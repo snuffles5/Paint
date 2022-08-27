@@ -1,0 +1,3 @@
+/Users/deni/IdeaProjects/bsc_projects/Assignment1/cmake-build-debug/CMakeFiles/Assignment1.dir
+/Users/deni/IdeaProjects/bsc_projects/Assignment1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/deni/IdeaProjects/bsc_projects/Assignment1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
