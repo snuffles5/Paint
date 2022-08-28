@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\c# projects",
+    "\\c# projects\\Paint",
+    "\\c# projects\\Paint\\Figures"
   ],
+  "SelectedNode": "\\c# projects\\Paint\\Paint.sln",
   "PreviewInSolutionExplorer": false
 }
