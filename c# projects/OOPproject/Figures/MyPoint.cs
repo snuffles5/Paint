@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Drawing;
 
 public class myPoint
 {
@@ -14,6 +14,11 @@ public class myPoint
     {
         X = myPoint.X;
         Y = myPoint.Y;
+    }
+    public myPoint(Point point)
+    {
+        X = point.X;
+        Y = point.Y;
     }
     // Properties
     public float X
