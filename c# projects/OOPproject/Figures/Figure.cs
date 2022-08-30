@@ -5,16 +5,12 @@ using System.Globalization;
 
 public abstract class Figure
 {
-    public enum colors
-    {
-        Black, Red, Blue, Green, Yellow, Purple, Orange
-    }
-    myPoint _myPoint;
+    MyPoint _myPoint;
     Color _strokeColor;
     Color _fillColor;
     int _strokeWidth;
 
-    public myPoint myPoint { get { return _myPoint; } set { _myPoint = new myPoint(value.X, value.Y); } }
+    public MyPoint MyPoint { get { return _myPoint; } set { _myPoint = new MyPoint(value.X, value.Y); } }
     public float X { get { return _myPoint.X; } set { _myPoint.X = value; } }
     public float Y { get { return _myPoint.Y; } set { _myPoint.Y = value; } }
     public Color StrokeColor
@@ -50,6 +46,6 @@ public abstract class Figure
         }
     }
     public abstract void Draw(Graphics g);
-    public abstract bool isInside(myPoint myPoint);
+    public abstract bool isInside(MyPoint MyPoint);
 
 }

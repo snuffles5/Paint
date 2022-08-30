@@ -6,21 +6,33 @@ public class Circle : Figure
     const float DEFAULT_RADIUS = 1f;
     float radius;
     public Circle() : this(10, 10, DEFAULT_RADIUS) { }
-    public Circle(myPoint myPoint, float radius = DEFAULT_RADIUS)
+    public Circle(MyPoint MyPoint, float radius = DEFAULT_RADIUS, int strokeWidth = 1)
     {
-        myPoint = new myPoint(myPoint);
+        MyPoint = new MyPoint(MyPoint);
         Radius = radius;
         StrokeColor = Color.Black;
         FillColor = Color.Black;
+        StrokeWidth = strokeWidth;
+    }
+    public Circle(Color strokeColor, Color fillColor, MyPoint MyPoint, float radius = DEFAULT_RADIUS, int strokeWidth = 1)
+    {
+        MyPoint = new MyPoint(MyPoint);
+        Radius = radius;
+        StrokeColor = strokeColor;
+        FillColor = fillColor;
+        StrokeWidth = strokeWidth;
     }
 
-    public Circle(float x, float y, float radius = DEFAULT_RADIUS)
+    public Circle(float x, float y, float radius = DEFAULT_RADIUS, int strokeWidth = 1)
     {
-        myPoint = new myPoint(x, y);
+        MyPoint = new MyPoint(x, y);
         Radius = radius;
         StrokeColor = Color.Black;
         FillColor = Color.Black;
+        StrokeWidth = strokeWidth;
     }
+    public MyPoint Center { get { return MyPoint; } set { MyPoint = new MyPoint(value.X, value.Y); } }
+
     public float Radius
     {
         get
@@ -42,9 +54,9 @@ public class Circle : Figure
         graphic.FillEllipse(br, X - Radius, Y - Radius, 2 * Radius, 2 * Radius);
         graphic.DrawEllipse(pen, X - Radius, Y - Radius, 2 * Radius, 2 * Radius);
     }
-    public override bool isInside(myPoint myPoint)
+    public override bool isInside(MyPoint MyPoint)
     {
-        return Math.Sqrt(Math.Pow(myPoint.X - X, 2) + Math.Pow(myPoint.Y - Y, 2)) < Radius;
+        return Math.Sqrt(Math.Pow(MyPoint.X - X, 2) + Math.Pow(MyPoint.Y - Y, 2)) < Radius;
     }
 
     ~Circle() { Console.WriteLine("Destructor Circle"); }

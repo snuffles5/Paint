@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Drawing;
 
-public class myPoint
+public class MyPoint
 {
     float _x;
     float _y;
-    public myPoint(float x = 0, float y = 0)
+    public MyPoint(float x = 0, float y = 0)
     {
         X = x;
         Y = y;
     }
-    public myPoint(myPoint myPoint)
+    public MyPoint(MyPoint MyPoint)
     {
-        X = myPoint.X;
-        Y = myPoint.Y;
+        X = MyPoint.X;
+        Y = MyPoint.Y;
     }
-    public myPoint(Point point)
+    public MyPoint(Point point)
     {
         X = point.X;
         Y = point.Y;

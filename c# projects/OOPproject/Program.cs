@@ -1,15 +1,26 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+
+/************** TODO List in general *********************
+**  Serializable / Deserialize and implement it.
+**  regions
+**  comments where needed
+**  Rhombus class 
+**  
+**  features:
+**  freefigure
+**  Background Color (canvas)
+**
+**
+*********************************************************/
+
 
 namespace OOPproject
 {
     static class Program
     {
         /// <summary>
-        ///  The main entry point for the application.
+        ///  
         /// </summary>
         [STAThread]
         static void Main()
