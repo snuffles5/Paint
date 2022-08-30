@@ -1,19 +1,19 @@
 ﻿using System;
 
 
-public class Point
+public class myPoint
 {
     float _x;
     float _y;
-    public Point(float x = 0, float y = 0)
+    public myPoint(float x = 0, float y = 0)
     {
         X = x;
         Y = y;
     }
-    public Point(Point point)
+    public myPoint(myPoint myPoint)
     {
-        X = point.X;
-        Y = point.Y;
+        X = myPoint.X;
+        Y = myPoint.Y;
     }
     // Properties
     public float X
