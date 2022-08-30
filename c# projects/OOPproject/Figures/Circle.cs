@@ -12,7 +12,7 @@ public class Circle : Figure
         StrokeColor = Color.Black;
         FillColor = Color.Black;
     }
-    
+
     public Circle(float x, float y, float radius = DEFAULT_RADIUS)
     {
         Point = new Point(x, y);
@@ -34,16 +34,16 @@ public class Circle : Figure
                 radius = 0;
         }
     }
-    public override void Draw(Graphics graphic) 
+    public override void Draw(Graphics graphic)
     {
         SolidBrush br = new SolidBrush(FillColor);
         Pen pen = new Pen(StrokeColor, StrokeWidth);
         graphic.FillEllipse(br, X - Radius, Y - Radius, 2 * Radius, 2 * Radius);
         graphic.DrawEllipse(pen, X - Radius, Y - Radius, 2 * Radius, 2 * Radius);
     }
-    public override bool isInside(Point point) 
+    public override bool isInside(Point point)
     {
-        return Math.Sqrt( Math.Pow(point.X - X,2) + Math.Pow(point.Y - Y, 2) ) < Radius;
+        return Math.Sqrt(Math.Pow(point.X - X, 2) + Math.Pow(point.Y - Y, 2)) < Radius;
     }
 
     ~Circle() { Console.WriteLine("Destructor Circle"); }

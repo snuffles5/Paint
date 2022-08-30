@@ -25,3 +25,10 @@ C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproj
 C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\obj\Debug\netcoreapp3.1\OOPproject.csproj.CoreCompileInputs.cache
 C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\obj\Debug\netcoreapp3.1\OOPproject.dll
 C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\obj\Debug\netcoreapp3.1\OOPproject.pdb
+C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\bin\Debug\netcoreapp3.1\OOPproject.exe
+C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\bin\Debug\netcoreapp3.1\OOPproject.deps.json
+C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\bin\Debug\netcoreapp3.1\OOPproject.runtimeconfig.json
+C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\bin\Debug\netcoreapp3.1\OOPproject.runtimeconfig.dev.json
+C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\bin\Debug\netcoreapp3.1\OOPproject.dll
+C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\bin\Debug\netcoreapp3.1\OOPproject.pdb
+C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\obj\Debug\netcoreapp3.1\OOPproject.genruntimeconfig.cache

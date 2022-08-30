@@ -28,16 +28,16 @@ namespace OOPproject
         Point pX, pY;
         Pen pen1 = new Pen(Color.Black,1);
         Pen eraser = new Pen(Color.White, 10);
+        int index;
         int x, y, sX, sY, cX, cY;
+
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
             pY = e.Location;
             cX = e.X;
             cY = e.Y;
-
         }
-
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
             if(paint)
@@ -65,6 +65,21 @@ namespace OOPproject
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
             paint = false;
+            sX = x - cX;
+            sY = y - cY;
+
+            if(index==3)
+            {
+                g.DrawEllipse(pen1,cX,cY,sX,sY);
+            }
+            if (index == 4)
+            {
+                g.DrawRectangle(pen1, cX, cY, sX, sY);
+            }
+            if(index==5)
+            {
+                g.DrawLine(pen1,cX,cY,x,y);
+            }
         }
 
         private void btn_pencil_Click(object sender, EventArgs e)
@@ -77,6 +92,18 @@ namespace OOPproject
             index = 2;
         }
 
-        int index;
+        private void btn_circle_Click(object sender, EventArgs e)
+        {
+            index = 3;
+        }
+        private void btn_rect_Click(object sender, EventArgs e)
+        {
+            index = 4;
+        }
+        private void btn_line_Click(object sender, EventArgs e)
+        {
+            index = 5;
+        }
+
     }
 }

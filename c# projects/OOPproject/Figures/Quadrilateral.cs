@@ -15,12 +15,12 @@ public class Quadrilateral : Figure // not supporting rotation
     public Quadrilateral(Point p1, Point p2, Point p3, Point p4)
     {
         _vertices = new Point[4];
-        Vertices = new Point[] {p1, p2, p3, p4};
+        Vertices = new Point[] { p1, p2, p3, p4 };
         StrokeColor = Color.Black;
         FillColor = Color.Black;
     }
-   
-  
+
+
 
     public Point[] Vertices
     {
@@ -36,9 +36,9 @@ public class Quadrilateral : Figure // not supporting rotation
                 _vertices[i] = value[i];
             }
         }
-     }
+    }
 
-    public override void Draw(Graphics graphic) 
+    public override void Draw(Graphics graphic)
     {
         SolidBrush br = new SolidBrush(FillColor);
         Pen pen = new Pen(StrokeColor, StrokeWidth);
@@ -49,7 +49,7 @@ public class Quadrilateral : Figure // not supporting rotation
             new System.Drawing.Point( (int)Math.Floor(Vertices[1].X), (int)Math.Floor(Vertices[1].Y)),
             new System.Drawing.Point( (int)Math.Floor(Vertices[2].X), (int)Math.Floor(Vertices[2].Y)),
             new System.Drawing.Point( (int)Math.Floor(Vertices[3].X), (int)Math.Floor(Vertices[3].Y)),
-            
+
         });
         graphic.DrawPolygon(pen, new System.Drawing.Point[]
         {
@@ -60,7 +60,7 @@ public class Quadrilateral : Figure // not supporting rotation
 
         });
     }
-    public override bool isInside(Point point) 
+    public override bool isInside(Point point)
     {
         float angle01 = (float)Math.Atan2(Vertices[1].Y - point.Y, Vertices[1].X - point.X) -
                 (float)Math.Atan2(Vertices[0].Y - point.Y, Vertices[0].X - point.X);

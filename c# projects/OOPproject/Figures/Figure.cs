@@ -16,14 +16,14 @@ public abstract class Figure
     public Point Point { get { return _point; } set { _point = new Point(value.X, value.Y); } }
     public float X { get { return _point.X; } set { _point.X = value; } }
     public float Y { get { return _point.Y; } set { _point.Y = value; } }
-    public Color StrokeColor 
+    public Color StrokeColor
     {
-        get { return _strokeColor; } 
-        set 
+        get { return _strokeColor; }
+        set
         {
             if (value != _strokeColor)
                 _strokeColor = value;
-        } 
+        }
     }
     public Color FillColor
     {
@@ -43,7 +43,7 @@ public abstract class Figure
             {
                 if (value >= 0)
                     _strokeWidth = value;
-                else 
+                else
                     _strokeWidth = 1;
             }
         }

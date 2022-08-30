@@ -92,6 +92,7 @@ namespace OOPproject
             this.btn_line.Text = "Line";
             this.btn_line.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btn_line.UseVisualStyleBackColor = true;
+            this.btn_line.Click += new System.EventHandler(this.btn_line_Click);
             // 
             // btn_rect
             // 
@@ -109,6 +110,7 @@ namespace OOPproject
             this.btn_rect.Text = "Rectangle";
             this.btn_rect.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btn_rect.UseVisualStyleBackColor = true;
+            this.btn_rect.Click += new System.EventHandler(this.btn_rect_Click);
             // 
             // btn_circle
             // 
@@ -125,6 +127,7 @@ namespace OOPproject
             this.btn_circle.Text = "Circle";
             this.btn_circle.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btn_circle.UseVisualStyleBackColor = true;
+            this.btn_circle.Click += new System.EventHandler(this.btn_circle_Click);
             // 
             // btn_eraser
             // 

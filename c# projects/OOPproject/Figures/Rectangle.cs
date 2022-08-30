@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-public class Rectangle: Quadrilateral // not supporting rotation
+public class Rectangle : Quadrilateral // not supporting rotation
 {
     float _width;
     float _height;
@@ -24,7 +24,7 @@ public class Rectangle: Quadrilateral // not supporting rotation
     }
     public Rectangle(float x, float y, float width, float height)
     {
-        Point = new Point(x,y);
+        Point = new Point(x, y);
         Width = width;
         Height = height;
         StrokeColor = Color.Black;
@@ -62,16 +62,17 @@ public class Rectangle: Quadrilateral // not supporting rotation
     {
         get
         {
-            return new Point(this.Point.X-(Width / 2), this.Point.Y-(Height / 2));
+            return new Point(this.Point.X - (Width / 2), this.Point.Y - (Height / 2));
         }
-    }public Point SecondPoint
+    }
+    public Point SecondPoint
     {
         get
         {
-            return new Point(this.Point.X+(Width / 2), this.Point.Y+(Height / 2));
+            return new Point(this.Point.X + (Width / 2), this.Point.Y + (Height / 2));
         }
     }
-    public override void Draw(Graphics graphic) 
+    public override void Draw(Graphics graphic)
     {
         SolidBrush br = new SolidBrush(FillColor);
         Pen pen = new Pen(StrokeColor, StrokeWidth);
@@ -79,7 +80,7 @@ public class Rectangle: Quadrilateral // not supporting rotation
         graphic.FillRectangle(br, FirstPoint.X, FirstPoint.Y, Width, Height);
         graphic.DrawRectangle(pen, FirstPoint.X, FirstPoint.Y, Width, Height);
     }
-    public override bool isInside(Point point) 
+    public override bool isInside(Point point)
     {
         return Math.Abs(point.X - X) <= Width / 2 && Math.Abs(point.Y - Y) <= Height / 2;
     }
