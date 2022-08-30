@@ -1,13 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wlqszMsZcsE3TAzw8uxZUHVsSBI/RA+5TgmMe2DGnJQQFvtSBAdQ0bWAfxetxBzSLWaioDOkdX1vBtgQ6GWQMQ==",
+  "dgSpecHash": "ad+/8/MDBgaAWv3P62c5iBOLVSTz9z0kZWNsJTqiPK7lwCQCy2sUcJ0n8o3yeLAgc9u2ATmDDBGHg60C8CKF9g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\shach\\Documents\\daniel\\bsc_projects\\c# projects\\OOPproject\\OOPproject.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\shach\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.28\\microsoft.netcore.app.host.win-x64.3.1.28.nupkg.sha512",
-    "C:\\Users\\shach\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
-    "C:\\Users\\shach\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
-    "C:\\Users\\shach\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\talta\\source\\repo_tal_daniel\\snuffles5\\bsc_projects\\c# projects\\OOPproject\\OOPproject.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }
