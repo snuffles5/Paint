@@ -144,7 +144,7 @@ namespace OOPproject
             sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
             if(sfd.ShowDialog()==DialogResult.OK)
             {
-                Rectangle rect = new Rectangle(0, 0, pic.Width, pic.Height);
+                System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, pic.Width, pic.Height);
                 Bitmap btm = bm.Clone(rect, bm.PixelFormat);
                 btm.Save(sfd.FileName,ImageFormat.Jpeg);
                 MessageBox.Show("Image saved sucessfully!");

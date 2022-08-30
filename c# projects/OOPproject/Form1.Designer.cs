@@ -265,7 +265,6 @@ namespace OOPproject
             this.pic_color.Size = new System.Drawing.Size(49, 43);
             this.pic_color.TabIndex = 0;
             this.pic_color.UseVisualStyleBackColor = false;
-            this.pic_color.Click += new System.EventHandler(this.pic_color_Click);
             // 
             // panel2
             // 
