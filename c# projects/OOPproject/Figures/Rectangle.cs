@@ -6,10 +6,10 @@ public class Rectangle : Quadrilateral // not supporting rotation
     float _width;
     float _height;
     public Rectangle() : this(1, 1) { }
-    public Rectangle(Point point, float width, float height)
+    public Rectangle(myPoint myPoint, float width, float height)
     {
-        Point = new Point(point);
-        Vertices = new Point[] { };
+        myPoint = new myPoint(myPoint);
+        Vertices = new myPoint[] { };
         Width = width;
         Height = height;
         StrokeColor = Color.Black;
@@ -17,7 +17,7 @@ public class Rectangle : Quadrilateral // not supporting rotation
     }
     public Rectangle(float width, float height)
     {
-        Point = new Point();
+        myPoint = new myPoint();
         Width = width;
         Height = height;
         StrokeColor = Color.Black;
@@ -25,7 +25,7 @@ public class Rectangle : Quadrilateral // not supporting rotation
     }
     public Rectangle(float x, float y, float width, float height)
     {
-        Point = new Point(x, y);
+        myPoint = new myPoint(x, y);
         Width = width;
         Height = height;
         StrokeColor = Color.Black;
@@ -59,18 +59,18 @@ public class Rectangle : Quadrilateral // not supporting rotation
                 _height = 0;
         }
     }
-    public Point FirstPoint
+    public myPoint FirstmyPoint
     {
         get
         {
-            return new Point(this.Point.X - (Width / 2), this.Point.Y - (Height / 2));
+            return new myPoint(this.myPoint.X - (Width / 2), this.myPoint.Y - (Height / 2));
         }
     }
-    public Point SecondPoint
+    public myPoint SecondmyPoint
     {
         get
         {
-            return new Point(this.Point.X + (Width / 2), this.Point.Y + (Height / 2));
+            return new myPoint(this.myPoint.X + (Width / 2), this.myPoint.Y + (Height / 2));
         }
     }
     public override void Draw(Graphics graphic)
@@ -78,12 +78,12 @@ public class Rectangle : Quadrilateral // not supporting rotation
         SolidBrush br = new SolidBrush(FillColor);
         Pen pen = new Pen(StrokeColor, StrokeWidth);
         //g.FillRectangle(br, X - width / 2, Y - height / 2, width, height);
-        graphic.FillRectangle(br, FirstPoint.X, FirstPoint.Y, Width, Height);
-        graphic.DrawRectangle(pen, FirstPoint.X, FirstPoint.Y, Width, Height);
+        graphic.FillRectangle(br, FirstmyPoint.X, FirstmyPoint.Y, Width, Height);
+        graphic.DrawRectangle(pen, FirstmyPoint.X, FirstmyPoint.Y, Width, Height);
     }
-    public override bool isInside(Point point)
+    public override bool isInside(myPoint myPoint)
     {
-        return Math.Abs(point.X - X) <= Width / 2 && Math.Abs(point.Y - Y) <= Height / 2;
+        return Math.Abs(myPoint.X - X) <= Width / 2 && Math.Abs(myPoint.Y - Y) <= Height / 2;
     }
 
     ~Rectangle() { System.Diagnostics.Debug.WriteLine("Destructor Rectangle"); }

@@ -6,9 +6,9 @@ public class Circle : Figure
     const float DEFAULT_RADIUS = 1f;
     float radius;
     public Circle() : this(10, 10, DEFAULT_RADIUS) { }
-    public Circle(Point point, float radius = DEFAULT_RADIUS)
+    public Circle(myPoint myPoint, float radius = DEFAULT_RADIUS)
     {
-        Point = new Point(point);
+        myPoint = new myPoint(myPoint);
         Radius = radius;
         StrokeColor = Color.Black;
         FillColor = Color.Black;
@@ -16,7 +16,7 @@ public class Circle : Figure
 
     public Circle(float x, float y, float radius = DEFAULT_RADIUS)
     {
-        Point = new Point(x, y);
+        myPoint = new myPoint(x, y);
         Radius = radius;
         StrokeColor = Color.Black;
         FillColor = Color.Black;
@@ -42,9 +42,9 @@ public class Circle : Figure
         graphic.FillEllipse(br, X - Radius, Y - Radius, 2 * Radius, 2 * Radius);
         graphic.DrawEllipse(pen, X - Radius, Y - Radius, 2 * Radius, 2 * Radius);
     }
-    public override bool isInside(Point point)
+    public override bool isInside(myPoint myPoint)
     {
-        return Math.Sqrt(Math.Pow(point.X - X, 2) + Math.Pow(point.Y - Y, 2)) < Radius;
+        return Math.Sqrt(Math.Pow(myPoint.X - X, 2) + Math.Pow(myPoint.Y - Y, 2)) < Radius;
     }
 
     ~Circle() { Console.WriteLine("Destructor Circle"); }
