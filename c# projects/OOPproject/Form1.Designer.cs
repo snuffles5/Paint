@@ -1,5 +1,5 @@
 ﻿
-namespace Paint
+namespace OOPproject
 {
     partial class Form1
     {
@@ -68,7 +68,7 @@ namespace Paint
             // 
             // color_pick
             // 
-            this.color_pick.Image = global::Paint.Properties.Resources.color_palette;
+            this.color_pick.Image = global::OOPproject.Properties.Resources.color_palette;
             this.color_pick.Location = new System.Drawing.Point(0, 0);
             this.color_pick.Name = "color_pick";
             this.color_pick.Size = new System.Drawing.Size(249, 95);
@@ -83,7 +83,7 @@ namespace Paint
             this.btn_line.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_line.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_line.ForeColor = System.Drawing.Color.Wheat;
-            this.btn_line.Image = global::Paint.Properties.Resources.line;
+            this.btn_line.Image = global::OOPproject.Properties.Resources.line;
             this.btn_line.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btn_line.Location = new System.Drawing.Point(788, 16);
             this.btn_line.Name = "btn_line";
@@ -100,7 +100,7 @@ namespace Paint
             this.btn_rect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_rect.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_rect.ForeColor = System.Drawing.Color.Wheat;
-            this.btn_rect.Image = global::Paint.Properties.Resources.rectangle;
+            this.btn_rect.Image = global::OOPproject.Properties.Resources.rectangle;
             this.btn_rect.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btn_rect.Location = new System.Drawing.Point(714, 16);
             this.btn_rect.Name = "btn_rect";
@@ -116,7 +116,7 @@ namespace Paint
             this.btn_circle.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
             this.btn_circle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_circle.ForeColor = System.Drawing.Color.Wheat;
-            this.btn_circle.Image = global::Paint.Properties.Resources.circle;
+            this.btn_circle.Image = global::OOPproject.Properties.Resources.circle;
             this.btn_circle.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btn_circle.Location = new System.Drawing.Point(641, 16);
             this.btn_circle.Name = "btn_circle";
@@ -132,7 +132,7 @@ namespace Paint
             this.btn_eraser.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
             this.btn_eraser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_eraser.ForeColor = System.Drawing.Color.Wheat;
-            this.btn_eraser.Image = global::Paint.Properties.Resources.eraser;
+            this.btn_eraser.Image = global::OOPproject.Properties.Resources.eraser;
             this.btn_eraser.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.btn_eraser.Location = new System.Drawing.Point(571, 16);
             this.btn_eraser.Name = "btn_eraser";
@@ -149,7 +149,7 @@ namespace Paint
             this.btn_pencil.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
             this.btn_pencil.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_pencil.ForeColor = System.Drawing.Color.Wheat;
-            this.btn_pencil.Image = global::Paint.Properties.Resources.pencil;
+            this.btn_pencil.Image = global::OOPproject.Properties.Resources.pencil;
             this.btn_pencil.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.btn_pencil.Location = new System.Drawing.Point(500, 16);
             this.btn_pencil.Name = "btn_pencil";
@@ -166,7 +166,7 @@ namespace Paint
             this.btn_fill.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
             this.btn_fill.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_fill.ForeColor = System.Drawing.Color.Wheat;
-            this.btn_fill.Image = global::Paint.Properties.Resources.bucket;
+            this.btn_fill.Image = global::OOPproject.Properties.Resources.bucket;
             this.btn_fill.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_fill.Location = new System.Drawing.Point(428, 16);
             this.btn_fill.Name = "btn_fill";
@@ -182,7 +182,7 @@ namespace Paint
             this.btn_color.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
             this.btn_color.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_color.ForeColor = System.Drawing.Color.Wheat;
-            this.btn_color.Image = global::Paint.Properties.Resources.color;
+            this.btn_color.Image = global::OOPproject.Properties.Resources.color;
             this.btn_color.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_color.Location = new System.Drawing.Point(357, 16);
             this.btn_color.Name = "btn_color";

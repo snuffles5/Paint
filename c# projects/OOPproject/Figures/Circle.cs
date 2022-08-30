@@ -1,4 +1,6 @@
-﻿public class Circle : Figure
+﻿using System.Drawing;
+
+public class Circle : Figure
 {
     const float DEFAULT_RADIUS = 1f;
     float radius;
