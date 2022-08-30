@@ -62,6 +62,8 @@ namespace OOPproject
             sY = e.Y - cY;
         }
 
+       
+
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
             paint = false;
@@ -82,16 +84,19 @@ namespace OOPproject
             }
         }
 
+        private void pic_color_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void btn_pencil_Click(object sender, EventArgs e)
         {
             index = 1;
         }
-
         private void btn_eraser_Click(object sender, EventArgs e)
         {
             index = 2;
         }
-
         private void btn_circle_Click(object sender, EventArgs e)
         {
             index = 3;
@@ -103,6 +108,25 @@ namespace OOPproject
         private void btn_line_Click(object sender, EventArgs e)
         {
             index = 5;
+        }
+        private void pic_Paint(object sender, PaintEventArgs e)
+        {
+            Graphics g = e.Graphics;
+            if(paint)
+            {
+                if (index == 3)
+                {
+                    g.DrawEllipse(pen1, cX, cY, sX, sY);
+                }
+                if (index == 4)
+                {
+                    g.DrawRectangle(pen1, cX, cY, sX, sY);
+                }
+                if (index == 5)
+                {
+                    g.DrawLine(pen1, cX, cY, x, y);
+                }
+            }
         }
 
     }

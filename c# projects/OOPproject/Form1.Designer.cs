@@ -42,8 +42,11 @@ namespace OOPproject
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pic = new System.Windows.Forms.PictureBox();
+            this.btn_clear = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.color_pick)).BeginInit();
+            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             this.SuspendLayout();
             // 
@@ -85,7 +88,7 @@ namespace OOPproject
             this.btn_line.ForeColor = System.Drawing.Color.Wheat;
             this.btn_line.Image = global::OOPproject.Properties.Resources.line;
             this.btn_line.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btn_line.Location = new System.Drawing.Point(788, 16);
+            this.btn_line.Location = new System.Drawing.Point(733, 16);
             this.btn_line.Name = "btn_line";
             this.btn_line.Size = new System.Drawing.Size(74, 63);
             this.btn_line.TabIndex = 7;
@@ -103,7 +106,7 @@ namespace OOPproject
             this.btn_rect.ForeColor = System.Drawing.Color.Wheat;
             this.btn_rect.Image = global::OOPproject.Properties.Resources.rectangle;
             this.btn_rect.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btn_rect.Location = new System.Drawing.Point(714, 16);
+            this.btn_rect.Location = new System.Drawing.Point(659, 16);
             this.btn_rect.Name = "btn_rect";
             this.btn_rect.Size = new System.Drawing.Size(74, 63);
             this.btn_rect.TabIndex = 6;
@@ -120,7 +123,7 @@ namespace OOPproject
             this.btn_circle.ForeColor = System.Drawing.Color.Wheat;
             this.btn_circle.Image = global::OOPproject.Properties.Resources.circle;
             this.btn_circle.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btn_circle.Location = new System.Drawing.Point(641, 16);
+            this.btn_circle.Location = new System.Drawing.Point(586, 16);
             this.btn_circle.Name = "btn_circle";
             this.btn_circle.Size = new System.Drawing.Size(73, 63);
             this.btn_circle.TabIndex = 5;
@@ -137,7 +140,7 @@ namespace OOPproject
             this.btn_eraser.ForeColor = System.Drawing.Color.Wheat;
             this.btn_eraser.Image = global::OOPproject.Properties.Resources.eraser;
             this.btn_eraser.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btn_eraser.Location = new System.Drawing.Point(571, 16);
+            this.btn_eraser.Location = new System.Drawing.Point(516, 16);
             this.btn_eraser.Name = "btn_eraser";
             this.btn_eraser.Size = new System.Drawing.Size(70, 63);
             this.btn_eraser.TabIndex = 4;
@@ -154,7 +157,7 @@ namespace OOPproject
             this.btn_pencil.ForeColor = System.Drawing.Color.Wheat;
             this.btn_pencil.Image = global::OOPproject.Properties.Resources.pencil;
             this.btn_pencil.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btn_pencil.Location = new System.Drawing.Point(500, 16);
+            this.btn_pencil.Location = new System.Drawing.Point(445, 16);
             this.btn_pencil.Name = "btn_pencil";
             this.btn_pencil.Size = new System.Drawing.Size(71, 63);
             this.btn_pencil.TabIndex = 3;
@@ -171,7 +174,7 @@ namespace OOPproject
             this.btn_fill.ForeColor = System.Drawing.Color.Wheat;
             this.btn_fill.Image = global::OOPproject.Properties.Resources.bucket;
             this.btn_fill.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_fill.Location = new System.Drawing.Point(428, 16);
+            this.btn_fill.Location = new System.Drawing.Point(373, 16);
             this.btn_fill.Name = "btn_fill";
             this.btn_fill.Size = new System.Drawing.Size(72, 63);
             this.btn_fill.TabIndex = 2;
@@ -187,7 +190,7 @@ namespace OOPproject
             this.btn_color.ForeColor = System.Drawing.Color.Wheat;
             this.btn_color.Image = global::OOPproject.Properties.Resources.color;
             this.btn_color.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_color.Location = new System.Drawing.Point(357, 16);
+            this.btn_color.Location = new System.Drawing.Point(302, 16);
             this.btn_color.Name = "btn_color";
             this.btn_color.Size = new System.Drawing.Size(71, 63);
             this.btn_color.TabIndex = 1;
@@ -198,18 +201,21 @@ namespace OOPproject
             // pic_color
             // 
             this.pic_color.BackColor = System.Drawing.Color.White;
-            this.pic_color.Location = new System.Drawing.Point(264, 33);
+            this.pic_color.Location = new System.Drawing.Point(251, 27);
             this.pic_color.Name = "pic_color";
-            this.pic_color.Size = new System.Drawing.Size(53, 31);
+            this.pic_color.Size = new System.Drawing.Size(41, 43);
             this.pic_color.TabIndex = 0;
             this.pic_color.UseVisualStyleBackColor = false;
+            this.pic_color.Click += new System.EventHandler(this.pic_color_Click);
             // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.Black;
-            this.panel3.Location = new System.Drawing.Point(332, 0);
+            this.panel3.Controls.Add(this.button1);
+            this.panel3.Controls.Add(this.btn_clear);
+            this.panel3.Location = new System.Drawing.Point(295, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(553, 95);
+            this.panel3.Size = new System.Drawing.Size(590, 95);
             this.panel3.TabIndex = 8;
             // 
             // panel2
@@ -229,9 +235,44 @@ namespace OOPproject
             this.pic.Size = new System.Drawing.Size(884, 538);
             this.pic.TabIndex = 0;
             this.pic.TabStop = false;
+            this.pic.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_Paint);
             this.pic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_MouseDown);
             this.pic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pic_MouseMove);
             this.pic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pic_MouseUp);
+            // 
+            // btn_clear
+            // 
+            this.btn_clear.BackColor = System.Drawing.Color.Gray;
+            this.btn_clear.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Maroon;
+            this.btn_clear.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
+            this.btn_clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_clear.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_clear.ForeColor = System.Drawing.Color.Wheat;
+            this.btn_clear.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btn_clear.Location = new System.Drawing.Point(510, 52);
+            this.btn_clear.Name = "btn_clear";
+            this.btn_clear.Size = new System.Drawing.Size(74, 27);
+            this.btn_clear.TabIndex = 8;
+            this.btn_clear.Text = "Clear";
+            this.btn_clear.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btn_clear.UseVisualStyleBackColor = false;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Gray;
+            this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Maroon;
+            this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button1.ForeColor = System.Drawing.Color.Wheat;
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.button1.Location = new System.Drawing.Point(512, 16);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(74, 27);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Clear";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.button1.UseVisualStyleBackColor = false;
             // 
             // Form1
             // 
@@ -247,6 +288,7 @@ namespace OOPproject
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.color_pick)).EndInit();
+            this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
             this.ResumeLayout(false);
 
@@ -267,6 +309,8 @@ namespace OOPproject
         private System.Windows.Forms.Button btn_circle;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.PictureBox color_pick;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_clear;
     }
 }
 
