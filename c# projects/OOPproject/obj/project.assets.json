@@ -8,24 +8,19 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\talta\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\shach\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\talta\\source\\repo_tal_daniel\\snuffles5\\bsc_projects\\c# projects\\OOPproject\\OOPproject.csproj",
+      "projectUniqueName": "C:\\Users\\shach\\Documents\\daniel\\bsc_projects\\c# projects\\OOPproject\\OOPproject.csproj",
       "projectName": "OOPproject",
-      "projectPath": "C:\\Users\\talta\\source\\repo_tal_daniel\\snuffles5\\bsc_projects\\c# projects\\OOPproject\\OOPproject.csproj",
-      "packagesPath": "C:\\Users\\talta\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\talta\\source\\repo_tal_daniel\\snuffles5\\bsc_projects\\c# projects\\OOPproject\\obj\\",
+      "projectPath": "C:\\Users\\shach\\Documents\\daniel\\bsc_projects\\c# projects\\OOPproject\\OOPproject.csproj",
+      "packagesPath": "C:\\Users\\shach\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\shach\\Documents\\daniel\\bsc_projects\\c# projects\\OOPproject\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\talta\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\shach\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -56,10 +51,29 @@
           "net47",
           "net471",
           "net472",
-          "net48"
+          "net48",
+          "net481"
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[3.1.10, 3.1.10]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[3.1.28, 3.1.28]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[3.1.0, 3.1.0]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[3.1.0, 3.1.0]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
@@ -68,7 +82,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.411\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 public class Quadrilateral : Figure // not supporting rotation
 {
