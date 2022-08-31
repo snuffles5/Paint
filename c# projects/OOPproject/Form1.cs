@@ -29,29 +29,45 @@ namespace OOPproject
         Point pX, pY;
         Pen pen1 = new Pen(Color.Black,1);
         Pen eraser = new Pen(Color.White, 10);
-        int index;
+        int currIndex;
         int x, y, sX, sY, cX, cY;
         ColorDialog cd = new ColorDialog();
         Color New_Color;
-
+        FigureList Flist = new FigureList();
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
-            pY = e.Location;
-            cX = e.X;
-            cY = e.Y;
+            //pY = e.Location;
+            //cX = e.X;
+            //cY = e.Y;
+            //להוסיף בדיקה אם אנחנו בתוך השטח של השיט
+            //סוויץ'
+            switch (currIndex)
+            {
+                case 3:
+                    Flist[Flist.NextIndex] = new Circle(e.X, e.Y, 0);
+                    break;
+                case 4:
+                    Flist[Flist.NextIndex] = new Rectangle(e.X, e.Y, 0, 0);
+                    break;
+                case 5:
+                    Flist[Flist.NextIndex] = new Line(e.X, e.Y,0,0);
+                    break;
+            }
+
+
         }
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
             if(paint)
             {
-                if(index==1)
+                if(currIndex==1)
                 {
                     pX = e.Location;
                     g.DrawLine(pen1,pX,pY);
                     pY = pX;
                 }
-                if (index == 2)
+                if (currIndex == 2)
                 {
                     pX = e.Location;
                     g.DrawLine(eraser, pX, pY);
@@ -70,19 +86,23 @@ namespace OOPproject
             sX = x - cX;
             sY = y - cY;
 
-            if(index==3)
+            if(currIndex==3)
             {
-                g.DrawEllipse(pen1,cX,cY,sX,sY);
+                Circle c;
+                c.Draw(g);
+                //g.DrawEllipse(pen1,cX,cY,sX,sY);
             }
-            if (index == 4)
+            if (currIndex == 4)
             {
-                //Rectangle r;
-                //r.Draw(g)
-                g.DrawRectangle(pen1, cX, cY, sX, sY);
+                Rectangle r;
+                r.Draw(g);
+                //g.DrawRectangle(pen1, cX, cY, sX, sY);
             }
-            if(index==5)
+            if(currIndex==5)
             {
-                g.DrawLine(pen1,cX,cY,x,y);
+                Line l;
+                l.Draw(g);
+                //g.DrawLine(pen1,cX,cY,x,y);
             }
         }
 
@@ -90,7 +110,7 @@ namespace OOPproject
         {
             g.Clear(Color.White);
             pic.Image = bm;
-            index = 0;
+            currIndex = 0;
             //מחיקת רשימה מקושרת?
         }
 
@@ -104,7 +124,7 @@ namespace OOPproject
 
         private void btn_pencil_Click(object sender, EventArgs e)
         {
-            index = 1;
+            currIndex = 1;
         }
 
         private void color_pick_MouseClick(object sender, MouseEventArgs e)
@@ -117,16 +137,16 @@ namespace OOPproject
 
         private void btn_eraser_Click(object sender, EventArgs e)
         {
-            index = 2;
+            currIndex = 2;
         }
         private void btn_circle_Click(object sender, EventArgs e)
         {
-            index = 3;
+            currIndex = 3;
         }
 
         private void pic_MouseClick(object sender, MouseEventArgs e)
         {
-            if(index==7)
+            if(currIndex==7)
             {
                 Point point = set_point(pic, e.Location);
                 Fill(bm, point.X, point.Y, New_Color);
@@ -135,7 +155,7 @@ namespace OOPproject
 
         private void btn_fill_Click(object sender, EventArgs e)
         {
-            index = 7;
+            currIndex = 7;
         }
 
         private void btn_save_Click(object sender, EventArgs e)
@@ -158,26 +178,26 @@ namespace OOPproject
 
         private void btn_rect_Click(object sender, EventArgs e)
         {
-            index = 4;
+            currIndex = 4;
         }
         private void btn_line_Click(object sender, EventArgs e)
         {
-            index = 5;
+            currIndex = 5;
         }
         private void pic_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
             if(paint)
             {
-                if (index == 3)
+                if (currIndex == 3)
                 {
                     g.DrawEllipse(pen1, cX, cY, sX, sY);
                 }
-                if (index == 4)
+                if (currIndex == 4)
                 {
                     g.DrawRectangle(pen1, cX, cY, sX, sY);
                 }
-                if (index == 5)
+                if (currIndex == 5)
                 {
                     g.DrawLine(pen1, cX, cY, x, y);
                 }
