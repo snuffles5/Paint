@@ -50,6 +50,8 @@ public class Rectangle : Quadrilateral // not supporting rotation
                 _width = value;
             else
                 _width = 0;
+            MyPoint.X = Width / 2;
+            MyPoint.Y = Height / 2 ;
         }
     }
     public float Height
@@ -64,6 +66,8 @@ public class Rectangle : Quadrilateral // not supporting rotation
                 _height = value;
             else
                 _height = 0;
+            MyPoint.X = Width / 2;
+            MyPoint.Y = Height / 2;
         }
     }
     public MyPoint Center { get { return MyPoint; } set { MyPoint = new MyPoint(value.X, value.Y); } }
