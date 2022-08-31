@@ -64,19 +64,21 @@ namespace OOPproject
             switch (currSelect)
             {
                 case 3:
-                    Flist[Flist.NextIndex] = new Circle(e.X, e.Y, 0);
+                    Flist[figureIndex] = new Circle(e.X, e.Y, 0);
                     break;
                 case 4:
-                    Flist[Flist.NextIndex] = new Rectangle(e.X, e.Y, 0, 0);
+                    Flist[figureIndex] = new Rectangle(e.X, e.Y, 0, 0);
+                    Flist[figureIndex].FillColor = Color.Transparent;
                     break;
                 case 5:
-                    Flist[Flist.NextIndex] = new Line(e.X, e.Y,0,0);
+                    Flist[figureIndex] = new Line(e.X, e.Y,0,0);
                     break;
             }
+            pic.Invalidate();
         }
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
-            if(paint && figureIndex!=0)
+            if(paint && figureIndex!=-1)
             {
                 Figure c = (Figure)Flist[figureIndex];
                 switch (currSelect)
@@ -93,6 +95,7 @@ namespace OOPproject
                         break;
                     case 3:
                         Flist[Flist.NextIndex] = new Circle(e.X, e.Y, 0);
+                        c.Draw(g);
                         break;
                     case 4:
                         ((Rectangle)c).Width = e.X - c.X;
@@ -101,6 +104,7 @@ namespace OOPproject
                         break;
                     case 5:
                         Flist[Flist.NextIndex] = new Line(e.X, e.Y, 0, 0);
+                        c.Draw(g);
                         break;
                 }
 
@@ -117,11 +121,12 @@ namespace OOPproject
                 //    pY = pX;
                 //}
             }
-            pic.Refresh();
-            x = e.X;
-            y = e.Y;
-            sX = e.X - cX;
-            sY = e.Y - cY;
+            //pic.Refresh();
+            //x = e.X;
+            //y = e.Y;
+            //sX = e.X - cX;
+            //sY = e.Y - cY;
+            pic.Invalidate();
         }
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
