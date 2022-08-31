@@ -43,6 +43,23 @@ namespace OOPproject
             //cY = e.Y;
             //להוסיף בדיקה אם אנחנו בתוך השטח של השיט
             //סוויץ
+            //figureIndex = -1;
+            //for (int i = 0; i <Flist.NextIndex; i++)
+            //{
+            //    if (Flist[i].isInside(e.X, e.Y))
+            //    {
+            //        figureIndex = i;
+            //        string s = e.Button.ToString();
+            //        if (s == "Right") //if Right button pressed - Remove
+            //        {
+            //            pts.Remove(figureIndex);
+            //            figureIndex = -1;
+            //            pic.Invalidate();
+            //            return;
+            //        }
+            //        break;
+            //    }
+            //}
             figureIndex = Flist.NextIndex;
             switch (currSelect)
             {
@@ -80,6 +97,7 @@ namespace OOPproject
                     case 4:
                         ((Rectangle)c).Width = e.X - c.X;
                         ((Rectangle)c).Height = e.Y - c.Y;
+                        c.Draw(g);
                         break;
                     case 5:
                         Flist[Flist.NextIndex] = new Line(e.X, e.Y, 0, 0);
