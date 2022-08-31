@@ -1,31 +1,43 @@
 ﻿using System;
-using static System.Windows.Forms.LinkLabel;
+using System.Drawing;
 
-
-public class Line
+public class Line: Figure
 {
-    Point _point1;
-    Point _point2;
+    MyPoint _point2;
     public Line(float x1 = 0, float y1 = 0, float x2 = 0, float y2 = 0)
     {
-        Point1 = new Point(x1, y1);
-        Point2 = new Point(x2, y2);
-    }
-    public Line(Line Line)
+        MyPoint = new MyPoint(x1, y1);
+        Point2 = new MyPoint(x2, y2);
+        StrokeColor = Color.Black;
+        StrokeWidth = 1;
+        FillColor = Color.Transparent;
+    } 
+    public Line(Color strokeColor, float x1 = 0, float y1 = 0, float x2 = 0, float y2 = 0, int strokeWidth = 1)
     {
-        Point1 = new Point(Line.X1, Line.Y1);
-        Point2 = new Point(Line.X2, Line.Y2);
+        MyPoint = new MyPoint(x1, y1);
+        Point2 = new MyPoint(x2, y2);
+        StrokeColor = strokeColor;
+        StrokeWidth = strokeWidth;
+        FillColor = Color.Transparent;
+    }
+    public Line(Line line)
+    {
+        Point1 = new MyPoint(line.X1, line.Y1);
+        Point2 = new MyPoint(line.X2, line.Y2);
+        StrokeColor = line.StrokeColor;
+        StrokeWidth = line.StrokeWidth;
+        FillColor = line.FillColor;
     }
     // Properties
-    public Point Point1
+    public MyPoint Point1
     {
-        get { return _point1; }
+        get { return MyPoint; }
         set
         {
-            _point1 = value;
+            MyPoint = value;
         }
     }
-    public Point Point2
+    public MyPoint Point2
     {
         get { return _point2; }
         set
@@ -35,34 +47,34 @@ public class Line
     }
     public float X1
     {
-        get { return _point1.X; }
+        get { return MyPoint.X; }
         set
         {
-            _point1.X = value;
+            MyPoint.X = value;
         }
     }
     public float Y1
     {
-        get { return _point1.Y; }
+        get { return MyPoint.Y; }
         set
         {
-            _point1.Y = value;
+            MyPoint.Y = value;
         }
     }
     public float X2
     {
-        get { return _point1.X; }
+        get { return MyPoint.X; }
         set
         {
-            _point1.X = value;
+            _point2.X = value;
         }
     }
     public float Y2
     {
-        get { return _point1.Y; }
+        get { return _point2.Y; }
         set
         {
-            _point1.Y = value;
+            _point2.Y = value;
         }
     }
     public double Distance
@@ -71,5 +83,17 @@ public class Line
         { // √[( y2 –  y1)² + ( x1 –  x2)²]
             return Math.Sqrt(Math.Pow(Y2 - Y1, 2) + Math.Pow(X1 - X2, 2));
         }
+    }
+
+    public override void Draw(Graphics g)
+    {
+        Pen pen = new Pen(StrokeColor, StrokeWidth);
+        g.DrawLine(pen, Point1.X, Point1.Y, Point2.X, Point2.Y);
+    }
+
+    public override bool isInside(MyPoint MyPoint)
+    {
+        throw new NotImplementedException(); // TODO: Sorry, wasn't implemented yet
+        //return true;
     }
 }

@@ -6,30 +6,37 @@ public class Rectangle : Quadrilateral // not supporting rotation
     float _width;
     float _height;
     public Rectangle() : this(1, 1) { }
-    public Rectangle(Point point, float width, float height)
+    public Rectangle(MyPoint point, float width, float height, int strokeWidth = 0)
     {
-        Point = new Point(point);
-        Vertices = new Point[] { };
+        MyPoint = new MyPoint(point);
+        Vertices = new MyPoint[] { new MyPoint(point.X - width / 2, point.Y - height / 2), 
+            new MyPoint(point.X + width / 2, point.Y - height / 2), new MyPoint(point.X + width / 2, point.Y + height / 2), 
+            new MyPoint(point.X - width / 2, point.Y + height / 2) };
         Width = width;
         Height = height;
         StrokeColor = Color.Black;
         FillColor = Color.Black;
+        StrokeWidth = strokeWidth;
     }
-    public Rectangle(float width, float height)
+    public Rectangle(float width, float height, int strokeWidth = 0)
     {
-        Point = new Point();
-        Width = width;
+        MyPoint = new MyPoint(width / 2,height / 2);
+        Vertices = new MyPoint[] { new MyPoint(MyPoint.X - width / 2, MyPoint.Y - height / 2),
+            new MyPoint(MyPoint.X + width / 2, MyPoint.Y - height / 2), new MyPoint(MyPoint.X + width / 2, MyPoint.Y + height / 2),
+            new MyPoint(MyPoint.X - width / 2, MyPoint.Y + height / 2) };
         Height = height;
         StrokeColor = Color.Black;
         FillColor = Color.Black;
+        StrokeWidth = strokeWidth;
     }
-    public Rectangle(float x, float y, float width, float height)
+    public Rectangle(float x, float y, float width, float height, int strokeWidth = 0)
     {
-        Point = new Point(x, y);
+        MyPoint = new MyPoint(x, y);
         Width = width;
         Height = height;
         StrokeColor = Color.Black;
         FillColor = Color.Black;
+        StrokeWidth = strokeWidth;
     }
     public float Width
     {
@@ -59,31 +66,18 @@ public class Rectangle : Quadrilateral // not supporting rotation
                 _height = 0;
         }
     }
-    public Point FirstPoint
-    {
-        get
-        {
-            return new Point(this.Point.X - (Width / 2), this.Point.Y - (Height / 2));
-        }
-    }
-    public Point SecondPoint
-    {
-        get
-        {
-            return new Point(this.Point.X + (Width / 2), this.Point.Y + (Height / 2));
-        }
-    }
+    public MyPoint Center { get { return MyPoint; } set { MyPoint = new MyPoint(value.X, value.Y); } }
+
     public override void Draw(Graphics graphic)
     {
         SolidBrush br = new SolidBrush(FillColor);
         Pen pen = new Pen(StrokeColor, StrokeWidth);
-        //g.FillRectangle(br, X - width / 2, Y - height / 2, width, height);
-        graphic.FillRectangle(br, FirstPoint.X, FirstPoint.Y, Width, Height);
-        graphic.DrawRectangle(pen, FirstPoint.X, FirstPoint.Y, Width, Height);
+        graphic.FillRectangle(br, Vertices[0].X, Vertices[0].Y, Width, Height);
+        graphic.DrawRectangle(pen, Vertices[0].X, Vertices[0].Y, Width, Height);
     }
-    public override bool isInside(Point point)
+    public override bool isInside(MyPoint MyPoint)
     {
-        return Math.Abs(point.X - X) <= Width / 2 && Math.Abs(point.Y - Y) <= Height / 2;
+        return Math.Abs(MyPoint.X - X) <= Width / 2 && Math.Abs(MyPoint.Y - Y) <= Height / 2;
     }
 
     ~Rectangle() { System.Diagnostics.Debug.WriteLine("Destructor Rectangle"); }

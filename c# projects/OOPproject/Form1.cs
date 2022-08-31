@@ -51,6 +51,8 @@ namespace OOPproject
                 if (index == 2)
                 {
                     pX = e.Location;
+                    //Rectangle r;
+                    //r.Draw(g)
                     g.DrawLine(eraser, pX, pY);
                     pY = pX;
                 }
