@@ -5,35 +5,16 @@ public class Rectangle : Quadrilateral // not supporting rotation
 {
     float _width;
     float _height;
-    public Rectangle() : this(1, 1) { }
-    public Rectangle(MyPoint point, float width, float height, int strokeWidth = 0)
+    public Rectangle(MyPoint point, float width, float height, int strokeWidth = 0): base(point, new MyPoint(point.X + width, point.Y), new MyPoint(point.X + width, point.Y + height), new MyPoint(point.X, point.Y + height))
     {
-        MyPoint = new MyPoint(point);
-        Vertices = new MyPoint[] { new MyPoint(point.X - width / 2, point.Y - height / 2), 
-            new MyPoint(point.X + width / 2, point.Y - height / 2), new MyPoint(point.X + width / 2, point.Y + height / 2), 
-            new MyPoint(point.X - width / 2, point.Y + height / 2) };
         Width = width;
         Height = height;
         StrokeColor = Color.Black;
         FillColor = Color.Black;
         StrokeWidth = strokeWidth;
     }
-    public Rectangle(float width, float height, int strokeWidth = 0)
+    public Rectangle(float x=0, float y=0, float width = 0, float height = 0, int strokeWidth = 0) : base(new MyPoint(x,y), new MyPoint(x + width, y), new MyPoint(x + width, y + height), new MyPoint(x, y + height))
     {
-        MyPoint = new MyPoint(width / 2,height / 2);
-        Vertices = new MyPoint[] { new MyPoint(MyPoint.X - width / 2, MyPoint.Y - height / 2),
-            new MyPoint(MyPoint.X + width / 2, MyPoint.Y - height / 2), new MyPoint(MyPoint.X + width / 2, MyPoint.Y + height / 2),
-            new MyPoint(MyPoint.X - width / 2, MyPoint.Y + height / 2) };
-        Height = height;
-        StrokeColor = Color.Black;
-        FillColor = Color.Black;
-        StrokeWidth = strokeWidth;
-    }
-    public Rectangle(float x, float y, float width, float height, int strokeWidth = 0)
-    {
-        MyPoint = new MyPoint(x, y);
-        Width = width;
-        Height = height;
         StrokeColor = Color.Black;
         FillColor = Color.Black;
         StrokeWidth = strokeWidth;
@@ -46,10 +27,10 @@ public class Rectangle : Quadrilateral // not supporting rotation
         }
         set
         {
-            if (_width >= 0)
-                updateParams(Width / 2, Height / 2, value, Height);
+            if (value >= 0)
+                updateParams(MyPoint.X, MyPoint.Y, value, Height);
             else
-                updateParams(Width / 2, Height / 2, 0, Height);
+                updateParams(MyPoint.X, MyPoint.Y, 0, Height);
 
         }
     }
@@ -61,22 +42,24 @@ public class Rectangle : Quadrilateral // not supporting rotation
         }
         set
         {
-            if (_height >= 0)
-                updateParams(Width / 2, Height / 2, Width, value);
+            if (value >= 0)
+                updateParams(MyPoint.X, MyPoint.Y, Width, value);
             else
-               updateParams(Width / 2, Height / 2, Width, 0);
+               updateParams(MyPoint.X, MyPoint.Y, Width, 0);
         }
     }
 
-    private void updateParams(float x, float y, float width, float height)
+    private void updateParams(float x, float y, float width, float height) // this method receive width and height after CHECK!
     {
         MyPoint.X = x; 
         MyPoint.Y = y;
-        Width = width;
-        Height = height;
-        Vertices = new MyPoint[] { new MyPoint(MyPoint.X - Width / 2, MyPoint.Y - Height / 2),
-            new MyPoint(MyPoint.X + Width / 2, MyPoint.Y - Height / 2), new MyPoint(MyPoint.X + Width / 2, MyPoint.Y + Height / 2),
-            new MyPoint(MyPoint.X - Width / 2, MyPoint.Y + Height / 2)};
+        _width = width;
+        _height = height;
+        Vertices[0] = new MyPoint(x + width, y);
+        Vertices[1] = new MyPoint(x + width, y + height);
+        Vertices[2] = new MyPoint(x, y + height);
+        //Vertices = new MyPoint[] { new MyPoint(x + width, y), new MyPoint(x + width, y + height), 
+        //new MyPoint(x, y + height) };
     }
     public MyPoint Center { get { return MyPoint; } set { updateParams(value.X, value.Y, Width, Height); } }
 
@@ -84,8 +67,8 @@ public class Rectangle : Quadrilateral // not supporting rotation
     {
         SolidBrush br = new SolidBrush(FillColor);
         Pen pen = new Pen(StrokeColor, StrokeWidth);
-        graphic.FillRectangle(br, Vertices[0].X, Vertices[0].Y, Width, Height);
-        graphic.DrawRectangle(pen, Vertices[0].X, Vertices[0].Y, Width, Height);
+        graphic.FillRectangle(br, MyPoint.X, MyPoint.Y, Width, Height);
+        graphic.DrawRectangle(pen, MyPoint.X, MyPoint.Y, Width, Height);
     }
     public override bool isInside(MyPoint MyPoint)
     {

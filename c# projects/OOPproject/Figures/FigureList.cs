@@ -55,4 +55,8 @@ public class FigureList
         for (int i = 0; i < figures.Count; i++)
             ((Figure)figures[i]).Draw(g);
     }
+    public void Clear()
+    {
+        figures.Clear();
+    }
 }

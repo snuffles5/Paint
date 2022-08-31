@@ -5,12 +5,22 @@ using System.Globalization;
 
 public abstract class Figure
 {
-    MyPoint _myPoint;
+    MyPoint _myPoint = new MyPoint();
     Color _strokeColor;
     Color _fillColor;
     int _strokeWidth;
 
-    public MyPoint MyPoint { get { return _myPoint; } set { _myPoint = new MyPoint(value.X, value.Y); } }
+    public MyPoint MyPoint 
+    { 
+        get 
+        { 
+            return _myPoint;
+        } 
+        set 
+        { 
+            _myPoint.X = value.X; _myPoint.Y = value.Y; 
+        } 
+    }
     public float X { get { return _myPoint.X; } set { _myPoint.X = value; } }
     public float Y { get { return _myPoint.Y; } set { _myPoint.Y = value; } }
     public Color StrokeColor
