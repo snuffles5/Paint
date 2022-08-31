@@ -47,10 +47,10 @@ public class Rectangle : Quadrilateral // not supporting rotation
         set
         {
             if (_width >= 0)
-                _width = value;
+                updateParams(Width / 2, Height / 2, value, Height);
             else
-                _width = 0;
-            updatePoints( Width / 2, Height / 2);
+                updateParams(Width / 2, Height / 2, 0, Height);
+
         }
     }
     public float Height
@@ -62,22 +62,23 @@ public class Rectangle : Quadrilateral // not supporting rotation
         set
         {
             if (_height >= 0)
-                _height = value;
+                updateParams(Width / 2, Height / 2, Width, value);
             else
-                _height = 0;
-            updatePoints(Width / 2, Height / 2);
+               updateParams(Width / 2, Height / 2, Width, 0);
         }
     }
 
-    private void updatePoints(float x, float y)
+    private void updateParams(float x, float y, float width, float height)
     {
         MyPoint.X = x; 
         MyPoint.Y = y;
+        Width = width;
+        Height = height;
         Vertices = new MyPoint[] { new MyPoint(MyPoint.X - Width / 2, MyPoint.Y - Height / 2),
             new MyPoint(MyPoint.X + Width / 2, MyPoint.Y - Height / 2), new MyPoint(MyPoint.X + Width / 2, MyPoint.Y + Height / 2),
             new MyPoint(MyPoint.X - Width / 2, MyPoint.Y + Height / 2)};
     }
-    public MyPoint Center { get { return MyPoint; } set { updatePoints(value.X, value.Y); } }
+    public MyPoint Center { get { return MyPoint; } set { updateParams(value.X, value.Y, Width, Height); } }
 
     public override void Draw(Graphics graphic)
     {
