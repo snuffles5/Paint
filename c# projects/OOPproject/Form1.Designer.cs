@@ -79,7 +79,7 @@ namespace OOPproject
             this.pnl_temp.Name = "pnl_temp";
             this.pnl_temp.Size = new System.Drawing.Size(502, 40);
             this.pnl_temp.TabIndex = 10;
-            this.pnl_temp.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
+            //this.pnl_temp.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // btn_clear
             // 
