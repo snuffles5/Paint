@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -64,10 +65,14 @@ namespace OOPproject
             switch (currSelect)
             {
                 case 3:
-                    Flist[figureIndex] = new Circle(e.X, e.Y, 0);
+                    //Flist[figureIndex] = new Circle(e.X, e.Y, 0);
+                    //Flist[figureIndex].FillColor = Color.Transparent;
+                    Flist[figureIndex] = new Ellipse(e.X, e.Y, e.X, e.Y);
+                    Flist[figureIndex].FillColor = Color.Transparent;
                     break;
                 case 4:
                     Flist[figureIndex] = new Rectangle(e.X, e.Y, 0, 0);
+                    Flist[figureIndex].FillColor = Color.Transparent;
                     break;
                 case 5:
                     Flist[figureIndex] = new Line(e.X, e.Y,0,0);
@@ -91,12 +96,17 @@ namespace OOPproject
                         g.DrawLine(eraser, pX, pY);
                         pY = pX;
                         break;
-                    case 3:
-                        Flist[Flist.NextIndex] = new Circle(e.X, e.Y, 0);
+                    case 3: // TODO: check why distance doesnt work
+                        //float newX = Math.Abs(((Circle)c).X - e.X);
+                        //float newY = Math.Abs(((Circle)c).Y - e.Y);
+                        //double dis = Math.Sqrt(newX*newX + newY*newY);
+                        //((Circle)c).Radius = (float)dis; // double to float TODO
+                        //((Circle)c).Center = new MyPoint(newX, newY);
+                        ((Ellipse)c).SecondPoint.X = e.X;
+                        ((Ellipse)c).SecondPoint.Y = e.Y;
+                        ((Ellipse)c).Draw(g);
                         break;
                     case 4:
-                        if(figureIndex >= 1)
-                            ((Rectangle)c).Width = e.X - c.X;
                         ((Rectangle)c).Width = e.X - c.X;
                         ((Rectangle)c).Height = e.Y - c.Y;
                         ((Rectangle)c).Draw(g);
@@ -120,18 +130,20 @@ namespace OOPproject
                 //}
             }
             pic.Refresh();
-            x = e.X;
-            y = e.Y;
-            sX = e.X - cX;
-            sY = e.Y - cY;
+            //pic.Refresh();
+            //x = e.X;
+            //y = e.Y;
+            //sX = e.X - cX;
+            //sY = e.Y - cY;
         }
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
             paint = false;
-            sX = x - cX;
-            sY = y - cY;
-            figureIndex = -1;
-
+            //sX = x - cX;
+            //sY = y - cY;
+            //figureIndex = -1;
+            //Figure c = (Figure)Flist[figureIndex];
+            
             if(currSelect==3)
             {
                 //Circle c;
@@ -140,9 +152,14 @@ namespace OOPproject
             }
             if (currSelect == 4)
             {
-               // Rectangle r;
-               // r.Draw(g);
+                // Rectangle r;
+                // r.Draw(g);
                 //g.DrawRectangle(pen1, cX, cY, sX, sY);
+                //if (figureIndex >= 1)
+                //    ((Rectangle)c).Width = e.X - c.X;
+                //((Rectangle)c).Width = e.X - c.X;
+                //((Rectangle)c).Height = e.Y - c.Y;
+                //((Rectangle)c).Draw(g);
             }
             if(currSelect==5)
             {
@@ -150,6 +167,8 @@ namespace OOPproject
                // l.Draw(g);
                 //g.DrawLine(pen1,cX,cY,x,y);
             }
+            //pic.Invalidate();
+            
         }
 
         private void btn_clear_Click(object sender, EventArgs e)
@@ -157,6 +176,7 @@ namespace OOPproject
             g.Clear(Color.White);
             pic.Image = bm;
             currSelect = 0;
+            Flist.Clear();
             //מחיקת רשימה מקושרת?
         }
 
@@ -228,21 +248,25 @@ namespace OOPproject
         private void pic_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            if(paint)
-            {
-                if (currSelect == 3)
-                {
-                    g.DrawEllipse(pen1, cX, cY, sX, sY);
-                }
-                if (currSelect == 4)
-                {
-                    g.DrawRectangle(pen1, cX, cY, sX, sY);
-                }
-                if (currSelect == 5)
-                {
-                    g.DrawLine(pen1, cX, cY, x, y);
-                }
-            }
+            g.Clear(Color.White);
+
+            //if(paint)
+            //{
+            //    if (currSelect == 3)
+            //    {
+            //        g.DrawEllipse(pen1, cX, cY, sX, sY);
+            //    }
+            //    if (currSelect == 4)
+            //    {
+            //        g.DrawRectangle(pen1, cX, cY, sX, sY);
+            //    }
+            //    if (currSelect == 5)
+            //    {
+            //        g.DrawLine(pen1, cX, cY, x, y);
+            //    }
+            //}
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            Flist.DrawAll(g);
         }
 
         static Point set_point(PictureBox pb, Point p)

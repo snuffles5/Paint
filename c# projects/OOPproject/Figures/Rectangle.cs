@@ -27,7 +27,7 @@ public class Rectangle : Quadrilateral // not supporting rotation
         }
         set
         {
-            if (_width >= 0)
+            if (value >= 0)
                 updateParams(MyPoint.X, MyPoint.Y, value, Height);
             else
                 updateParams(MyPoint.X, MyPoint.Y, 0, Height);
@@ -42,19 +42,19 @@ public class Rectangle : Quadrilateral // not supporting rotation
         }
         set
         {
-            if (_height >= 0)
+            if (value >= 0)
                 updateParams(MyPoint.X, MyPoint.Y, Width, value);
             else
                updateParams(MyPoint.X, MyPoint.Y, Width, 0);
         }
     }
 
-    private void updateParams(float x, float y, float width, float height)
+    private void updateParams(float x, float y, float width, float height) // this method receive width and height after CHECK!
     {
         MyPoint.X = x; 
         MyPoint.Y = y;
-        Width = width;
-        Height = height;
+        _width = width;
+        _height = height;
         Vertices[0] = new MyPoint(x + width, y);
         Vertices[1] = new MyPoint(x + width, y + height);
         Vertices[2] = new MyPoint(x, y + height);
