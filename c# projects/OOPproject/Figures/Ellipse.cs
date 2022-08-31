@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 public class Ellipse : Figure
 {
     const float DEFAULT_RADIUS = 1f;
     MyPoint _secondPoint;
+    public GraphicsPath _path = new GraphicsPath();
+
     public Ellipse() : this(10, 10, 10, 10) { }
     public Ellipse(MyPoint firstPoint, MyPoint secondPoint, int strokeWidth = 1)
     {
@@ -41,15 +44,23 @@ public class Ellipse : Figure
     public override void Draw(Graphics graphic)
     {
         SolidBrush br = new SolidBrush(FillColor);
-        Pen pen = new Pen(StrokeColor, StrokeWidth);
+        Pen = new Pen(StrokeColor, StrokeWidth);
         graphic.FillEllipse(br, FirstPoint.X, FirstPoint.Y, SecondPoint.X-FirstPoint.X, SecondPoint.Y-FirstPoint.Y);
-        graphic.DrawEllipse(pen, FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
+        graphic.DrawEllipse(Pen, FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
+        _path.AddEllipse(FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
     }
-    public override bool isInside(MyPoint firstPoint)
+    public override bool isInside(MyPoint point)
     {
         //return Math.Sqrt(Math.Pow(firstPoint.X - X, 2) + Math.Pow(firstPoint.Y - Y, 2)) < Radius;
         // Todo 
-        return true;
+        return _path.IsOutlineVisible(point.X, point.Y, Pen);
+    }
+    public override bool isInside(float x, float y)
+    {
+        //return Math.Sqrt(Math.Pow(firstPoint.X - X, 2) + Math.Pow(firstPoint.Y - Y, 2)) < Radius;
+        // Todo 
+
+        return _path.IsOutlineVisible(x, y, Pen);
     }
 
     ~Ellipse() { Console.WriteLine("Destructor Ellipse"); }

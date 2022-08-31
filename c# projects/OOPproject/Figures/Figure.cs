@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Globalization;
 
@@ -9,6 +10,12 @@ public abstract class Figure
     Color _strokeColor;
     Color _fillColor;
     int _strokeWidth;
+    
+    
+    public
+        //TODO make private and getters
+        Pen _pen; 
+    // TODO maybe add _static path to make the eraser less heavier. need to save index too.
 
     public MyPoint MyPoint 
     { 
@@ -40,6 +47,14 @@ public abstract class Figure
             if (value != _fillColor)
                 _fillColor = value;
         }
+    } public Pen Pen
+    {
+        get { return _pen; }
+        set
+        {
+            if (value !=  _pen)
+                _pen = value;
+        }
     }
     public int StrokeWidth
     {
@@ -57,5 +72,6 @@ public abstract class Figure
     }
     public abstract void Draw(Graphics g);
     public abstract bool isInside(MyPoint MyPoint);
+    public abstract bool isInside(float x, float y);
 
 }

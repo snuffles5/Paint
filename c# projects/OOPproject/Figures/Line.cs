@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
 
 public class Line: Figure
 {
     MyPoint _point2;
+    public GraphicsPath _path = new GraphicsPath();
     public Line(float x1 = 0, float y1 = 0, float x2 = 0, float y2 = 0)
     {
         MyPoint = new MyPoint(x1, y1);
@@ -87,13 +90,19 @@ public class Line: Figure
 
     public override void Draw(Graphics g)
     {
-        Pen pen = new Pen(StrokeColor, StrokeWidth);
-        g.DrawLine(pen, Point1.X, Point1.Y, Point2.X, Point2.Y);
+        Pen = new Pen(StrokeColor, StrokeWidth);
+        g.DrawLine(Pen, Point1.X, Point1.Y, Point2.X, Point2.Y);
+        _path.AddLine(Point1.X, Point1.Y, Point2.X, Point2.Y);
     }
 
-    public override bool isInside(MyPoint MyPoint)
+    public override bool isInside(MyPoint point)
     {
-        throw new NotImplementedException(); // TODO: Sorry, wasn't implemented yet
+        return _path.IsOutlineVisible(point.X, point.Y, Pen); // TODO: Sorry, wasn't implemented yet
         //return true;
+    }
+    public override bool isInside(float x, float y)
+    {
+        //throw new NotImplementedException(); // TODO: Sorry, wasn't implemented yet
+        return _path.IsOutlineVisible(x, y, Pen);
     }
 }

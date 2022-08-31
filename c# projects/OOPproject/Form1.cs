@@ -39,6 +39,16 @@ namespace OOPproject
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
+            for (int i = Flist.NextIndex - 1; currSelect == 2 &&  i >= 0; i--)
+            {
+                if (Flist[i].isInside(e.X, e.Y))
+                {
+                    Flist.Remove(i);
+                    textBoxForTesting.Text = Flist.NextIndex + "";
+                    //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
+                    break;
+                }
+            }
             //pY = e.Location;
             //cX = e.X;
             //cY = e.Y;
@@ -64,39 +74,58 @@ namespace OOPproject
             figureIndex = Flist.NextIndex;
             switch (currSelect)
             {
-                case 3:
+                case 3: //circle
                     //Flist[figureIndex] = new Circle(e.X, e.Y, 0);
                     //Flist[figureIndex].FillColor = Color.Transparent;
                     Flist[figureIndex] = new Ellipse(e.X, e.Y, e.X, e.Y);
                     Flist[figureIndex].FillColor = Color.Transparent;
+                    // FOR TESTING : TODO
+                    Flist[figureIndex].StrokeWidth = 5;
+
                     break;
-                case 4:
+                case 4: // rect
                     Flist[figureIndex] = new Rectangle(e.X, e.Y, 0, 0);
                     Flist[figureIndex].FillColor = Color.Transparent;
+                    // FOR TESTING : TODO
+                    Flist[figureIndex].StrokeWidth = 5;
+
                     break;
-                case 5:
-                    Flist[figureIndex] = new Line(e.X, e.Y,0,0);
+                case 5: // line
+                    Flist[figureIndex] = new Line(e.X, e.Y, e.X, e.Y);
+                    // FOR TESTING : TODO
+                    Flist[figureIndex].StrokeWidth = 5;
+
                     break;
             }
+                       textBoxForTesting.Text = Flist.NextIndex + "";
         }
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
-            if(paint && figureIndex != -1)
+            if(paint && figureIndex != -1) 
             {
                 Figure c = (Figure)Flist[figureIndex];
                 switch (currSelect)
                 {
-                    case 1:
-                        pX = e.Location;
-                        g.DrawLine(pen1, pX, pY);
-                        pY = pX;
+                    case 1: // pencil
+                        
                         break;
-                    case 2:
-                        pX = e.Location;
-                        g.DrawLine(eraser, pX, pY);
-                        pY = pX;
+                    case 2: // eraser
+                        //for (int i = Flist.NextIndex -1 ; i >= 0; i--) // TOO HEAVY
+                        //{
+                        //    if (Flist[i].isInside(e.X, e.Y))
+                        //    {
+                        //        Flist.Remove(i);
+                        //        textBoxForTesting.Text = Flist.NextIndex + "";
+                        //        //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
+                        //        break;
+                        //    }
+                        //}
+                        //pX = e.Location;
+                        //g.DrawLine(eraser, pX, pY);
+                        //pY = pX;
                         break;
-                    case 3: // TODO: check why distance doesnt work
+                    case 3: // circle
+                        // TODO: check why distance doesnt work
                         //float newX = Math.Abs(((Circle)c).X - e.X);
                         //float newY = Math.Abs(((Circle)c).Y - e.Y);
                         //double dis = Math.Sqrt(newX*newX + newY*newY);
@@ -105,14 +134,18 @@ namespace OOPproject
                         ((Ellipse)c).SecondPoint.X = e.X;
                         ((Ellipse)c).SecondPoint.Y = e.Y;
                         ((Ellipse)c).Draw(g);
-                        break;
-                    case 4:
+                        break; 
+                    case 4: // rect
                         ((Rectangle)c).Width = e.X - c.X;
                         ((Rectangle)c).Height = e.Y - c.Y;
                         ((Rectangle)c).Draw(g);
                         break;
-                    case 5:
-                        Flist[Flist.NextIndex] = new Line(e.X, e.Y, 0, 0);
+                    case 5: // line
+                        ((Line)c).X2 = e.X;
+                        ((Line)c).Y2 = e.Y;
+                        break;
+                    case 7: // fill
+                        
                         break;
                 }
 
@@ -141,10 +174,10 @@ namespace OOPproject
             paint = false;
             //sX = x - cX;
             //sY = y - cY;
-            //figureIndex = -1;
+            figureIndex = -1;
             //Figure c = (Figure)Flist[figureIndex];
             
-            if(currSelect==3)
+            if(currSelect==3) 
             {
                 //Circle c;
                 //c.Draw(g);
@@ -177,6 +210,8 @@ namespace OOPproject
             pic.Image = bm;
             currSelect = 0;
             Flist.Clear();
+            paint = false;
+            textBoxForTesting.Text = Flist.NextIndex + "";
             //מחיקת רשימה מקושרת?
         }
 
@@ -186,11 +221,13 @@ namespace OOPproject
             New_Color = cd.Color;
             pic_color.BackColor = cd.Color;
             pen1.Color = cd.Color;
+            paint = false;
         }
 
         private void btn_pencil_Click(object sender, EventArgs e)
         {
             currSelect = 1;
+            paint = false;
         }
 
         private void color_pick_MouseClick(object sender, MouseEventArgs e)
@@ -199,20 +236,23 @@ namespace OOPproject
             pic_color.BackColor = ((Bitmap)color_pick.Image).GetPixel(point.X, point.Y);
             New_Color = pic_color.BackColor;
             pen1.Color = pic_color.BackColor;
+            paint = false;
         }
 
         private void btn_eraser_Click(object sender, EventArgs e)
         {
             currSelect = 2;
+            paint = false;
         }
         private void btn_circle_Click(object sender, EventArgs e)
         {
             currSelect = 3;
+            paint = false;
         }
 
         private void pic_MouseClick(object sender, MouseEventArgs e)
         {
-            if(currSelect==7)
+            if(currSelect==7) // fill is selected 
             {
                 Point point = set_point(pic, e.Location);
                 Fill(bm, point.X, point.Y, New_Color);
@@ -222,6 +262,7 @@ namespace OOPproject
         private void btn_fill_Click(object sender, EventArgs e)
         {
             currSelect = 7;
+            paint = false;
         }
 
         private void btn_save_Click(object sender, EventArgs e)
@@ -235,15 +276,18 @@ namespace OOPproject
                 btm.Save(sfd.FileName,ImageFormat.Jpeg);
                 MessageBox.Show("Image saved sucessfully!");
             }
+            paint = false;
         }
 
         private void btn_rect_Click(object sender, EventArgs e)
         {
             currSelect = 4;
+            paint = false;
         }
         private void btn_line_Click(object sender, EventArgs e)
         {
             currSelect = 5;
+            paint = false;
         }
         private void pic_Paint(object sender, PaintEventArgs e)
         {

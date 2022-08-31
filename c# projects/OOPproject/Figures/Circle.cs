@@ -54,9 +54,13 @@ public class Circle : Figure
         graphic.FillEllipse(br, X - Radius, Y - Radius, 2 * Radius, 2 * Radius);
         graphic.DrawEllipse(pen, X - Radius, Y - Radius, 2 * Radius, 2 * Radius);
     }
-    public override bool isInside(MyPoint MyPoint)
+    public override bool isInside(MyPoint point)
     {
-        return Math.Sqrt(Math.Pow(MyPoint.X - X, 2) + Math.Pow(MyPoint.Y - Y, 2)) < Radius;
+        return Math.Sqrt(Math.Pow(point.X - X, 2) + Math.Pow(point.Y - Y, 2)) < Radius;
+    }
+    public override bool isInside(float x, float y)
+    {
+        return Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - Y, 2)) < Radius;
     }
 
     ~Circle() { Console.WriteLine("Destructor Circle"); }

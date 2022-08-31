@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 
 public abstract class Quadrilateral : Figure 
 {
     MyPoint[] _vertices = new MyPoint[3];
+    public GraphicsPath _path = new GraphicsPath();
     public Quadrilateral() : this(new MyPoint(), new MyPoint(), new MyPoint(), new MyPoint()) { }
     public Quadrilateral(MyPoint fPoint, MyPoint[] vertices, int strokeWidth = 1)
     {

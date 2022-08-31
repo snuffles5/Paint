@@ -44,6 +44,7 @@ namespace OOPproject
             this.pic_color = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pic = new System.Windows.Forms.PictureBox();
+            this.textBoxForTesting = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.color_pick)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
@@ -79,7 +80,6 @@ namespace OOPproject
             this.pnl_temp.Name = "pnl_temp";
             this.pnl_temp.Size = new System.Drawing.Size(502, 40);
             this.pnl_temp.TabIndex = 10;
-            //this.pnl_temp.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
             // btn_clear
             // 
@@ -289,11 +289,20 @@ namespace OOPproject
             this.pic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pic_MouseMove);
             this.pic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pic_MouseUp);
             // 
+            // textBoxForTesting
+            // 
+            this.textBoxForTesting.Location = new System.Drawing.Point(828, 610);
+            this.textBoxForTesting.Name = "textBoxForTesting";
+            this.textBoxForTesting.ReadOnly = true;
+            this.textBoxForTesting.Size = new System.Drawing.Size(100, 23);
+            this.textBoxForTesting.TabIndex = 2;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(928, 661);
+            this.Controls.Add(this.textBoxForTesting);
             this.Controls.Add(this.pic);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -305,6 +314,7 @@ namespace OOPproject
             ((System.ComponentModel.ISupportInitialize)(this.color_pick)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -325,6 +335,7 @@ namespace OOPproject
         private System.Windows.Forms.Button btn_save;
         private System.Windows.Forms.Button btn_clear;
         private System.Windows.Forms.Panel pnl_temp;
+        private System.Windows.Forms.TextBox textBoxForTesting;
     }
 }
 
