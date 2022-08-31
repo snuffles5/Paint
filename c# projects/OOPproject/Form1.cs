@@ -64,19 +64,19 @@ namespace OOPproject
             switch (currSelect)
             {
                 case 3:
-                    Flist[Flist.NextIndex] = new Circle(e.X, e.Y, 0);
+                    Flist[figureIndex] = new Circle(e.X, e.Y, 0);
                     break;
                 case 4:
-                    Flist[Flist.NextIndex] = new Rectangle(e.X, e.Y, 0, 0);
+                    Flist[figureIndex] = new Rectangle(e.X, e.Y, 0, 0);
                     break;
                 case 5:
-                    Flist[Flist.NextIndex] = new Line(e.X, e.Y,0,0);
+                    Flist[figureIndex] = new Line(e.X, e.Y,0,0);
                     break;
             }
         }
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
-            if(paint && figureIndex!=0)
+            if(paint && figureIndex != -1)
             {
                 Figure c = (Figure)Flist[figureIndex];
                 switch (currSelect)
@@ -95,9 +95,11 @@ namespace OOPproject
                         Flist[Flist.NextIndex] = new Circle(e.X, e.Y, 0);
                         break;
                     case 4:
+                        if(figureIndex >= 1)
+                            ((Rectangle)c).Width = e.X - c.X;
                         ((Rectangle)c).Width = e.X - c.X;
                         ((Rectangle)c).Height = e.Y - c.Y;
-                        c.Draw(g);
+                        ((Rectangle)c).Draw(g);
                         break;
                     case 5:
                         Flist[Flist.NextIndex] = new Line(e.X, e.Y, 0, 0);
@@ -128,6 +130,7 @@ namespace OOPproject
             paint = false;
             sX = x - cX;
             sY = y - cY;
+            figureIndex = -1;
 
             if(currSelect==3)
             {

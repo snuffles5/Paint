@@ -3,29 +3,38 @@ using System.Drawing;
 
 public abstract class Quadrilateral : Figure 
 {
-    MyPoint[] _vertices = new MyPoint[4];
+    MyPoint[] _vertices = new MyPoint[3];
     public Quadrilateral() : this(new MyPoint(), new MyPoint(), new MyPoint(), new MyPoint()) { }
-    public Quadrilateral(MyPoint[] vertices, int strokeWidth = 1)
+    public Quadrilateral(MyPoint fPoint, MyPoint[] vertices, int strokeWidth = 1)
     {
-        if (vertices.Length == 4) // save the vertices only if all exist, if not set them all to default X,Y values
-            Vertices = vertices;
+        MyPoint = fPoint;
+        // save the vertices only if all exist, if not set them all to default X,Y values
+        for (int i = 0; vertices.Length == 3 && i < vertices.Length; i++)
+        {
+            Vertices[i] = vertices[i];
+        }
         StrokeColor = Color.Black;
         FillColor = Color.Black;
         StrokeWidth = strokeWidth;
     } 
     
-    public Quadrilateral(MyPoint[] vertices, Color strokeColor, Color fillColor, int strokeWidth = 1)
+    public Quadrilateral(MyPoint fPoint, MyPoint[] vertices, Color strokeColor, Color fillColor, int strokeWidth = 1)
     {
-        if (vertices.Length == 4) // save the vertices only if all exist, if not set them all to default X,Y values
-            Vertices = vertices;
+        MyPoint = fPoint;
+        for (int i = 0; vertices.Length == 3 && i < vertices.Length; i++)
+        {
+            Vertices[i] = vertices[i];
+        }
         StrokeColor = strokeColor;
         FillColor = fillColor;
         StrokeWidth = strokeWidth;
     }
     public Quadrilateral(MyPoint p1, MyPoint p2, MyPoint p3, MyPoint p4, int strokeWidth = 1)
     {
-        _vertices = new MyPoint[4];
-        Vertices = new MyPoint[] { p1, p2, p3, p4 };
+        MyPoint = p1;
+        Vertices[0] = p2;
+        Vertices[1] = p3;
+        Vertices[2] = p4;
         StrokeColor = Color.Black;
         FillColor = Color.Black;
         StrokeWidth = strokeWidth;
