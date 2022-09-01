@@ -30,10 +30,14 @@ namespace OOPproject
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.pic_color = new System.Windows.Forms.Button();
+            this.btn_redo = new System.Windows.Forms.Button();
+            this.btn_rhombus = new System.Windows.Forms.Button();
+            this.Undo = new System.Windows.Forms.Button();
             this.pnl_temp = new System.Windows.Forms.Panel();
+            this.PenEraserBtn = new System.Windows.Forms.Button();
             this.btn_clear = new System.Windows.Forms.Button();
             this.btn_save = new System.Windows.Forms.Button();
-            this.color_pick = new System.Windows.Forms.PictureBox();
             this.btn_line = new System.Windows.Forms.Button();
             this.btn_rect = new System.Windows.Forms.Button();
             this.btn_circle = new System.Windows.Forms.Button();
@@ -41,22 +45,24 @@ namespace OOPproject
             this.btn_pencil = new System.Windows.Forms.Button();
             this.btn_fill = new System.Windows.Forms.Button();
             this.btn_color = new System.Windows.Forms.Button();
-            this.pic_color = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.pic = new System.Windows.Forms.PictureBox();
             this.textBoxForTesting = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.color_pick)).BeginInit();
+            this.pnl_temp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Gray;
+            this.panel1.Controls.Add(this.pic_color);
+            this.panel1.Controls.Add(this.btn_redo);
+            this.panel1.Controls.Add(this.btn_rhombus);
+            this.panel1.Controls.Add(this.Undo);
             this.panel1.Controls.Add(this.pnl_temp);
             this.panel1.Controls.Add(this.btn_clear);
             this.panel1.Controls.Add(this.btn_save);
-            this.panel1.Controls.Add(this.color_pick);
             this.panel1.Controls.Add(this.btn_line);
             this.panel1.Controls.Add(this.btn_rect);
             this.panel1.Controls.Add(this.btn_circle);
@@ -64,22 +70,85 @@ namespace OOPproject
             this.panel1.Controls.Add(this.btn_pencil);
             this.panel1.Controls.Add(this.btn_fill);
             this.panel1.Controls.Add(this.btn_color);
-            this.panel1.Controls.Add(this.pic_color);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(928, 121);
             this.panel1.TabIndex = 0;
             // 
+            // pic_color
+            // 
+            this.pic_color.BackColor = System.Drawing.Color.White;
+            this.pic_color.Location = new System.Drawing.Point(20, 93);
+            this.pic_color.Name = "pic_color";
+            this.pic_color.Size = new System.Drawing.Size(48, 18);
+            this.pic_color.TabIndex = 0;
+            this.pic_color.UseVisualStyleBackColor = false;
+            // 
+            // btn_redo
+            // 
+            this.btn_redo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_redo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_redo.ForeColor = System.Drawing.Color.Wheat;
+            this.btn_redo.Location = new System.Drawing.Point(19, 53);
+            this.btn_redo.Name = "btn_redo";
+            this.btn_redo.Size = new System.Drawing.Size(49, 32);
+            this.btn_redo.TabIndex = 13;
+            this.btn_redo.Text = "Redo";
+            this.btn_redo.UseVisualStyleBackColor = true;
+            // 
+            // btn_rhombus
+            // 
+            this.btn_rhombus.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_rhombus.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Maroon;
+            this.btn_rhombus.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Maroon;
+            this.btn_rhombus.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_rhombus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_rhombus.ForeColor = System.Drawing.Color.Wheat;
+            this.btn_rhombus.Image = global::OOPproject.Properties.Resources.rectangle;
+            this.btn_rhombus.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btn_rhombus.Location = new System.Drawing.Point(719, 10);
+            this.btn_rhombus.Name = "btn_rhombus";
+            this.btn_rhombus.Size = new System.Drawing.Size(74, 63);
+            this.btn_rhombus.TabIndex = 12;
+            this.btn_rhombus.Text = "Rhombus";
+            this.btn_rhombus.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btn_rhombus.UseVisualStyleBackColor = true;
+            this.btn_rhombus.Click += new System.EventHandler(this.btn_rhombus_Click);
+            // 
+            // Undo
+            // 
+            this.Undo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Undo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Undo.ForeColor = System.Drawing.Color.Wheat;
+            this.Undo.Location = new System.Drawing.Point(19, 13);
+            this.Undo.Name = "Undo";
+            this.Undo.Size = new System.Drawing.Size(49, 32);
+            this.Undo.TabIndex = 11;
+            this.Undo.Text = "Undo";
+            this.Undo.UseVisualStyleBackColor = true;
+            // 
             // pnl_temp
             // 
             this.pnl_temp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pnl_temp.Controls.Add(this.PenEraserBtn);
             this.pnl_temp.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pnl_temp.ForeColor = System.Drawing.Color.Wheat;
-            this.pnl_temp.Location = new System.Drawing.Point(316, 75);
+            this.pnl_temp.Location = new System.Drawing.Point(90, 83);
             this.pnl_temp.Name = "pnl_temp";
-            this.pnl_temp.Size = new System.Drawing.Size(502, 40);
+            this.pnl_temp.Size = new System.Drawing.Size(724, 32);
             this.pnl_temp.TabIndex = 10;
+            // 
+            // PenEraserBtn
+            // 
+            this.PenEraserBtn.Enabled = false;
+            this.PenEraserBtn.Location = new System.Drawing.Point(0, 0);
+            this.PenEraserBtn.Name = "PenEraserBtn";
+            this.PenEraserBtn.Size = new System.Drawing.Size(89, 32);
+            this.PenEraserBtn.TabIndex = 0;
+            this.PenEraserBtn.Text = "Eraser Pen";
+            this.PenEraserBtn.UseVisualStyleBackColor = true;
+            this.PenEraserBtn.Visible = false;
             // 
             // btn_clear
             // 
@@ -91,7 +160,7 @@ namespace OOPproject
             this.btn_clear.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_clear.ForeColor = System.Drawing.Color.Wheat;
             this.btn_clear.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btn_clear.Location = new System.Drawing.Point(836, 61);
+            this.btn_clear.Location = new System.Drawing.Point(833, 71);
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(80, 42);
             this.btn_clear.TabIndex = 8;
@@ -109,25 +178,13 @@ namespace OOPproject
             this.btn_save.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btn_save.ForeColor = System.Drawing.Color.Wheat;
             this.btn_save.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btn_save.Location = new System.Drawing.Point(836, 7);
+            this.btn_save.Location = new System.Drawing.Point(833, 12);
             this.btn_save.Name = "btn_save";
             this.btn_save.Size = new System.Drawing.Size(80, 43);
             this.btn_save.TabIndex = 9;
             this.btn_save.Text = "Save";
             this.btn_save.UseVisualStyleBackColor = false;
             this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
-            // 
-            // color_pick
-            // 
-            this.color_pick.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.color_pick.Image = global::OOPproject.Properties.Resources.color_palette;
-            this.color_pick.Location = new System.Drawing.Point(0, 0);
-            this.color_pick.Name = "color_pick";
-            this.color_pick.Size = new System.Drawing.Size(241, 121);
-            this.color_pick.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.color_pick.TabIndex = 9;
-            this.color_pick.TabStop = false;
-            this.color_pick.MouseClick += new System.Windows.Forms.MouseEventHandler(this.color_pick_MouseClick);
             // 
             // btn_line
             // 
@@ -139,7 +196,7 @@ namespace OOPproject
             this.btn_line.ForeColor = System.Drawing.Color.Wheat;
             this.btn_line.Image = global::OOPproject.Properties.Resources.line;
             this.btn_line.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btn_line.Location = new System.Drawing.Point(745, 7);
+            this.btn_line.Location = new System.Drawing.Point(630, 10);
             this.btn_line.Name = "btn_line";
             this.btn_line.Size = new System.Drawing.Size(74, 63);
             this.btn_line.TabIndex = 7;
@@ -158,7 +215,7 @@ namespace OOPproject
             this.btn_rect.ForeColor = System.Drawing.Color.Wheat;
             this.btn_rect.Image = global::OOPproject.Properties.Resources.rectangle;
             this.btn_rect.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btn_rect.Location = new System.Drawing.Point(671, 7);
+            this.btn_rect.Location = new System.Drawing.Point(539, 10);
             this.btn_rect.Name = "btn_rect";
             this.btn_rect.Size = new System.Drawing.Size(74, 63);
             this.btn_rect.TabIndex = 6;
@@ -176,7 +233,7 @@ namespace OOPproject
             this.btn_circle.ForeColor = System.Drawing.Color.Wheat;
             this.btn_circle.Image = global::OOPproject.Properties.Resources.circle;
             this.btn_circle.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btn_circle.Location = new System.Drawing.Point(598, 7);
+            this.btn_circle.Location = new System.Drawing.Point(449, 10);
             this.btn_circle.Name = "btn_circle";
             this.btn_circle.Size = new System.Drawing.Size(73, 63);
             this.btn_circle.TabIndex = 5;
@@ -194,7 +251,7 @@ namespace OOPproject
             this.btn_eraser.ForeColor = System.Drawing.Color.Wheat;
             this.btn_eraser.Image = global::OOPproject.Properties.Resources.eraser;
             this.btn_eraser.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btn_eraser.Location = new System.Drawing.Point(528, 7);
+            this.btn_eraser.Location = new System.Drawing.Point(364, 10);
             this.btn_eraser.Name = "btn_eraser";
             this.btn_eraser.Size = new System.Drawing.Size(70, 63);
             this.btn_eraser.TabIndex = 4;
@@ -212,7 +269,7 @@ namespace OOPproject
             this.btn_pencil.ForeColor = System.Drawing.Color.Wheat;
             this.btn_pencil.Image = global::OOPproject.Properties.Resources.pencil;
             this.btn_pencil.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.btn_pencil.Location = new System.Drawing.Point(457, 7);
+            this.btn_pencil.Location = new System.Drawing.Point(280, 10);
             this.btn_pencil.Name = "btn_pencil";
             this.btn_pencil.Size = new System.Drawing.Size(71, 63);
             this.btn_pencil.TabIndex = 3;
@@ -230,7 +287,7 @@ namespace OOPproject
             this.btn_fill.ForeColor = System.Drawing.Color.Wheat;
             this.btn_fill.Image = global::OOPproject.Properties.Resources.bucket;
             this.btn_fill.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_fill.Location = new System.Drawing.Point(385, 7);
+            this.btn_fill.Location = new System.Drawing.Point(194, 10);
             this.btn_fill.Name = "btn_fill";
             this.btn_fill.Size = new System.Drawing.Size(72, 63);
             this.btn_fill.TabIndex = 2;
@@ -248,7 +305,7 @@ namespace OOPproject
             this.btn_color.ForeColor = System.Drawing.Color.Wheat;
             this.btn_color.Image = global::OOPproject.Properties.Resources.color;
             this.btn_color.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_color.Location = new System.Drawing.Point(314, 7);
+            this.btn_color.Location = new System.Drawing.Point(108, 10);
             this.btn_color.Name = "btn_color";
             this.btn_color.Size = new System.Drawing.Size(71, 63);
             this.btn_color.TabIndex = 1;
@@ -256,15 +313,6 @@ namespace OOPproject
             this.btn_color.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btn_color.UseVisualStyleBackColor = true;
             this.btn_color.Click += new System.EventHandler(this.btn_color_Click);
-            // 
-            // pic_color
-            // 
-            this.pic_color.BackColor = System.Drawing.Color.White;
-            this.pic_color.Location = new System.Drawing.Point(249, 11);
-            this.pic_color.Name = "pic_color";
-            this.pic_color.Size = new System.Drawing.Size(49, 43);
-            this.pic_color.TabIndex = 0;
-            this.pic_color.UseVisualStyleBackColor = false;
             // 
             // panel2
             // 
@@ -311,7 +359,7 @@ namespace OOPproject
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.color_pick)).EndInit();
+            this.pnl_temp.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -331,11 +379,14 @@ namespace OOPproject
         private System.Windows.Forms.Button btn_line;
         private System.Windows.Forms.Button btn_rect;
         private System.Windows.Forms.Button btn_circle;
-        private System.Windows.Forms.PictureBox color_pick;
         private System.Windows.Forms.Button btn_save;
         private System.Windows.Forms.Button btn_clear;
         private System.Windows.Forms.Panel pnl_temp;
         private System.Windows.Forms.TextBox textBoxForTesting;
+        private System.Windows.Forms.Button btn_redo;
+        private System.Windows.Forms.Button btn_rhombus;
+        private System.Windows.Forms.Button Undo;
+        private System.Windows.Forms.Button PenEraserBtn;
     }
 }
 

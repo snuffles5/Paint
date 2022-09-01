@@ -28,17 +28,18 @@ namespace OOPproject
         Graphics g;
         bool paint = false;
         Point pX, pY;
-        Pen pen1 = new Pen(Color.Black,1);
-        Pen eraser = new Pen(Color.White, 10);
+        Pen pen1 = new Pen(Color.Black,2);
+        Pen eraser = new Pen(Color.White, 15);
         int currSelect;
         int figureIndex=-1;
-        int x, y, sX, sY, cX, cY;
+        //int x, y, sX, sY, cX, cY;
         ColorDialog cd = new ColorDialog();
         Color New_Color;
         FigureList Flist = new FigureList();
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
+            pY = e.Location;
             for (int i = Flist.NextIndex - 1; currSelect == 2 &&  i >= 0; i--)
             {
                 if (Flist[i].isInside(e.X, e.Y))
@@ -49,11 +50,9 @@ namespace OOPproject
                     break;
                 }
             }
-            //pY = e.Location;
             //cX = e.X;
             //cY = e.Y;
             //להוסיף בדיקה אם אנחנו בתוך השטח של השיט
-            //סוויץ
             //figureIndex = -1;
             //for (int i = 0; i <Flist.NextIndex; i++)
             //{
@@ -74,42 +73,41 @@ namespace OOPproject
             figureIndex = Flist.NextIndex;
             switch (currSelect)
             {
-                case 3: //circle
+               case 3: //circle
                     //Flist[figureIndex] = new Circle(e.X, e.Y, 0);
                     //Flist[figureIndex].FillColor = Color.Transparent;
                     Flist[figureIndex] = new Ellipse(e.X, e.Y, e.X, e.Y);
                     Flist[figureIndex].FillColor = Color.Transparent;
                     // FOR TESTING : TODO
                     Flist[figureIndex].StrokeWidth = 5;
-
                     break;
                 case 4: // rect
                     Flist[figureIndex] = new Rectangle(e.X, e.Y, 0, 0);
                     Flist[figureIndex].FillColor = Color.Transparent;
                     // FOR TESTING : TODO
                     Flist[figureIndex].StrokeWidth = 5;
-
                     break;
                 case 5: // line
                     Flist[figureIndex] = new Line(e.X, e.Y, e.X, e.Y);
                     // FOR TESTING : TODO
                     Flist[figureIndex].StrokeWidth = 5;
-
                     break;
             }
                        textBoxForTesting.Text = Flist.NextIndex + "";
         }
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
-            if(paint && figureIndex != -1) 
+            if(paint && figureIndex != -1)
             {
                 Figure c = (Figure)Flist[figureIndex];
                 switch (currSelect)
                 {
-                    case 1: // pencil
-                        
+                    case 1:  // pencil
+                        pX = e.Location;
+                        g.DrawLine(pen1, pX, pY);
+                        pY = pX;
                         break;
-                    case 2: // eraser
+                    case 2:   // eraser
                         //for (int i = Flist.NextIndex -1 ; i >= 0; i--) // TOO HEAVY
                         //{
                         //    if (Flist[i].isInside(e.X, e.Y))
@@ -120,12 +118,12 @@ namespace OOPproject
                         //        break;
                         //    }
                         //}
-                        //pX = e.Location;
-                        //g.DrawLine(eraser, pX, pY);
-                        //pY = pX;
+                        pX = e.Location;
+                        g.DrawLine(eraser, pX, pY);
+                        pY = pX;
                         break;
-                    case 3: // circle
-                        // TODO: check why distance doesnt work
+                    case 3: // circle     
+                        // TODO: check why distance doesnt work  
                         //float newX = Math.Abs(((Circle)c).X - e.X);
                         //float newY = Math.Abs(((Circle)c).Y - e.Y);
                         //double dis = Math.Sqrt(newX*newX + newY*newY);
@@ -134,7 +132,7 @@ namespace OOPproject
                         ((Ellipse)c).SecondPoint.X = e.X;
                         ((Ellipse)c).SecondPoint.Y = e.Y;
                         ((Ellipse)c).Draw(g);
-                        break; 
+                        break;
                     case 4: // rect
                         ((Rectangle)c).Width = e.X - c.X;
                         ((Rectangle)c).Height = e.Y - c.Y;
@@ -144,26 +142,27 @@ namespace OOPproject
                         ((Line)c).X2 = e.X;
                         ((Line)c).Y2 = e.Y;
                         break;
-                    case 7: // fill
-                        
+                    case 6: // fill
                         break;
-                }
+                    case 7: //rhombus
+                        break;
 
-                //if (currSelect==1)
-                //{
-                //    pX = e.Location;
-                //    g.DrawLine(pen1,pX,pY);
-                //    pY = pX;
-                //}
-                //if (currSelect == 2)
-                //{
-                //    pX = e.Location;
-                //    g.DrawLine(eraser, pX, pY);
-                //    pY = pX;
-                //}
-            }
+                }
+                    //if (currSelect==1)
+                    //{
+                    //    pX = e.Location;
+                    //    g.DrawLine(pen1,pX,pY);
+                    //    pY = pX;
+                    //}
+                    //if (currSelect == 2)
+                    //{
+                    //    pX = e.Location;
+                    //    g.DrawLine(eraser, pX, pY);
+                    //    pY = pX;
+                    //}
+                
+            }  
             pic.Refresh();
-            //pic.Refresh();
             //x = e.X;
             //y = e.Y;
             //sX = e.X - cX;
@@ -172,36 +171,30 @@ namespace OOPproject
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
             paint = false;
+            figureIndex = -1;
             //sX = x - cX;
             //sY = y - cY;
-            figureIndex = -1;
             //Figure c = (Figure)Flist[figureIndex];
-            
-            if(currSelect==3) 
-            {
-                //Circle c;
-                //c.Draw(g);
-                //g.DrawEllipse(pen1,cX,cY,sX,sY);
-            }
-            if (currSelect == 4)
-            {
-                // Rectangle r;
-                // r.Draw(g);
-                //g.DrawRectangle(pen1, cX, cY, sX, sY);
-                //if (figureIndex >= 1)
-                //    ((Rectangle)c).Width = e.X - c.X;
-                //((Rectangle)c).Width = e.X - c.X;
-                //((Rectangle)c).Height = e.Y - c.Y;
-                //((Rectangle)c).Draw(g);
-            }
-            if(currSelect==5)
-            {
-               // Line l;
-               // l.Draw(g);
-                //g.DrawLine(pen1,cX,cY,x,y);
-            }
+            //if (currSelect == 3)
+            //{
+            //    g.DrawEllipse(pen1, cX, cY, sX, sY);
+            //}
+            //if (currSelect == 4)
+            //{
+            //    g.DrawRectangle(pen1, cX, cY, sX, sY);
+            //    if (figureIndex >= 1)
+            //        ((Rectangle)c).Width = e.X - c.X;
+            //    ((Rectangle)c).Width = e.X - c.X;
+            //    ((Rectangle)c).Height = e.Y - c.Y;
+            //    ((Rectangle)c).Draw(g);
+            //}
+            //if (currSelect == 5)
+            //{
+            //    Line l;
+            //    l.Draw(g);
+            //    g.DrawLine(pen1, cX, cY, x, y);
+            //}
             //pic.Invalidate();
-            
         }
 
         private void btn_clear_Click(object sender, EventArgs e)
@@ -212,9 +205,7 @@ namespace OOPproject
             Flist.Clear();
             paint = false;
             textBoxForTesting.Text = Flist.NextIndex + "";
-            //מחיקת רשימה מקושרת?
         }
-
         private void btn_color_Click(object sender, EventArgs e)
         {
             cd.ShowDialog();
@@ -223,48 +214,58 @@ namespace OOPproject
             pen1.Color = cd.Color;
             paint = false;
         }
-
         private void btn_pencil_Click(object sender, EventArgs e)
         {
             currSelect = 1;
             paint = false;
         }
-
-        private void color_pick_MouseClick(object sender, MouseEventArgs e)
-        {
-            Point point = set_point(color_pick, e.Location);
-            pic_color.BackColor = ((Bitmap)color_pick.Image).GetPixel(point.X, point.Y);
-            New_Color = pic_color.BackColor;
-            pen1.Color = pic_color.BackColor;
-            paint = false;
-        }
-
+        //private void color_pick_MouseClick(object sender, MouseEventArgs e)
+        //{
+        //    Point point = set_point(color_pick, e.Location);
+        //    pic_color.BackColor = ((Bitmap)color_pick.Image).GetPixel(point.X, point.Y);
+        //    New_Color = pic_color.BackColor;
+        //    pen1.Color = pic_color.BackColor;
+        //    paint = false;
+        //}
         private void btn_eraser_Click(object sender, EventArgs e)
         {
             currSelect = 2;
             paint = false;
+            PenEraserBtn.Show();
         }
         private void btn_circle_Click(object sender, EventArgs e)
         {
             currSelect = 3;
             paint = false;
         }
-
+        private void btn_rect_Click(object sender, EventArgs e)
+        {
+            currSelect = 4;
+            paint = false;
+        }
+        private void btn_line_Click(object sender, EventArgs e)
+        {
+            currSelect = 5;
+            paint = false;
+        }
         private void pic_MouseClick(object sender, MouseEventArgs e)
         {
-            if(currSelect==7) // fill is selected 
+            if(currSelect==6) // fill is selected 
             {
                 Point point = set_point(pic, e.Location);
                 Fill(bm, point.X, point.Y, New_Color);
             }
         }
-
         private void btn_fill_Click(object sender, EventArgs e)
+        {
+            currSelect = 6;
+            paint = false;
+        }
+        private void btn_rhombus_Click(object sender, EventArgs e)
         {
             currSelect = 7;
             paint = false;
         }
-
         private void btn_save_Click(object sender, EventArgs e)
         {
             var sfd = new SaveFileDialog();
@@ -278,22 +279,10 @@ namespace OOPproject
             }
             paint = false;
         }
-
-        private void btn_rect_Click(object sender, EventArgs e)
-        {
-            currSelect = 4;
-            paint = false;
-        }
-        private void btn_line_Click(object sender, EventArgs e)
-        {
-            currSelect = 5;
-            paint = false;
-        }
         private void pic_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            g.Clear(Color.White);
-
+            g.Clear(Color.White); 
             //if(paint)
             //{
             //    if (currSelect == 3)
@@ -312,7 +301,6 @@ namespace OOPproject
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             Flist.DrawAll(g);
         }
-
         static Point set_point(PictureBox pb, Point p)
         {
             float pX = 1f * pb.Image.Width / pb.Width;
