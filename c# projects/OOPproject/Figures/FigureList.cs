@@ -41,7 +41,7 @@ public class FigureList
         }
     }
 
-    public void DrawAll(Graphics g) // Todo: Verify if needed
+    public void DrawAll(Graphics g)
     {
         Figure prev, cur;
         for (int i = 1; i < figures.Count; i++)

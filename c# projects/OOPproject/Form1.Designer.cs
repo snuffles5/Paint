@@ -35,6 +35,7 @@ namespace OOPproject
             this.btn_rhombus = new System.Windows.Forms.Button();
             this.Undo = new System.Windows.Forms.Button();
             this.pnl_temp = new System.Windows.Forms.Panel();
+            this.ObjectsEraser = new System.Windows.Forms.Button();
             this.PenEraserBtn = new System.Windows.Forms.Button();
             this.btn_clear = new System.Windows.Forms.Button();
             this.btn_save = new System.Windows.Forms.Button();
@@ -78,7 +79,12 @@ namespace OOPproject
             // 
             // pic_color
             // 
-            this.pic_color.BackColor = System.Drawing.Color.White;
+            this.pic_color.BackColor = System.Drawing.Color.Black;
+            this.pic_color.Enabled = false;
+            this.pic_color.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.pic_color.FlatAppearance.BorderSize = 0;
+            this.pic_color.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.pic_color.ForeColor = System.Drawing.Color.Black;
             this.pic_color.Location = new System.Drawing.Point(20, 93);
             this.pic_color.Name = "pic_color";
             this.pic_color.Size = new System.Drawing.Size(48, 18);
@@ -96,6 +102,7 @@ namespace OOPproject
             this.btn_redo.TabIndex = 13;
             this.btn_redo.Text = "Redo";
             this.btn_redo.UseVisualStyleBackColor = true;
+            this.btn_redo.Click += new System.EventHandler(this.btn_redo_Click);
             // 
             // btn_rhombus
             // 
@@ -127,28 +134,43 @@ namespace OOPproject
             this.Undo.TabIndex = 11;
             this.Undo.Text = "Undo";
             this.Undo.UseVisualStyleBackColor = true;
+            this.Undo.Click += new System.EventHandler(this.Undo_Click);
             // 
             // pnl_temp
             // 
             this.pnl_temp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pnl_temp.Controls.Add(this.ObjectsEraser);
             this.pnl_temp.Controls.Add(this.PenEraserBtn);
             this.pnl_temp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pnl_temp.ForeColor = System.Drawing.Color.Wheat;
+            this.pnl_temp.ForeColor = System.Drawing.Color.Transparent;
             this.pnl_temp.Location = new System.Drawing.Point(90, 83);
             this.pnl_temp.Name = "pnl_temp";
             this.pnl_temp.Size = new System.Drawing.Size(724, 32);
             this.pnl_temp.TabIndex = 10;
             // 
+            // ObjectsEraser
+            // 
+            this.ObjectsEraser.ForeColor = System.Drawing.Color.Black;
+            this.ObjectsEraser.Location = new System.Drawing.Point(318, 0);
+            this.ObjectsEraser.Name = "ObjectsEraser";
+            this.ObjectsEraser.Size = new System.Drawing.Size(89, 32);
+            this.ObjectsEraser.TabIndex = 1;
+            this.ObjectsEraser.Text = "Objects Eraser ";
+            this.ObjectsEraser.UseVisualStyleBackColor = true;
+            this.ObjectsEraser.Visible = false;
+            this.ObjectsEraser.Click += new System.EventHandler(this.EraserObjects_Click);
+            // 
             // PenEraserBtn
             // 
-            this.PenEraserBtn.Enabled = false;
-            this.PenEraserBtn.Location = new System.Drawing.Point(0, 0);
+            this.PenEraserBtn.ForeColor = System.Drawing.Color.Black;
+            this.PenEraserBtn.Location = new System.Drawing.Point(213, 0);
             this.PenEraserBtn.Name = "PenEraserBtn";
             this.PenEraserBtn.Size = new System.Drawing.Size(89, 32);
             this.PenEraserBtn.TabIndex = 0;
-            this.PenEraserBtn.Text = "Eraser Pen";
+            this.PenEraserBtn.Text = "Pen Eraser ";
             this.PenEraserBtn.UseVisualStyleBackColor = true;
             this.PenEraserBtn.Visible = false;
+            this.PenEraserBtn.Click += new System.EventHandler(this.PenEraserBtn_Click);
             // 
             // btn_clear
             // 
@@ -387,6 +409,7 @@ namespace OOPproject
         private System.Windows.Forms.Button btn_rhombus;
         private System.Windows.Forms.Button Undo;
         private System.Windows.Forms.Button PenEraserBtn;
+        private System.Windows.Forms.Button ObjectsEraser;
     }
 }
 
