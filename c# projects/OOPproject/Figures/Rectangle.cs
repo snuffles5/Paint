@@ -68,7 +68,10 @@ public class Rectangle : Quadrilateral // not supporting rotation
     public override void Draw(Graphics graphic)
     {
         SolidBrush br = new SolidBrush(FillColor);
-        Pen = new Pen(StrokeColor, StrokeWidth);
+        if (IsSelected)
+            Pen = new Pen(SELECTED_COLOR, StrokeWidth);
+        else
+            Pen = new Pen(StrokeColor, StrokeWidth);
         graphic.FillRectangle(br, MyPoint.X, MyPoint.Y, Width, Height);
         graphic.DrawRectangle(Pen, MyPoint.X, MyPoint.Y, Width, Height);
         _path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);
@@ -97,6 +100,18 @@ public class Rectangle : Quadrilateral // not supporting rotation
         }
         return false;
     }
+
+    public override void Change(float x, float y)
+    {
+        Width = x - X;
+        Height = y - Y;
+    }
+    public override void Move(float x, float y)
+    {
+        //TODO
+        updateParams(x, y, Width, Height);
+    }
+
 
     ~Rectangle() { System.Diagnostics.Debug.WriteLine("Destructor Rectangle"); }
 

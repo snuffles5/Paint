@@ -71,8 +71,11 @@ public class Rhombus : Quadrilateral
 
     public override void Draw(Graphics graphic)
     {
+        if (IsSelected)
+            Pen = new Pen(SELECTED_COLOR, StrokeWidth);
+        else
+            Pen = new Pen(StrokeColor, StrokeWidth);
         SolidBrush br = new SolidBrush(FillColor);
-        Pen = new Pen(StrokeColor, StrokeWidth);
         graphic.FillPolygon(br, new PointF[] {new PointF(MyPoint.X, MyPoint.Y), new PointF(Vertices[0].X, Vertices[0].Y), new PointF(Vertices[1].X, Vertices[1].Y), new PointF(Vertices[2].X, Vertices[2].Y) });
         graphic.DrawPolygon(Pen, new PointF[] {new PointF(MyPoint.X, MyPoint.Y), new PointF(Vertices[0].X, Vertices[0].Y), new PointF(Vertices[1].X, Vertices[1].Y), new PointF(Vertices[2].X, Vertices[2].Y) });
         _path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);
@@ -101,6 +104,17 @@ public class Rhombus : Quadrilateral
         }
         return false;
     }
+
+    public override void Change(float x, float y)
+    {
+        Width = x - X;
+        Height = y - Y;
+    }
+    public override void Move(float x, float y)
+    {
+        //TODO   
+    }
+
 
     ~Rhombus() { System.Diagnostics.Debug.WriteLine("Destructor Rhombus"); }
 

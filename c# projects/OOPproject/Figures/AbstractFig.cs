@@ -75,20 +75,25 @@ public class AbstractFig : Figure
     {
         if (point != null)
         {
+            MyPoint prev = Vertices != null ? Vertices[Vertices.Count - 1] : MyPoint;
+            _path.AddLine(new PointF(prev.X, prev.Y), new PointF(point.X, point.Y));
             Vertices.Add(point);
-            _path.AddPolygon(new PointF[] { new PointF(point.X, point.Y) });
         }
     }
      public void Add(float x, float y)
     {
-        Vertices.Add(new MyPoint(x,y));
-        _path.AddPolygon(new PointF[] { new PointF(x, y)});
+        MyPoint prev = Vertices != null && Vertices.Count > 0 ? Vertices[Vertices.Count - 1] : MyPoint;
+        _path.AddLine(new PointF(prev.X, prev.Y), new PointF(x, y));
+        Vertices.Add(new MyPoint(x, y));
     }
 
 
     public override void Draw(Graphics g)
     {
-        Pen = new Pen(StrokeColor, StrokeWidth);
+        if(IsSelected)
+            Pen = new Pen(SELECTED_COLOR, StrokeWidth);
+        else
+            Pen = new Pen(StrokeColor, StrokeWidth);
         g.DrawPath(Pen,_path);
     }
 
@@ -102,6 +107,19 @@ public class AbstractFig : Figure
     {
         return _path.IsOutlineVisible(x, y, Pen);
     }
+
+    public override void Change(float x, float y)
+    {
+        Add(x, y);
+    }
+
+    public override void Move(float x, float y)
+    {
+     //TODO   
+    }
+
+
+
     //~AbstractFig() { System.Diagnostics.Debug.WriteLine("Destructor AbstractFig"); }
 
 }

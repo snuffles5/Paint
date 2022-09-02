@@ -10,7 +10,12 @@ public abstract class Figure
     Color _strokeColor;
     Color _fillColor;
     int _strokeWidth;
+    bool _isSelected = false;
     Pen _pen;
+    
+    public
+        //TODO make private and getters
+    static Color SELECTED_COLOR = Color.Red;
     // TODO maybe add _static path to make the eraser less heavier. need to save index too.
 
     public MyPoint MyPoint 
@@ -26,6 +31,7 @@ public abstract class Figure
     }
     public float X { get { return _myPoint.X; } set { _myPoint.X = value; } }
     public float Y { get { return _myPoint.Y; } set { _myPoint.Y = value; } }
+    public bool IsSelected { get { return _isSelected; } set { _isSelected = value; } }
     public Color StrokeColor
     {
         get { return _strokeColor; }
@@ -66,6 +72,8 @@ public abstract class Figure
             }
         }
     }
+    public abstract void Change(float x, float y);
+    public abstract void Move(float x, float y);
     public abstract void Draw(Graphics g);
     public abstract bool isInside(MyPoint MyPoint);
     public abstract bool isInside(float x, float y);
