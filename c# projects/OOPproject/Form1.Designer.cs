@@ -147,7 +147,7 @@ namespace OOPproject
             this.PenEraserBtn.TabIndex = 0;
             this.PenEraserBtn.UseVisualStyleBackColor = true;
             this.PenEraserBtn.Visible = false;
-            this.PenEraserBtn.Click += new System.EventHandler(this.PenEraserBtn_Click);
+            this.PenEraserBtn.Click += new System.EventHandler(this.btn_pen_eraser_Click);
             // 
             // ObjectsEraser
             // 
@@ -160,7 +160,7 @@ namespace OOPproject
             this.ObjectsEraser.TabIndex = 1;
             this.ObjectsEraser.UseVisualStyleBackColor = true;
             this.ObjectsEraser.Visible = false;
-            this.ObjectsEraser.Click += new System.EventHandler(this.EraserObjects_Click);
+            this.ObjectsEraser.Click += new System.EventHandler(this.btn_object_eraser_Click);
             // 
             // btn_EditObject
             // 
@@ -177,7 +177,6 @@ namespace OOPproject
             this.btn_EditObject.Text = "Edit object";
             this.btn_EditObject.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btn_EditObject.UseVisualStyleBackColor = true;
-            this.btn_EditObject.Click += new System.EventHandler(this.btn_EditObject_Click);
             // 
             // pic_color
             // 
@@ -234,7 +233,7 @@ namespace OOPproject
             this.Undo.Size = new System.Drawing.Size(49, 32);
             this.Undo.TabIndex = 11;
             this.Undo.UseVisualStyleBackColor = true;
-            this.Undo.Click += new System.EventHandler(this.Undo_Click);
+            this.Undo.Click += new System.EventHandler(this.btn_undo_Click);
             // 
             // btn_clear
             // 
@@ -389,7 +388,6 @@ namespace OOPproject
             this.pic.Size = new System.Drawing.Size(928, 512);
             this.pic.TabIndex = 0;
             this.pic.TabStop = false;
-            this.pic.Click += new System.EventHandler(this.pic_Click);
             this.pic.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_Paint);
             this.pic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pic_MouseClick);
             this.pic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_MouseDown);
