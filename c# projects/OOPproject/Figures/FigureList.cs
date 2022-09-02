@@ -61,4 +61,16 @@ public class FigureList
     {
         figures.Clear();
     }
+
+    public int Find(float x, float y)
+    {
+        for (int i = NextIndex - 1; i >= 0; i--)
+        {
+            if (this[i].isInside(x, y))
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

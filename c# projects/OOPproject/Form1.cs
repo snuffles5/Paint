@@ -135,6 +135,15 @@ namespace OOPproject
                     //    break;
                     case FigureSelection.Fill: // fill
                         break;// pencil 
+                    case FigureSelection.ObjectEraser:
+                        int index = Flist.Find(e.X, e.Y);
+                        if (index != -1)
+                        {
+                            Flist.Remove(Flist.Find(e.X, e.Y));
+                            pic.Text = Flist.NextIndex + "";
+                            //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
+                        }
+                        break;
                     //case FigureSelection.Rhombus: //rhombus
                     //    ((Rhombus)c).Width = e.X - c.X;
                     //    ((Rhombus)c).Height = e.Y - c.Y;
@@ -327,17 +336,14 @@ namespace OOPproject
                     Fill(bm, point.X, point.Y, New_Color);
                     break;
                 case FigureSelection.ObjectEraser:
-                    for (int i = Flist.NextIndex - 1; i >= 0; i--)
+                    int index = Flist.Find(e.X, e.Y);
+                    if (index != -1)
                     {
-                        if (Flist[i].isInside(e.X, e.Y))
-                        {
-                            Flist.Remove(i);
-                            pic.Text = Flist.NextIndex + "";
-                            //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
-                            pic.Invalidate();
-                            break;
-                        }
-                    }
+                        Flist.Remove(Flist.Find(e.X, e.Y));
+                        pic.Text = Flist.NextIndex + "";
+                        //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
+                        pic.Invalidate();
+                    } 
                     break;
                 case FigureSelection.Point:
                     bool foundFig = false;
