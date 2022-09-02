@@ -10,11 +10,7 @@ public abstract class Figure
     Color _strokeColor;
     Color _fillColor;
     int _strokeWidth;
-    
-    
-    public
-        //TODO make private and getters
-        Pen _pen; 
+    Pen _pen;
     // TODO maybe add _static path to make the eraser less heavier. need to save index too.
 
     public MyPoint MyPoint 

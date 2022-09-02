@@ -4,7 +4,7 @@ using System.Drawing;
 public class Circle : Figure
 {
     const float DEFAULT_RADIUS = 1f;
-    float radius;
+    float _radius;
     public Circle() : this(10, 10, DEFAULT_RADIUS) { }
     public Circle(MyPoint MyPoint, float radius = DEFAULT_RADIUS, int strokeWidth = 1)
     {
@@ -37,14 +37,14 @@ public class Circle : Figure
     {
         get
         {
-            return radius;
+            return _radius;
         }
         set
         {
-            if (radius >= 0)
-                radius = value;
+            if (_radius >= 0)
+                _radius = value;
             else
-                radius = 0;
+                _radius = 0;
         }
     }
     public override void Draw(Graphics graphic)

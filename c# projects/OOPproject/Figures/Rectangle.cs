@@ -64,7 +64,6 @@ public class Rectangle : Quadrilateral // not supporting rotation
         //Vertices = new MyPoint[] { new MyPoint(x + width, y), new MyPoint(x + width, y + height), 
         //new MyPoint(x, y + height) };
     }
-    public MyPoint Center { get { return MyPoint; } set { updateParams(value.X, value.Y, Width, Height); } }
 
     public override void Draw(Graphics graphic)
     {

@@ -4,7 +4,6 @@ using System.Drawing.Drawing2D;
 
 public class Ellipse : Figure
 {
-    const float DEFAULT_RADIUS = 1f;
     MyPoint _secondPoint;
     public GraphicsPath _path = new GraphicsPath();
 
@@ -40,7 +39,6 @@ public class Ellipse : Figure
     public float X2 { get { return _secondPoint.X; } set { _secondPoint.X = value; } }
     public float Y2 { get { return _secondPoint.Y; } set { _secondPoint.Y = value; } }
 
-    //TODO add X1 X2 Y1 Y2 getters
     public override void Draw(Graphics graphic)
     {
         SolidBrush br = new SolidBrush(FillColor);

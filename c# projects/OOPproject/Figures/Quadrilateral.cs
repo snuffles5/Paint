@@ -111,6 +111,6 @@ public abstract class Quadrilateral : Figure
     //    // todo -> verify implement
     //}
 
-    ~Quadrilateral() { System.Diagnostics.Debug.WriteLine("Destructor Quadrilateral"); }
+    //~Quadrilateral() { System.Diagnostics.Debug.WriteLine("Destructor Quadrilateral"); }
 
 }

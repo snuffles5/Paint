@@ -61,6 +61,11 @@ namespace OOPproject
             figureIndex = Flist.NextIndex;
             switch (currSelect)
             {
+                case FigureSelection.Pencil:
+                    Flist[figureIndex] = new AbstractFig(e.X, e.Y);
+                    Flist[figureIndex].FillColor = Color.Transparent;
+                    Flist[figureIndex].StrokeColor = New_Color;
+                    break;
                 case FigureSelection.Ellipse: // ellipse     
                     Flist[figureIndex] = new Ellipse(e.X, e.Y, e.X, e.Y);
                     Flist[figureIndex].FillColor = Color.Transparent;
@@ -106,9 +111,11 @@ namespace OOPproject
                 switch (currSelect)
                 {
                     case FigureSelection.Pencil:
-                        pX = e.Location;
-                        g.DrawLine(pen1, pX, pY);
-                        pY = pX;
+                        //pX = e.Location;
+                        //g.DrawLine(pen1, pX, pY);
+                        //pY = pX;
+                        ((AbstractFig)c).X = e.X;
+                        ((AbstractFig)c).Y = e.Y;
                         break;
                     case FigureSelection.PenEraser:   // eraser
                         //for (int i = Flist.NextIndex -1 ; i >= 0; i--) // TOO HEAVY
@@ -126,8 +133,8 @@ namespace OOPproject
                         pY = pX;
                         break;
                     case FigureSelection.Ellipse: // ellipse     
-                        ((Ellipse)c).SecondPoint.X = e.X;
-                        ((Ellipse)c).SecondPoint.Y = e.Y;
+                        ((Ellipse)c).X2 = e.X;
+                        ((Ellipse)c).Y2 = e.Y;
                         //((Ellipse)c).Draw(g);
                         break;
                     case FigureSelection.Rectangle: // rect
