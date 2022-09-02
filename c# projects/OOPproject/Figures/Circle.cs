@@ -50,9 +50,12 @@ public class Circle : Figure
     public override void Draw(Graphics graphic)
     {
         SolidBrush br = new SolidBrush(FillColor);
-        Pen pen = new Pen(StrokeColor, StrokeWidth);
+        if (IsSelected)
+            Pen = new Pen(SELECTED_COLOR, StrokeWidth);
+        else
+            Pen = new Pen(StrokeColor, StrokeWidth);
         graphic.FillEllipse(br, X - Radius, Y - Radius, 2 * Radius, 2 * Radius);
-        graphic.DrawEllipse(pen, X - Radius, Y - Radius, 2 * Radius, 2 * Radius);
+        graphic.DrawEllipse(Pen, X - Radius, Y - Radius, 2 * Radius, 2 * Radius);
     }
     public override bool isInside(MyPoint point)
     {
@@ -61,6 +64,15 @@ public class Circle : Figure
     public override bool isInside(float x, float y)
     {
         return Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - Y, 2)) < Radius;
+    }
+    public override void Change(float dis, float y)
+    {
+        Radius = (float)dis;
+    }
+
+    public override void Move(float x, float y)
+    {
+        //TODO   
     }
 
     ~Circle() { Console.WriteLine("Destructor Circle"); }

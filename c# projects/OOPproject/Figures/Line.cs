@@ -90,7 +90,10 @@ public class Line: Figure
 
     public override void Draw(Graphics g)
     {
-        Pen = new Pen(StrokeColor, StrokeWidth);
+        if (IsSelected)
+            Pen = new Pen(SELECTED_COLOR, StrokeWidth);
+        else
+            Pen = new Pen(StrokeColor, StrokeWidth);
         g.DrawLine(Pen, Point1.X, Point1.Y, Point2.X, Point2.Y);
         _path.AddLine(Point1.X, Point1.Y, Point2.X, Point2.Y);
     }
@@ -105,4 +108,15 @@ public class Line: Figure
         //throw new NotImplementedException(); // TODO: Sorry, wasn't implemented yet
         return _path.IsOutlineVisible(x, y, Pen);
     }
+
+    public override void Change(float x, float y)
+    {
+        X2 = x;
+        Y2 = y;
+    }
+    public override void Move(float x, float y)
+    {
+        //TODO   
+    }
+
 }

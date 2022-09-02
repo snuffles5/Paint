@@ -134,7 +134,7 @@ namespace OOPproject
             this.Undo.TabIndex = 11;
             this.Undo.Text = "Undo";
             this.Undo.UseVisualStyleBackColor = true;
-            this.Undo.Click += new System.EventHandler(this.Undo_Click);
+            this.Undo.Click += new System.EventHandler(this.btn_undo_Click);
             // 
             // pnl_temp
             // 
@@ -158,7 +158,7 @@ namespace OOPproject
             this.ObjectsEraser.Text = "Objects Eraser ";
             this.ObjectsEraser.UseVisualStyleBackColor = true;
             this.ObjectsEraser.Visible = false;
-            this.ObjectsEraser.Click += new System.EventHandler(this.EraserObjects_Click);
+            this.ObjectsEraser.Click += new System.EventHandler(this.btn_object_eraser_Click);
             // 
             // PenEraserBtn
             // 
@@ -170,7 +170,7 @@ namespace OOPproject
             this.PenEraserBtn.Text = "Pen Eraser ";
             this.PenEraserBtn.UseVisualStyleBackColor = true;
             this.PenEraserBtn.Visible = false;
-            this.PenEraserBtn.Click += new System.EventHandler(this.PenEraserBtn_Click);
+            this.PenEraserBtn.Click += new System.EventHandler(this.btn_pen_eraser_Click);
             // 
             // btn_clear
             // 
@@ -366,6 +366,7 @@ namespace OOPproject
             this.textBoxForTesting.ReadOnly = true;
             this.textBoxForTesting.Size = new System.Drawing.Size(100, 23);
             this.textBoxForTesting.TabIndex = 2;
+            this.textBoxForTesting.Click += new System.EventHandler(this.textBoxForTesting_Click);
             // 
             // Form1
             // 

@@ -42,7 +42,10 @@ public class Ellipse : Figure
     public override void Draw(Graphics graphic)
     {
         SolidBrush br = new SolidBrush(FillColor);
-        Pen = new Pen(StrokeColor, StrokeWidth);
+        if (IsSelected)
+            Pen = new Pen(SELECTED_COLOR, StrokeWidth);
+        else
+            Pen = new Pen(StrokeColor, StrokeWidth);
         graphic.FillEllipse(br, FirstPoint.X, FirstPoint.Y, SecondPoint.X-FirstPoint.X, SecondPoint.Y-FirstPoint.Y);
         graphic.DrawEllipse(Pen, FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
         _path.AddEllipse(FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
@@ -59,6 +62,17 @@ public class Ellipse : Figure
         // Todo 
 
         return _path.IsOutlineVisible(x, y, Pen);
+    }
+
+    public override void Change(float x, float y)
+    {
+        SecondPoint.X = x;
+        SecondPoint.Y = y;
+    }
+
+    public override void Move(float x, float y)
+    {
+        //TODO   
     }
 
     ~Ellipse() { Console.WriteLine("Destructor Ellipse"); }
