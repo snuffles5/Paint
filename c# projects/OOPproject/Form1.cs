@@ -62,9 +62,9 @@ namespace OOPproject
             switch (currSelect)
             {
                 case FigureSelection.Pencil:
-                    Flist[figureIndex] = new AbstractFig(e.X, e.Y);
-                    Flist[figureIndex].FillColor = Color.Transparent;
-                    Flist[figureIndex].StrokeColor = New_Color;
+                   // Flist[figureIndex] = new AbstractFig(e.X, e.Y);
+                   // Flist[figureIndex].FillColor = Color.Transparent;
+                   // Flist[figureIndex].StrokeColor = New_Color;
                     break;
                 case FigureSelection.Ellipse: // ellipse     
                     Flist[figureIndex] = new Ellipse(e.X, e.Y, e.X, e.Y);
@@ -111,11 +111,11 @@ namespace OOPproject
                 switch (currSelect)
                 {
                     case FigureSelection.Pencil:
-                        //pX = e.Location;
-                        //g.DrawLine(pen1, pX, pY);
-                        //pY = pX;
-                        ((AbstractFig)c).X = e.X;
-                        ((AbstractFig)c).Y = e.Y;
+                        pX = e.Location;
+                        g.DrawLine(pen1, pX, pY);
+                        pY = pX;
+                        //((AbstractFig)c).X = e.X;
+                        //((AbstractFig)c).Y = e.Y;
                         break;
                     case FigureSelection.PenEraser:   // eraser
                         //for (int i = Flist.NextIndex -1 ; i >= 0; i--) // TOO HEAVY
@@ -178,7 +178,7 @@ namespace OOPproject
                     //}
                 
             }
-            //pic.Refresh();
+            pic.Refresh();
             //pic.Invalidate();
 
             //x = e.X;
@@ -227,6 +227,9 @@ namespace OOPproject
             textBoxForTesting.Text = Flist.NextIndex + "";
             PenEraserBtn.Hide();
             ObjectsEraser.Hide();
+            btn_change_clr.Hide();
+            btn_fill.Hide();
+            btn_changeSize.Hide();
         }
         private void btn_color_Click(object sender, EventArgs e)
         {
@@ -238,6 +241,9 @@ namespace OOPproject
             paint = false;
             PenEraserBtn.Hide();
             ObjectsEraser.Hide();
+            btn_change_clr.Hide();
+            btn_fill.Hide();
+            btn_changeSize.Hide();
         }
         private void btn_pencil_Click(object sender, EventArgs e)
         {
@@ -245,6 +251,9 @@ namespace OOPproject
             paint = false;
             PenEraserBtn.Hide();
             ObjectsEraser.Hide();
+            btn_change_clr.Hide();
+            btn_fill.Hide();
+            btn_changeSize.Hide();
         }
         
         private void btn_eraser_Click(object sender, EventArgs e)
@@ -253,6 +262,9 @@ namespace OOPproject
             paint = false;
             PenEraserBtn.Show();
             ObjectsEraser.Show();
+            btn_change_clr.Hide();
+            btn_fill.Hide();
+            btn_changeSize.Hide();
         }
         private void btn_circle_Click(object sender, EventArgs e)
         {
@@ -260,6 +272,9 @@ namespace OOPproject
             paint = false;
             PenEraserBtn.Hide();
             ObjectsEraser.Hide();
+            btn_change_clr.Hide();
+            btn_fill.Hide();
+            btn_changeSize.Hide();
         }
         private void btn_rect_Click(object sender, EventArgs e)
         {
@@ -267,6 +282,9 @@ namespace OOPproject
             paint = false;
             PenEraserBtn.Hide();
             ObjectsEraser.Hide();
+            btn_change_clr.Hide();
+            btn_fill.Hide();
+            btn_changeSize.Hide();
         }
         private void btn_line_Click(object sender, EventArgs e)
         {
@@ -274,6 +292,9 @@ namespace OOPproject
             paint = false;
             PenEraserBtn.Hide();
             ObjectsEraser.Hide();
+            btn_change_clr.Hide();
+            btn_fill.Hide();
+            btn_changeSize.Hide();
         }
         private void btn_fill_Click(object sender, EventArgs e)
         {
@@ -281,6 +302,9 @@ namespace OOPproject
             paint = false;
             PenEraserBtn.Hide();
             ObjectsEraser.Hide();
+            btn_change_clr.Hide();
+            btn_fill.Hide();
+            btn_changeSize.Hide();
         }
         private void btn_rhombus_Click(object sender, EventArgs e)
         {
@@ -288,6 +312,9 @@ namespace OOPproject
             paint = false;
             PenEraserBtn.Hide();
             ObjectsEraser.Hide();
+            btn_change_clr.Hide();
+            btn_fill.Hide();
+            btn_changeSize.Hide();
         }
 
         private void PenEraserBtn_Click(object sender, EventArgs e)
@@ -315,6 +342,9 @@ namespace OOPproject
             }
             PenEraserBtn.Hide();
             ObjectsEraser.Hide();
+            btn_change_clr.Hide();
+            btn_fill.Hide();
+            btn_changeSize.Hide();
 
         }
 
@@ -330,6 +360,9 @@ namespace OOPproject
             }
             PenEraserBtn.Hide();
             ObjectsEraser.Hide();
+            btn_change_clr.Hide();
+            btn_fill.Hide();
+            btn_changeSize.Hide();
         }
         private void btn_save_Click(object sender, EventArgs e)
         {
@@ -346,6 +379,9 @@ namespace OOPproject
             currSelect = FigureSelection.None;
             PenEraserBtn.Hide();
             ObjectsEraser.Hide();
+            btn_change_clr.Hide();
+            btn_fill.Hide();
+            btn_changeSize.Hide();
         }
 
         private void pic_MouseClick(object sender, MouseEventArgs e)
@@ -357,6 +393,9 @@ namespace OOPproject
             }
             PenEraserBtn.Hide();
             ObjectsEraser.Hide();
+            btn_change_clr.Hide();
+            btn_fill.Hide();
+            btn_changeSize.Hide();
         }
         #endregion
 
@@ -382,6 +421,26 @@ namespace OOPproject
                 sp.Push(new Point(x, y));
                 bm.SetPixel(x, y, newColor);
             }
+        }
+
+        private void btn_EditObject_Click(object sender, EventArgs e)
+        {
+            btn_change_clr.Show();
+            btn_fill.Show();
+            btn_changeSize.Show();
+        }
+
+        private void pic_Click(object sender, EventArgs e)
+        {
+            //for (int i = Flist.NextIndex - 1; currSelect == FigureSelection.ObjectEraser && i >= 0; i--) //לממש בחירת אובייקט על בסיס איז אינסייד
+            //{
+            //    if (Flist[i].isInside(e.X, e.Y))
+            //    {
+            //        Flist.Remove(i);
+            //        textBoxForTesting.Text = Flist.NextIndex + "";
+            //        break;
+            //    }
+            //}
         }
 
         public void Fill(Bitmap bm,int x ,int y,Color newColor )
