@@ -27,7 +27,7 @@ namespace OOPproject
         }
         public enum FigureSelection
         {
-            Point, None, Pencil, Ellipse, PerfectCircle, Rectangle, Line, Rhombus, Eraser, PenEraser, ObjectEraser, Fill, Color, Clear, Undo, Redo
+            Point, None, Pencil, Ellipse, PerfectCircle, Rectangle, Line, Rhombus, ObjectEraser, Fill, Color, Clear, Undo, Redo
         }
         Bitmap bm;
         Graphics g;
@@ -93,7 +93,7 @@ namespace OOPproject
                     Flist[figureIndex].StrokeColor = New_Color;
                     break;
             }
-            textBoxForTesting.Text = Flist.NextIndex + "";
+            pic.Text = Flist.NextIndex + "";
         }
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
@@ -114,22 +114,7 @@ namespace OOPproject
                     //    //g.DrawLine(pen1, pX, pY);
                     //    //pY = pX;
                     //    ((AbstractFig)c).Add(e.X ,e.Y);
-                    //    break;
-                    case FigureSelection.PenEraser:   // eraser
-                        //for (int i = Flist.NextIndex -1 ; i >= 0; i--) // TOO HEAVY
-                        //{
-                        //    if (Flist[i].isInside(e.X, e.Y))
-                        //    {
-                        //        Flist.Remove(i);
-                        //        textBoxForTesting.Text = Flist.NextIndex + "";
-                        //        //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
-                        //        break;
-                        //    }
-                        //}
-                        pX = e.Location;
-                        g.DrawLine(eraser, pX, pY);
-                        pY = pX;
-                        break;
+                    //    break;    
                     case FigureSelection.Ellipse:
                     case FigureSelection.Rectangle:
                     case FigureSelection.Line: // line
@@ -224,7 +209,7 @@ namespace OOPproject
             pic.Image = bm;
             currSelect =  FigureSelection.Clear;
             Flist.Clear();
-            textBoxForTesting.Text = Flist.NextIndex + "";
+            pic.Text = Flist.NextIndex + "";
             clearSelection(true);
         }
         private void btn_color_Click(object sender, EventArgs e)
@@ -246,19 +231,17 @@ namespace OOPproject
             clearSelection(true);
         }
         
-        private void btn_eraser_Click(object sender, EventArgs e)
-        {
-            currSelect = FigureSelection.Eraser;
-            clearSelection(false);
-            PenEraserBtn.Show();
-            ObjectsEraser.Show();
-        }
+        //private void btn_eraser_Click(object sender, EventArgs e)
+        //{
+        //    currSelect = FigureSelection.Eraser;
+        //    clearSelection(false);
+        //}
         private void btn_circle_Click(object sender, EventArgs e)
         {
             currSelect = FigureSelection.PerfectCircle;
             paint = false;
-            PenEraserBtn.Hide();
-            ObjectsEraser.Hide();
+            clearSelection(true);
+          
         }
         private void btn_rect_Click(object sender, EventArgs e)
         {
@@ -273,25 +256,26 @@ namespace OOPproject
         private void btn_fill_Click(object sender, EventArgs e)
         {
             currSelect = FigureSelection.Fill;
-            clearSelection(true);
+            showEditMenu();
+            clearSelection(false);
         }
         private void btn_rhombus_Click(object sender, EventArgs e)
         {
             currSelect = FigureSelection.Rhombus;
-            clearSelection(false);
+            clearSelection(true);
         }
 
-        private void btn_pen_eraser_Click(object sender, EventArgs e)
-        {
-            currSelect = FigureSelection.PenEraser;
-            clearSelection(false);
+        //private void btn_pen_eraser_Click(object sender, EventArgs e)
+        //{
+        //    currSelect = FigureSelection.PenEraser;
+        //    clearSelection(false);
 
-        }
+        //}
 
         private void btn_object_eraser_Click(object sender, EventArgs e)
         {
             currSelect = FigureSelection.ObjectEraser;
-            clearSelection(false);
+            clearSelection(true);
         }
 
         private void btn_undo_Click(object sender, EventArgs e) //doesnt work for pencil yet
@@ -347,7 +331,7 @@ namespace OOPproject
                         if (Flist[i].isInside(e.X, e.Y))
                         {
                             Flist.Remove(i);
-                            textBoxForTesting.Text = Flist.NextIndex + "";
+                            pic.Text = Flist.NextIndex + "";
                             //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
                             pic.Invalidate();
                             break;
@@ -360,7 +344,7 @@ namespace OOPproject
                     {
                         if (Flist[i].isInside(e.X, e.Y))
                         {
-                            textBoxForTesting.Text = ((Flist[i]).GetType()).ToString() + " [" + i + "]";
+                            pic.Text = ((Flist[i]).GetType()).ToString() + " [" + i + "]";
                             if (selectedFigureIndex != -1) {
                                 clearSelectedFig();
                             }
@@ -434,12 +418,30 @@ namespace OOPproject
             if (clearAll)
             {
                 clearSelectedFig();
-                PenEraserBtn.Hide();
-                ObjectsEraser.Hide();
+                btn_fill.Hide();
+                btn_change_clr.Hide();
                 Figure.SELECTED_COLOR = Color.Red;
             }
         }
-        
+
+        private void btn_EditObject_Click(object sender, EventArgs e)
+        {
+            currSelect = FigureSelection.Point;
+            showEditMenu();
+        }
+
+        private void btn_change_clr_Click(object sender, EventArgs e)
+        {
+            showEditMenu();
+            clearSelection(false);
+        }
+
+        private void btn_changeSize_Click(object sender, EventArgs e)
+        {
+            showEditMenu();
+            clearSelection(false);
+        }
+
         public void clearSelectedFig()
         {
             if (selectedFigureIndex  >= 0 && selectedFigureIndex < Flist.NextIndex)
@@ -447,6 +449,13 @@ namespace OOPproject
                 (Flist[selectedFigureIndex]).IsSelected = false;
                 selectedFigureIndex = -1;
             }
+        }
+
+        public void showEditMenu()
+        {
+            btn_fill.Show();
+            btn_change_clr.Show();
+            btn_strokeWidth.Show();
         }
     }
 }

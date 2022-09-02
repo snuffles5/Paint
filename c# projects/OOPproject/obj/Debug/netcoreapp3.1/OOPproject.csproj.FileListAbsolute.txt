@@ -15,7 +15,6 @@ C:\Users\talta\source\repos\OOPproject\OOPproject\obj\Debug\netcoreapp3.1\OOPpro
 C:\Users\talta\source\repos\OOPproject\OOPproject\obj\Debug\netcoreapp3.1\OOPproject.dll
 C:\Users\talta\source\repos\OOPproject\OOPproject\obj\Debug\netcoreapp3.1\OOPproject.pdb
 C:\Users\talta\source\repos\OOPproject\OOPproject\obj\Debug\netcoreapp3.1\OOPproject.genruntimeconfig.cache
-C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\obj\Debug\netcoreapp3.1\OOPproject.csproj.AssemblyReference.cache
 C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\obj\Debug\netcoreapp3.1\OOPproject.Form1.resources
 C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\obj\Debug\netcoreapp3.1\OOPproject.Properties.Resources.resources
 C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\obj\Debug\netcoreapp3.1\OOPproject.csproj.GenerateResource.cache
@@ -32,3 +31,4 @@ C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproj
 C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\bin\Debug\netcoreapp3.1\OOPproject.dll
 C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\bin\Debug\netcoreapp3.1\OOPproject.pdb
 C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\obj\Debug\netcoreapp3.1\OOPproject.genruntimeconfig.cache
+C:\Users\talta\source\repo_tal_daniel\snuffles5\bsc_projects\c# projects\OOPproject\obj\Debug\netcoreapp3.1\OOPproject.csproj.AssemblyReference.cache
