@@ -57,6 +57,7 @@ namespace OOPproject
                     Flist[figureIndex] = new AbstractFig(e.X, e.Y);
                     Flist[figureIndex].FillColor = Color.Transparent;
                     Flist[figureIndex].StrokeColor = New_Color;
+                    Flist[figureIndex].StrokeWidth = DEFAULT_WIDTH;
                     break;
                 case FigureSelection.Ellipse: // ellipse     
                     Flist[figureIndex] = new Ellipse(e.X, e.Y, e.X, e.Y);
