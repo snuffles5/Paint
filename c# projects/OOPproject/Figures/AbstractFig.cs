@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection;
 
+[Serializable]
 public class AbstractFig : Figure 
 {
     List<MyPoint> _vertices = new List<MyPoint>();

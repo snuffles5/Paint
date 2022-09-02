@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 
+[Serializable]
 public class Line: Figure
 {
     MyPoint _point2;

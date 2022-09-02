@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Drawing;
 
+[Serializable]
 public class FigureList
 {
     protected SortedList figures;

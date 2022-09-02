@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
+[Serializable]
 public abstract class Quadrilateral : Figure 
 {
     MyPoint[] _vertices = new MyPoint[3];

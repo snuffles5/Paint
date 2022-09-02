@@ -3,12 +3,12 @@ using System.Windows.Forms;
 
 /************** TODO List in general *********************
 **  Serializable / Deserialize and implement it.
-**  regions
+**  ---regions
 **  comments where needed
-**  Rhombus class 
+**  ---Rhombus class 
 **  
 **  features:
-**  freefigure
+**  ---freefigure
 **  Background Color (canvas)
 **
 **

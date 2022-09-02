@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
+[Serializable]
 public class Ellipse : Figure
 {
     MyPoint _secondPoint;

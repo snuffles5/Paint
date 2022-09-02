@@ -4,6 +4,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Globalization;
 
+[Serializable]
 public abstract class Figure
 {
     MyPoint _myPoint = new MyPoint();
