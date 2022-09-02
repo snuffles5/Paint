@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection;
 
+[Serializable]
 public class Rhombus : Quadrilateral 
 {
     float _width;

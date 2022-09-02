@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
+[Serializable]
 public class MyPoint
 {
     float _x;

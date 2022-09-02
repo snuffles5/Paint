@@ -401,6 +401,7 @@ namespace OOPproject
             this.textBoxForTesting.ReadOnly = true;
             this.textBoxForTesting.Size = new System.Drawing.Size(100, 23);
             this.textBoxForTesting.TabIndex = 2;
+            this.textBoxForTesting.Click += new System.EventHandler(this.textBoxForTesting_Click);
             // 
             // Form1
             // 

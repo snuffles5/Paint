@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
+[Serializable]
 public class Circle : Figure
 {
     const float DEFAULT_RADIUS = 1f;
