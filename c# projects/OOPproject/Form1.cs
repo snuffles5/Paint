@@ -13,11 +13,22 @@ namespace OOPproject
             InitializeComponent();
             this.Width = 950;
             this.Height = 700;
-            bm = new Bitmap(pic.Width,pic.Height);
+            bm = new Bitmap(pic.Width, pic.Height);
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
             pic.Image = bm;
         }
+
+        private void Form1_Shown(Object sender, EventArgs e)
+        {
+            FHistoryList.Add(new FigureList(Flist));
+            currentFlistIndex++;
+            txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+            txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
+            btn_undo.Enabled = false;
+            btn_redo.Enabled = false;
+        }
+
         public enum FigureSelection
         {
             Point, None, Pencil, Ellipse, PerfectCircle, Rectangle, Line, Rhombus, ObjectEraser, Fill, Color, Clear, Undo, Redo
@@ -26,23 +37,27 @@ namespace OOPproject
         Graphics g;
         const int DEFAULT_WIDTH = 5;
         bool paint = false;
-        //Point pX, pY;
         Pen pen1 = new Pen(Color.Black, DEFAULT_WIDTH);
-        //Pen eraser = new Pen(Color.White, 15);
         FigureSelection currSelect = FigureSelection.None;
-        int figureIndex=-1;
+        int figureIndex = -1;
         int selectedFigureIndex = -1;
-        //int x, y, sX, sY, cX, cY;
         ColorDialog cd = new ColorDialog();
         Color New_Color = Color.Black; //Default Stroke Color
         FigureList Flist = new FigureList();
-        FigureList FHistoryList = new FigureList();
+        //FigureList FHistoryList = new FigureList();
+        List<FigureList> FHistoryList = new List<FigureList>();
+        int currentFlistIndex = -1;
+        bool isErased;
+
+        //Point pX, pY;
+        //Pen eraser = new Pen(Color.White, 15);
+        //int x, y, sX, sY, cX, cY;
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
             //pY = e.Location;
-            
-      
+
+
             figureIndex = Flist.NextIndex;
             switch (currSelect)
             {
@@ -91,7 +106,7 @@ namespace OOPproject
         }
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
-            if(paint && figureIndex != -1)
+            if (paint && figureIndex != -1)
             {
                 Figure c = (Figure)Flist[figureIndex];
                 switch (currSelect)
@@ -134,6 +149,7 @@ namespace OOPproject
                         {
                             Flist.Remove(Flist.Find(e.X, e.Y));
                             pic.Text = Flist.NextIndex + "";
+                            isErased = true;
                             //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
                         }
                         break;
@@ -153,19 +169,23 @@ namespace OOPproject
 
                 }
                 pic.Invalidate();
-                    //if (currSelect==1)
-                    //{
-                    //    pX = e.Location;
-                    //    g.DrawLine(pen1,pX,pY);
-                    //    pY = pX;
-                    //}
-                    //if (currSelect == 2)
-                    //{
-                    //    pX = e.Location;
-                    //    g.DrawLine(eraser, pX, pY);
-                    //    pY = pX;
-                    //}
-                
+                //if (currSelect==1)
+                //{
+                //    pX = e.Location;
+                //    g.DrawLine(pen1,pX,pY);
+                //    pY = pX;
+                //}
+                //if (currSelect == 2)
+                //{
+                //    pX = e.Location;
+                //    g.DrawLine(eraser, pX, pY);
+                //    pY = pX;
+                //}
+
+            }
+            if (!paint)
+            {
+
             }
             //pic.Refresh();
             //pic.Invalidate();
@@ -179,6 +199,20 @@ namespace OOPproject
         {
             paint = false;
             figureIndex = -1;
+            switch (currSelect)
+            {
+                case FigureSelection.Ellipse:
+                case FigureSelection.Rectangle:
+                case FigureSelection.Line: // line
+                case FigureSelection.Rhombus: //rhombus
+                case FigureSelection.Pencil:
+                case FigureSelection.PerfectCircle:
+                    saveCurrentState();
+                    break;
+                case FigureSelection.ObjectEraser:
+                    if (isErased) saveCurrentState();
+                    break;
+            }
             //sX = x - cX;
             //sY = y - cY;
             //Figure c = (Figure)Flist[figureIndex];
@@ -210,9 +244,17 @@ namespace OOPproject
         {
             g.Clear(Color.White);
             pic.Image = bm;
-            currSelect =  FigureSelection.Clear;
-            Flist.Clear();
+            currSelect = FigureSelection.Clear;
             pic.Text = Flist.NextIndex + "";
+            txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+            txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
+            Flist.Clear();
+            FHistoryList.Clear();
+            FHistoryList.Add(new FigureList(Flist));
+            currentFlistIndex = 0;
+            txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+            txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
+            updateUndoRedoEnabled();
             clearSelection(true);
         }
         private void btn_color_Click(object sender, EventArgs e)
@@ -233,7 +275,7 @@ namespace OOPproject
             currSelect = FigureSelection.Pencil;
             clearSelection(true);
         }
-        
+
         //private void btn_eraser_Click(object sender, EventArgs e)
         //{
         //    currSelect = FigureSelection.Eraser;
@@ -244,7 +286,7 @@ namespace OOPproject
             currSelect = FigureSelection.PerfectCircle;
             paint = false;
             clearSelection(true);
-          
+
         }
         private void btn_rect_Click(object sender, EventArgs e)
         {
@@ -281,29 +323,68 @@ namespace OOPproject
             clearSelection(true);
         }
 
+        public void saveCurrentState()
+        {
+            if (currentFlistIndex < FHistoryList.Count - 1)
+                FHistoryList.RemoveRange(currentFlistIndex + 1, FHistoryList.Count - currentFlistIndex - 1);
+            currentFlistIndex++;
+            FHistoryList.Add(new FigureList(Flist));
+            txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+            txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
+            updateUndoRedoEnabled();
+        }
+
         private void btn_undo_Click(object sender, EventArgs e) //doesnt work for pencil yet
         {
             currSelect = FigureSelection.Undo;
-            if (Flist.NextIndex > 0)
+            if (currentFlistIndex > 0)
             {
-                FHistoryList[FHistoryList.NextIndex] = Flist[Flist.NextIndex-1];
-                Flist.Remove(Flist.NextIndex - 1);
+                currentFlistIndex--;
+                Flist = new FigureList(FHistoryList[currentFlistIndex]);
+                //FHistoryList[FHistoryList.NextIndex] = Flist[Flist.NextIndex-1];
+                //Flist.Remove(Flist.NextIndex - 1);
                 pic.Invalidate();
+                txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+                txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
+
             }
+            updateUndoRedoEnabled();
             clearSelection(true);
         }
 
         private void btn_redo_Click(object sender, EventArgs e)
         {
             currSelect = FigureSelection.Redo;
-            if (FHistoryList.NextIndex > 0)
+            if (currentFlistIndex < FHistoryList.Count - 1)
             {
-                Flist[Flist.NextIndex] = FHistoryList[FHistoryList.NextIndex - 1];
-                FHistoryList.Remove(FHistoryList.NextIndex - 1);
+                currentFlistIndex++;
+                Flist = new FigureList(FHistoryList[currentFlistIndex]);
                 pic.Invalidate();
+                txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+                txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
             }
+            //if (FHistoryList.NextIndex > 0)
+            //{
+            //    Flist[Flist.NextIndex] = FHistoryList[FHistoryList.NextIndex - 1];
+            //    FHistoryList.Remove(FHistoryList.NextIndex - 1);
+            //    pic.Invalidate();
+            //}
+            updateUndoRedoEnabled();
             clearSelection(true);
         }
+
+        private void updateUndoRedoEnabled()
+        {
+            if (currentFlistIndex == 0)
+                btn_undo.Enabled = false;
+            else 
+                btn_undo.Enabled = true;
+            if (currentFlistIndex<FHistoryList.Count-1)    
+            btn_redo.Enabled = true;   
+            else
+                btn_redo.Enabled = false; 
+         }
+
         private void btn_save_Click(object sender, EventArgs e)
         {
             var sfd = new SaveFileDialog();
@@ -433,6 +514,7 @@ namespace OOPproject
                 btn_fill.Hide();
                 btn_change_clr.Hide();
                 Figure.SELECTED_COLOR = Color.Red;
+                isErased = false;
             }
         }
 
@@ -470,4 +552,5 @@ namespace OOPproject
             btn_strokeWidth.Show();
         }
     }
+
 }

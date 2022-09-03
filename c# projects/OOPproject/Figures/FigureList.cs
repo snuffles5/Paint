@@ -11,6 +11,15 @@ public class FigureList
     {
         figures = new SortedList();
     }
+    public FigureList(FigureList flist)
+    {
+        figures = new SortedList();
+        for (int i = 0; i < flist.NextIndex; i++)
+        {
+            figures[NextIndex] = flist[i];
+        }
+    }
+
     public int NextIndex
     {
         get
