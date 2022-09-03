@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.Globalization;
+using System.Runtime.Serialization;
 
 [Serializable]
+[DataContract]
 public abstract class Figure
 {
-    MyPoint _myPoint = new MyPoint();
-    Color _strokeColor;
-    Color _fillColor;
-    int _strokeWidth;
-    bool _isSelected = false;
+    [DataMember] MyPoint _myPoint = new MyPoint();
+    [DataMember] Color _strokeColor;
+    [DataMember] Color _fillColor;
+    [DataMember] int _strokeWidth;
+    [DataMember] bool _isSelected = false;
     Pen _pen;
     
     public

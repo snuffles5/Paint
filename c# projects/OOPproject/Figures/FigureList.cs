@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Drawing;
+using System.Runtime.Serialization;
 
 [Serializable]
+
 public class FigureList
 {
     protected SortedList figures;
@@ -32,6 +34,7 @@ public class FigureList
                 figures[index] = value;		
         }
     }
+
 
     public void Remove(int element)
     {

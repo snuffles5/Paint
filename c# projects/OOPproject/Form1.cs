@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace OOPproject
 {
@@ -314,19 +314,51 @@ namespace OOPproject
         private void btn_save_Click(object sender, EventArgs e)
         {
             var sfd = new SaveFileDialog();
-            sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
-            if(sfd.ShowDialog()==DialogResult.OK)
+            //sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
+            //sfd.Filter = "Image (*.jpg)|*.jpg|Model files (*.mdl)|*.mdl|All Files(*.*)|*.*";
+            sfd.Filter = "Json files (*.json)|*.json|Image (*.jpg)|*.jpg|All Files(*.*)|*.*";
+            //sfd.InitialDirectory = Directory.GetCurrentDirectory();// + "..\\myModels";
+            //openFileDialog1.RestoreDirectory = true;
+            if (sfd.ShowDialog()==DialogResult.OK)
             {
                 switch (sfd.FilterIndex)
                 {
-                    case 1: // Image
+                    case 2: // Image
                         System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, pic.Width, pic.Height);
                         Bitmap btm = bm.Clone(rect, bm.PixelFormat);
                         btm.Save(sfd.FileName, ImageFormat.Jpeg);
                         MessageBox.Show("Image saved sucessfully!");
                         break;
-                    case 2: // 
+                    case 1: // 
+                        //IFormatter formatter = new BinaryFormatter();
+                        //using (Stream stream = new FileStream(sfd.FileName, FileMode.Create, FileAccess.Write)) //, FileShare.None
+                        //{
+                        //    //!!!!
+                        //    formatter.Serialize(stream, Flist);
+                        //    stream.Close();
+                        //
+                        //string jsonString = JsonConvert.SerializeObject(Flist);
+                        //JsonSerializerOptions options = new JsonSerializerOptions
+                        //{
+                        //    WriteIndented = true
+                        //};
+                        //string jsonString = System.Text.Json.JsonSerializer.Serialize<object>(Flist, options);
+                        Newtonsoft.Json.JsonSerializer jsonSerializer = new Newtonsoft.Json.JsonSerializer();
+                        StreamWriter sw = new StreamWriter(sfd.FileName);
+                        JsonWriter jsonWriter = new JsonTextWriter(sw);
+                        //jsonSerializer.Serialize(jsonWriter, Flist);//Flist[Flist.NextIndex-1]);
+                        jsonSerializer.Serialize(jsonWriter, Flist[Flist.NextIndex - 1]);//Flist
+                        //JsonConvert.SerializeObject(Flist, Formatting.Indented);
+                        jsonWriter.Close();
+                        sw.Close();
+                        //Console.WriteLine(jsonString);
+                        //Console.ReadKey();
 
+                        //File.WriteAllText(sfd.FileName, jsonString);
+                        //FileStream createStream = File.Create(sfd.FileName);
+                        //JsonSerializer.Serialize(Flist, jsonString);
+                        //createStream.Close();
+                        //SaveJsonAsync(sfd.FileName,jsonString);
                         break;
 
                     case 3: // All
@@ -336,6 +368,15 @@ namespace OOPproject
             }
             clearSelection(true);
             currSelect = FigureSelection.None;
+        }
+
+        public async Task SaveJsonAsync(string fileName, string jsonString)
+        {
+            
+            //File.WriteAllText(fileName, jsonString);
+            //using FileStream createStream = File.Create(fileName);
+            //await JsonSerializer.SerializeAsync(createStream, Flist);
+            //await createStream.DisposeAsync();
         }
 
         private void pic_MouseClick(object sender, MouseEventArgs e)

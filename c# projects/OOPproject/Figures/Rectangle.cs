@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
+using System.Runtime.Serialization;
 
 [Serializable]
 public class Rectangle : Quadrilateral // not supporting rotation
 {
-    float _width;
-    float _height;
+    [DataMember] float _width;
+    [DataMember] float _height;
     //GraphicsPath path = new GraphicsPath();
     //Pen pen;
     public Rectangle(MyPoint point, float width, float height, int strokeWidth = 0): base(point, new MyPoint(point.X + width, point.Y), new MyPoint(point.X + width, point.Y + height), new MyPoint(point.X, point.Y + height))
