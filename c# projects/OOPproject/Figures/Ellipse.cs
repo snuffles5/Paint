@@ -6,7 +6,7 @@ using System.Drawing.Drawing2D;
 public class Ellipse : Figure
 {
     MyPoint _secondPoint;
-    public GraphicsPath _path = new GraphicsPath();
+    [field: NonSerialized] public GraphicsPath _path = new GraphicsPath();
 
     public Ellipse() : this(10, 10, 10, 10) { }
     public Ellipse(MyPoint firstPoint, MyPoint secondPoint, int strokeWidth = 1)

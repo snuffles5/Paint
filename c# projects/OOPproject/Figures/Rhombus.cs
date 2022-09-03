@@ -8,8 +8,6 @@ public class Rhombus : Quadrilateral
 {
     float _width;
     float _height;
-    //GraphicsPath path = new GraphicsPath();
-    //Pen pen;
     public Rhombus(MyPoint point, float width, float height, int strokeWidth = 0): base(point.Y < height/2 ? new MyPoint(point.X, height / 2): point, // top point of rhombus is minus and exceeding canvas TODO Verify
         new MyPoint(point.X + width / 2, point.Y - height / 2), new MyPoint(point.X + width, point.Y), new MyPoint(point.X + width / 2, point.Y + height / 2))
     {

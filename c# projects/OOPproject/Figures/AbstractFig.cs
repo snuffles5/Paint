@@ -11,7 +11,7 @@ public class AbstractFig : Figure
     List<MyPoint> _vertices = new List<MyPoint>();
     MyPoint _maxPoint;
     MyPoint _minPoint;
-    public GraphicsPath _path = new GraphicsPath();
+    [field: NonSerialized] public GraphicsPath _path = new GraphicsPath();
     public AbstractFig() : this((List <MyPoint>) null) 
     {
         Pen = new Pen(StrokeColor, StrokeWidth);

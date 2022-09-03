@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 namespace OOPproject
@@ -322,19 +325,24 @@ namespace OOPproject
         private void btn_save_Click(object sender, EventArgs e)
         {
             var sfd = new SaveFileDialog();
-            sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
+            //sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
+            sfd.Filter = "Model (*.mdl)|*.mdl|Image (*.jpg)|*.jpg|(*.*)|*.*";
             if(sfd.ShowDialog()==DialogResult.OK)
             {
                 switch (sfd.FilterIndex)
                 {
-                    case 1: // Image
-                        System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, pic.Width, pic.Height);
-                        Bitmap btm = bm.Clone(rect, bm.PixelFormat);
-                        btm.Save(sfd.FileName, ImageFormat.Jpeg);
-                        MessageBox.Show("Image saved sucessfully!");
+                    case 1: // 
+                        IFormatter formatter = new BinaryFormatter();
+                        using (Stream stream = new FileStream(sfd.FileName, FileMode.Create, FileAccess.Write, FileShare.None))
+                        {
+                            //!!!!
+                            formatter.Serialize(stream, Flist[0]);
+                            stream.Close();
+                        }
                         break;
-                    case 2: // 
-
+                    case 2: // Image
+                        pic.Image.Save(sfd.FileName, ImageFormat.Jpeg);
+                        MessageBox.Show("Image saved sucessfully!");
                         break;
 
                     case 3: // All

@@ -12,7 +12,7 @@ public abstract class Figure
     Color _fillColor;
     int _strokeWidth;
     bool _isSelected;
-    Pen _pen;
+    [field: NonSerialized] Pen _pen;
     
     public Figure()
     {
