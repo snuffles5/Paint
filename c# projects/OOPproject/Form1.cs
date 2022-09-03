@@ -20,6 +20,7 @@ namespace OOPproject
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
             pic.Image = bm;
+            
         }
 
         private void Form1_Shown(Object sender, EventArgs e)
