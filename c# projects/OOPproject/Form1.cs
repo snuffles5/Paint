@@ -516,7 +516,7 @@ namespace OOPproject
                 clearSelectedFig();
                 btn_fill.Hide();
                 btn_change_clr.Hide();
-                Figure.SELECTED_COLOR = Color.Red;
+                Figure.SELECTED_COLOR = Color.DimGray;
                 isErased = false;
             }
         }

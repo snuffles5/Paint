@@ -21,7 +21,7 @@ public abstract class Figure
 
     public
         //TODO make private and getters
-    static Color SELECTED_COLOR = Color.Red;
+    static Color SELECTED_COLOR = Color.DimGray;
     // TODO maybe add _static path to make the eraser less heavier. need to save index too.
 
     public MyPoint MyPoint 
