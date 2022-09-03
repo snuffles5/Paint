@@ -9,7 +9,10 @@ public class AbstractFig : Figure
 {
     List<MyPoint> _vertices = new List<MyPoint>();
     public GraphicsPath _path = new GraphicsPath();
-    public AbstractFig() : this((List <MyPoint>) null) { }
+    public AbstractFig() : this((List <MyPoint>) null) 
+    {
+        Pen = new Pen(StrokeColor, StrokeWidth);
+    }
     public AbstractFig(List<MyPoint> vertices, int strokeWidth = 1)
     {
         if (vertices != null)
@@ -28,6 +31,7 @@ public class AbstractFig : Figure
         StrokeColor = Color.Black;
         FillColor = Color.Black;
         StrokeWidth = strokeWidth;
+        Pen = new Pen(StrokeColor, StrokeWidth);
     } 
     
     public AbstractFig(List<MyPoint> vertices, Color strokeColor, Color fillColor, int strokeWidth = 1)
@@ -48,6 +52,7 @@ public class AbstractFig : Figure
         StrokeColor = strokeColor;
         FillColor = fillColor;
         StrokeWidth = strokeWidth;
+        Pen = new Pen(StrokeColor, StrokeWidth);
     }
     public AbstractFig(float x, float y, int strokeWidth = 1)
     {
@@ -55,6 +60,7 @@ public class AbstractFig : Figure
         StrokeColor = Color.Black;
         FillColor = Color.Black;
         StrokeWidth = strokeWidth;
+        Pen = new Pen(StrokeColor, StrokeWidth);
     }
     public List<MyPoint> Vertices
     {
@@ -106,7 +112,9 @@ public class AbstractFig : Figure
 
     public override bool isInside(float x, float y)
     {
-        return _path.IsOutlineVisible(x, y, Pen);
+        if(Pen != null)
+            return _path.IsOutlineVisible(x, y, Pen);
+        return false;
     }
 
     public override void Change(float x, float y)

@@ -145,10 +145,12 @@ namespace OOPproject
                         break;// pencil 
                     case FigureSelection.ObjectEraser:
                         int index = Flist.Find(e.X, e.Y);
+                        //txtBoxForTesting.Text = index + " index to be erased";
+
                         if (index != -1)
                         {
                             Flist.Remove(Flist.Find(e.X, e.Y));
-                            pic.Text = Flist.NextIndex + "";
+                            txtBoxForTesting.Text = index + " erased.";
                             isErased = true;
                             //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
                         }
@@ -211,6 +213,7 @@ namespace OOPproject
                     break;
                 case FigureSelection.ObjectEraser:
                     if (isErased) saveCurrentState();
+                    isErased = false;
                     break;
             }
             //sX = x - cX;
@@ -422,14 +425,14 @@ namespace OOPproject
                     //Fill(bm, point.X, point.Y, New_Color);
                     break;
                 case FigureSelection.ObjectEraser:
-                    int index = Flist.Find(e.X, e.Y);
-                    if (index != -1)
-                    {
-                        Flist.Remove(Flist.Find(e.X, e.Y));
-                        pic.Text = Flist.NextIndex + "";
-                        //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
-                        pic.Invalidate();
-                    } 
+                    //int index = Flist.Find(e.X, e.Y);
+                    //if (index != -1)
+                    //{
+                    //    Flist.Remove(Flist.Find(e.X, e.Y));
+                    //    pic.Text = Flist.NextIndex + "";
+                    //    //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
+                    //    pic.Invalidate();
+                    //} 
                     break;
                 case FigureSelection.Point:
                     bool foundFig = false;

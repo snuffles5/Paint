@@ -11,9 +11,14 @@ public abstract class Figure
     Color _strokeColor;
     Color _fillColor;
     int _strokeWidth;
-    bool _isSelected = false;
+    bool _isSelected;
     Pen _pen;
     
+    public Figure()
+    {
+        _isSelected = false;
+    }
+
     public
         //TODO make private and getters
     static Color SELECTED_COLOR = Color.Red;
