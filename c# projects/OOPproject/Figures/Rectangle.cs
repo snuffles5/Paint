@@ -88,16 +88,7 @@ public class Rectangle : Quadrilateral // not supporting rotation
     {
         if (Vertices.Length != 0)
         {
-                //GraphicsPath path = new GraphicsPath();
-
-            ////Pen pen = new Pen(StrokeColor, StrokeWidth);
-            ////Graphics graphics;
-            //path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);
-            //path.AddLine(Vertices[0].X, Vertices[0].Y, Vertices[1].X, Vertices[1].Y);
-            //path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);
-            //path.AddLine(Vertices[2].X, Vertices[2].Y, MyPoint.X, MyPoint.Y);
             return _path.IsOutlineVisible(x, y, Pen);
-            //return Math.Abs(x - X) <= Width && Math.Abs(y - Y) <= Height;
         }
         return false;
     }

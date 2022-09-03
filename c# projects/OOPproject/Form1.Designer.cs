@@ -131,6 +131,7 @@ namespace OOPproject
             this.btn_strokeWidth.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btn_strokeWidth.UseVisualStyleBackColor = true;
             this.btn_strokeWidth.Visible = false;
+            this.btn_strokeWidth.Click += new System.EventHandler(this.btn_strokeWidth_Click);
             // 
             // btn_import
             // 

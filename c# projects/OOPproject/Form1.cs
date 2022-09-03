@@ -31,7 +31,9 @@ namespace OOPproject
 
         public enum FigureSelection
         {
-            Point, None, Pencil, Ellipse, PerfectCircle, Rectangle, Line, Rhombus, ObjectEraser, Fill, Color, Clear, Undo, Redo
+            Point, None, 
+            Pencil, Ellipse, PerfectCircle, Rectangle, Line, Rhombus, 
+            ObjectEraser, Fill, Color, Clear, Undo, Redo, StrokeWidth, ChangeStrokeColor
         }
         Bitmap bm;
         Graphics g;
@@ -50,10 +52,6 @@ namespace OOPproject
         bool isErased;
         MyPoint mouseDownPoint = new MyPoint();
         bool isMoved;
-
-        //Point pX, pY;
-        //Pen eraser = new Pen(Color.White, 15);
-        //int x, y, sX, sY, cX, cY;
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
@@ -129,29 +127,13 @@ namespace OOPproject
                         }
 
                         break;
-                    //case FigureSelection.Pencil:
-                    //    //pX = e.Location;
-                    //    //g.DrawLine(pen1, pX, pY);
-                    //    //pY = pX;
-                    //    ((AbstractFig)c).Add(e.X ,e.Y);
-                    //    break;    
                     case FigureSelection.Ellipse:
                     case FigureSelection.Rectangle:
                     case FigureSelection.Line: // line
                     case FigureSelection.Rhombus: //rhombus
                     case FigureSelection.Pencil:
                         c.Change(e.X, e.Y);
-                        //((Ellipse)c).Draw(g);
                         break;
-                    //case FigureSelection.Rectangle: // rect
-                    //    ((Rectangle)c).Width = e.X - c.X;
-                    //    ((Rectangle)c).Height = e.Y - c.Y;
-                    //    //((Rectangle)c).Draw(g);
-                    //    break;
-                    //case FigureSelection.Line: // line
-                    //    ((Line)c).X2 = e.X;
-                    //    ((Line)c).Y2 = e.Y;
-                    //    break;
                     case FigureSelection.Fill: // fill
                         break;// pencil 
                     case FigureSelection.ObjectEraser:
@@ -166,47 +148,21 @@ namespace OOPproject
                             //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
                         }
                         break;
-                    //case FigureSelection.Rhombus: //rhombus
-                    //    ((Rhombus)c).Width = e.X - c.X;
-                    //    ((Rhombus)c).Height = e.Y - c.Y;
-                    //    //((Rhombus)c).Draw(g);
-                    //    break;
                     case FigureSelection.PerfectCircle: //"perfect" circle
                         // TODO: check why Line.Distance doesnt work ---- double to float casting ----- point of start should be top left (angle 45) 
                         float newX = Math.Abs(((Circle)c).X - e.X);
                         float newY = Math.Abs(((Circle)c).Y - e.Y);
                         double dis = Math.Sqrt(newX * newX + newY * newY);
                         ((Circle)c).Radius = (float)dis; // double to float TODO
-                        //((Circle)c).Center = new MyPoint(newX, newY);
                         break;
 
                 }
                 pic.Invalidate();
-                //if (currSelect==1)
-                //{
-                //    pX = e.Location;
-                //    g.DrawLine(pen1,pX,pY);
-                //    pY = pX;
-                //}
-                //if (currSelect == 2)
-                //{
-                //    pX = e.Location;
-                //    g.DrawLine(eraser, pX, pY);
-                //    pY = pX;
-                //}
-
             }
             if (!paint)
             {
 
             }
-            //pic.Refresh();
-            //pic.Invalidate();
-
-            //x = e.X;
-            //y = e.Y;
-            //sX = e.X - cX;
-            //sY = e.Y - cY;
         }
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
@@ -232,29 +188,6 @@ namespace OOPproject
                     isMoved = false; 
                     break;
             }
-            //sX = x - cX;
-            //sY = y - cY;
-            //Figure c = (Figure)Flist[figureIndex];
-            //if (currSelect == 3)
-            //{
-            //    g.DrawEllipse(pen1, cX, cY, sX, sY);
-            //}
-            //if (currSelect == 4)
-            //{
-            //    g.DrawRectangle(pen1, cX, cY, sX, sY);
-            //    if (figureIndex >= 1)
-            //        ((Rectangle)c).Width = e.X - c.X;
-            //    ((Rectangle)c).Width = e.X - c.X;
-            //    ((Rectangle)c).Height = e.Y - c.Y;
-            //    ((Rectangle)c).Draw(g);
-            //}
-            //if (currSelect == 5)
-            //{
-            //    Line l;
-            //    l.Draw(g);
-            //    g.DrawLine(pen1, cX, cY, x, y);
-            //}
-            //pic.Invalidate();
         }
 
         /***************************    Buttons       *******************************/
@@ -295,11 +228,6 @@ namespace OOPproject
             clearSelection(true);
         }
 
-        //private void btn_eraser_Click(object sender, EventArgs e)
-        //{
-        //    currSelect = FigureSelection.Eraser;
-        //    clearSelection(false);
-        //}
         private void btn_circle_Click(object sender, EventArgs e)
         {
             currSelect = FigureSelection.PerfectCircle;
@@ -328,13 +256,6 @@ namespace OOPproject
             currSelect = FigureSelection.Rhombus;
             clearSelection(true);
         }
-
-        //private void btn_pen_eraser_Click(object sender, EventArgs e)
-        //{
-        //    currSelect = FigureSelection.PenEraser;
-        //    clearSelection(false);
-
-        //}
 
         private void btn_object_eraser_Click(object sender, EventArgs e)
         {
@@ -382,12 +303,6 @@ namespace OOPproject
                 txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
                 txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
             }
-            //if (FHistoryList.NextIndex > 0)
-            //{
-            //    Flist[Flist.NextIndex] = FHistoryList[FHistoryList.NextIndex - 1];
-            //    FHistoryList.Remove(FHistoryList.NextIndex - 1);
-            //    pic.Invalidate();
-            //}
             updateUndoRedoEnabled();
             clearSelection(true);
         }
@@ -540,12 +455,23 @@ namespace OOPproject
         private void btn_EditObject_Click(object sender, EventArgs e)
         {
             currSelect = FigureSelection.Point;
-            showEditMenu();
+            if (Flist.NextIndex > 0) showEditMenu();
         }
 
-        private void btn_change_clr_Click(object sender, EventArgs e)
+        private void btn_change_clr_Click(object sender, EventArgs e) //change stroke color
         {
+            currSelect = FigureSelection.ChangeStrokeColor;
             showEditMenu();
+            clearSelection(false);
+        }
+        private void btn_strokeWidth_Click(object sender, EventArgs e)
+        {
+            currSelect = FigureSelection.StrokeWidth;
+            if (Flist[selectedFigureIndex].IsSelected)
+            {
+                Flist[selectedFigureIndex].StrokeWidth++;
+                pic.Invalidate();
+            }
             clearSelection(false);
         }
 
@@ -570,6 +496,8 @@ namespace OOPproject
             btn_change_clr.Show();
             btn_strokeWidth.Show();
         }
+
+        
     }
 
 }
