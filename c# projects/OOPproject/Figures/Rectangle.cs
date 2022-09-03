@@ -73,10 +73,11 @@ public class Rectangle : Quadrilateral // not supporting rotation
             Pen = new Pen(StrokeColor, StrokeWidth);
         graphic.FillRectangle(br, MyPoint.X, MyPoint.Y, Width, Height);
         graphic.DrawRectangle(Pen, MyPoint.X, MyPoint.Y, Width, Height);
-        _path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);
-        _path.AddLine(Vertices[0].X, Vertices[0].Y, Vertices[1].X, Vertices[1].Y);
-        _path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);
-        _path.AddLine(Vertices[2].X, Vertices[2].Y, MyPoint.X, MyPoint.Y);
+        if (_path == null) _path = new GraphicsPath();
+            _path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);
+            _path.AddLine(Vertices[0].X, Vertices[0].Y, Vertices[1].X, Vertices[1].Y);
+            _path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);
+            _path.AddLine(Vertices[2].X, Vertices[2].Y, MyPoint.X, MyPoint.Y);
     }
     public override bool isInside(MyPoint point)
     {
@@ -84,7 +85,7 @@ public class Rectangle : Quadrilateral // not supporting rotation
     }
     public override bool isInside(float x, float y)
     {
-        if (Vertices.Length != 0)
+        if (Vertices.Length != 0 && _path != null)
         {
             return _path.IsOutlineVisible(x, y, Pen);
         }

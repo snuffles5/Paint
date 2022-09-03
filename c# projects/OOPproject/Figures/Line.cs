@@ -96,6 +96,7 @@ public class Line: Figure
         else
             Pen = new Pen(StrokeColor, StrokeWidth);
         g.DrawLine(Pen, Point1.X, Point1.Y, Point2.X, Point2.Y);
+        if (_path == null) _path = new GraphicsPath(); // after desrialize
         _path.AddLine(Point1.X, Point1.Y, Point2.X, Point2.Y);
     }
 
