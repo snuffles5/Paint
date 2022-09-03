@@ -36,7 +36,9 @@ namespace OOPproject
         {
             Point, None, 
             Pencil, Ellipse, PerfectCircle, Rectangle, Line, Rhombus, 
-            ObjectEraser, Fill, Color, Clear, Undo, Redo, StrokeWidth, ChangeStrokeColor
+            ObjectEraser, Fill, Color, Clear, Undo, Redo, StrokeWidth, ChangeStrokeColor,
+            Import,
+            Save
         }
         Bitmap bm;
         Graphics g;
@@ -325,6 +327,7 @@ namespace OOPproject
 
         private void btn_save_Click(object sender, EventArgs e)
         {
+            currSelect = FigureSelection.Save;
             var sfd = new SaveFileDialog();
             //sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
             sfd.Filter = "Model (*.mdl)|*.mdl|Image (*.jpg)|*.jpg|(*.*)|*.*";
@@ -339,11 +342,13 @@ namespace OOPproject
                             //!!!!
                             formatter.Serialize(stream, Flist[0]);
                             stream.Close();
+                            MessageBox.Show("File saved successfully!");
+
                         }
                         break;
                     case 2: // Image
                         pic.Image.Save(sfd.FileName, ImageFormat.Jpeg);
-                        MessageBox.Show("Image saved sucessfully!");
+                        MessageBox.Show("Image saved successfully!");
                         break;
 
                     case 3: // All
@@ -352,7 +357,39 @@ namespace OOPproject
                 }
             }
             clearSelection(true);
-            currSelect = FigureSelection.None;
+        }
+
+        private void btn_import_Click(object sender, EventArgs e)
+        {
+            currSelect = FigureSelection.Import;
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Model (*.mdl)|*.mdl|Image (*.jpg)|*.jpg|(*.*)|*.*";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                switch (ofd.FilterIndex)
+                {
+                    case 1: // 
+                        Stream stream = File.Open(ofd.FileName, FileMode.Open);
+                        var binaryFormatter = new BinaryFormatter();
+                        //!!!!
+                        Flist[0] = (Figure)binaryFormatter.Deserialize(stream);
+                        //MessageBox.Show("File imported successfully sucessfully!");
+
+                        stream.Close();
+                        pic.Invalidate();
+                        break;
+                    case 2: // Image
+                        //pic.Image.Save(ofd.FileName, ImageFormat.Jpeg);
+                        //MessageBox.Show("Image imported successfully sucessfully!");
+                        MessageBox.Show("Not implemented!");
+                        break;
+
+                    case 3: // All
+
+                        break;
+                }
+            }
+            clearSelection(true);
         }
 
         private void pic_MouseClick(object sender, MouseEventArgs e)
