@@ -8,8 +8,6 @@ public class Rhombus : Quadrilateral
 {
     float _width;
     float _height;
-    //GraphicsPath path = new GraphicsPath();
-    //Pen pen;
     public Rhombus(MyPoint point, float width, float height, int strokeWidth = 0): base(point.Y < height/2 ? new MyPoint(point.X, height / 2): point, // top point of rhombus is minus and exceeding canvas TODO Verify
         new MyPoint(point.X + width / 2, point.Y - height / 2), new MyPoint(point.X + width, point.Y), new MyPoint(point.X + width / 2, point.Y + height / 2))
     {
@@ -79,6 +77,7 @@ public class Rhombus : Quadrilateral
         SolidBrush br = new SolidBrush(FillColor);
         graphic.FillPolygon(br, new PointF[] {new PointF(MyPoint.X, MyPoint.Y), new PointF(Vertices[0].X, Vertices[0].Y), new PointF(Vertices[1].X, Vertices[1].Y), new PointF(Vertices[2].X, Vertices[2].Y) });
         graphic.DrawPolygon(Pen, new PointF[] {new PointF(MyPoint.X, MyPoint.Y), new PointF(Vertices[0].X, Vertices[0].Y), new PointF(Vertices[1].X, Vertices[1].Y), new PointF(Vertices[2].X, Vertices[2].Y) });
+        if (_path == null) _path = new GraphicsPath(); // after desrialize
         _path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);
         _path.AddLine(Vertices[0].X, Vertices[0].Y, Vertices[1].X, Vertices[1].Y);
         _path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);

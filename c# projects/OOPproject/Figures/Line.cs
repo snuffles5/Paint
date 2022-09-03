@@ -7,7 +7,7 @@ using System.IO;
 public class Line: Figure
 {
     MyPoint _point2;
-    public GraphicsPath _path = new GraphicsPath();
+    [field: NonSerialized] public GraphicsPath _path = new GraphicsPath();
     public Line(float x1 = 0, float y1 = 0, float x2 = 0, float y2 = 0)
     {
         MyPoint = new MyPoint(x1, y1);
@@ -96,6 +96,7 @@ public class Line: Figure
         else
             Pen = new Pen(StrokeColor, StrokeWidth);
         g.DrawLine(Pen, Point1.X, Point1.Y, Point2.X, Point2.Y);
+        if (_path == null) _path = new GraphicsPath(); // after desrialize
         _path.AddLine(Point1.X, Point1.Y, Point2.X, Point2.Y);
     }
 

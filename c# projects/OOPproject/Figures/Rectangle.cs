@@ -7,8 +7,6 @@ public class Rectangle : Quadrilateral // not supporting rotation
 {
     float _width;
     float _height;
-    //GraphicsPath path = new GraphicsPath();
-    //Pen pen;
     public Rectangle(MyPoint point, float width, float height, int strokeWidth = 0): base(point, new MyPoint(point.X + width, point.Y), new MyPoint(point.X + width, point.Y + height), new MyPoint(point.X, point.Y + height))
     {
         Width = width;
@@ -75,10 +73,11 @@ public class Rectangle : Quadrilateral // not supporting rotation
             Pen = new Pen(StrokeColor, StrokeWidth);
         graphic.FillRectangle(br, MyPoint.X, MyPoint.Y, Width, Height);
         graphic.DrawRectangle(Pen, MyPoint.X, MyPoint.Y, Width, Height);
-        _path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);
-        _path.AddLine(Vertices[0].X, Vertices[0].Y, Vertices[1].X, Vertices[1].Y);
-        _path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);
-        _path.AddLine(Vertices[2].X, Vertices[2].Y, MyPoint.X, MyPoint.Y);
+        if (_path == null) _path = new GraphicsPath();
+            _path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);
+            _path.AddLine(Vertices[0].X, Vertices[0].Y, Vertices[1].X, Vertices[1].Y);
+            _path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);
+            _path.AddLine(Vertices[2].X, Vertices[2].Y, MyPoint.X, MyPoint.Y);
     }
     public override bool isInside(MyPoint point)
     {
@@ -86,18 +85,9 @@ public class Rectangle : Quadrilateral // not supporting rotation
     }
     public override bool isInside(float x, float y)
     {
-        if (Vertices.Length != 0)
+        if (Vertices.Length != 0 && _path != null)
         {
-                //GraphicsPath path = new GraphicsPath();
-
-            ////Pen pen = new Pen(StrokeColor, StrokeWidth);
-            ////Graphics graphics;
-            //path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);
-            //path.AddLine(Vertices[0].X, Vertices[0].Y, Vertices[1].X, Vertices[1].Y);
-            //path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);
-            //path.AddLine(Vertices[2].X, Vertices[2].Y, MyPoint.X, MyPoint.Y);
             return _path.IsOutlineVisible(x, y, Pen);
-            //return Math.Abs(x - X) <= Width && Math.Abs(y - Y) <= Height;
         }
         return false;
     }
@@ -107,10 +97,10 @@ public class Rectangle : Quadrilateral // not supporting rotation
         Width = x - X;
         Height = y - Y;
     }
-    public override void Move(float x, float y)
+    public override void Move(float offsetX, float offsetY)
     {
         //TODO
-        updateParams(x, y, Width, Height);
+        updateParams(X+ offsetX, Y+ offsetY, Width, Height);
     }
 
 

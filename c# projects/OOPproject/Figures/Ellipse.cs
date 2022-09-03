@@ -6,7 +6,7 @@ using System.Drawing.Drawing2D;
 public class Ellipse : Figure
 {
     MyPoint _secondPoint;
-    public GraphicsPath _path = new GraphicsPath();
+    [field: NonSerialized] public GraphicsPath _path = new GraphicsPath();
 
     public Ellipse() : this(10, 10, 10, 10) { }
     public Ellipse(MyPoint firstPoint, MyPoint secondPoint, int strokeWidth = 1)
@@ -49,6 +49,7 @@ public class Ellipse : Figure
             Pen = new Pen(StrokeColor, StrokeWidth);
         graphic.FillEllipse(br, FirstPoint.X, FirstPoint.Y, SecondPoint.X-FirstPoint.X, SecondPoint.Y-FirstPoint.Y);
         graphic.DrawEllipse(Pen, FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
+        if (_path == null) _path = new GraphicsPath(); // after desrialize
         _path.AddEllipse(FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
     }
     public override bool isInside(MyPoint point)

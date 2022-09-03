@@ -11,12 +11,17 @@ public abstract class Figure
     Color _strokeColor;
     Color _fillColor;
     int _strokeWidth;
-    bool _isSelected = false;
-    Pen _pen;
+    bool _isSelected;
+    [field: NonSerialized] Pen _pen;
     
+    public Figure()
+    {
+        _isSelected = false;
+    }
+
     public
         //TODO make private and getters
-    static Color SELECTED_COLOR = Color.Red;
+    static Color SELECTED_COLOR = Color.DimGray;
     // TODO maybe add _static path to make the eraser less heavier. need to save index too.
 
     public MyPoint MyPoint 

@@ -42,7 +42,7 @@ namespace OOPproject
             this.btn_EditObject = new System.Windows.Forms.Button();
             this.btn_redo = new System.Windows.Forms.Button();
             this.btn_rhombus = new System.Windows.Forms.Button();
-            this.Undo = new System.Windows.Forms.Button();
+            this.btn_undo = new System.Windows.Forms.Button();
             this.btn_clear = new System.Windows.Forms.Button();
             this.btn_save = new System.Windows.Forms.Button();
             this.btn_line = new System.Windows.Forms.Button();
@@ -54,6 +54,7 @@ namespace OOPproject
             this.panel1 = new System.Windows.Forms.Panel();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pic = new System.Windows.Forms.PictureBox();
+            this.txtBoxForTesting = new System.Windows.Forms.TextBox();
             this.pnl_btns.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -75,7 +76,7 @@ namespace OOPproject
             this.pnl_btns.Controls.Add(this.btn_EditObject);
             this.pnl_btns.Controls.Add(this.btn_redo);
             this.pnl_btns.Controls.Add(this.btn_rhombus);
-            this.pnl_btns.Controls.Add(this.Undo);
+            this.pnl_btns.Controls.Add(this.btn_undo);
             this.pnl_btns.Controls.Add(this.btn_clear);
             this.pnl_btns.Controls.Add(this.btn_save);
             this.pnl_btns.Controls.Add(this.btn_line);
@@ -130,6 +131,7 @@ namespace OOPproject
             this.btn_strokeWidth.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btn_strokeWidth.UseVisualStyleBackColor = true;
             this.btn_strokeWidth.Visible = false;
+            this.btn_strokeWidth.Click += new System.EventHandler(this.btn_strokeWidth_Click);
             // 
             // btn_import
             // 
@@ -148,6 +150,7 @@ namespace OOPproject
             this.btn_import.Size = new System.Drawing.Size(43, 42);
             this.btn_import.TabIndex = 19;
             this.btn_import.UseVisualStyleBackColor = false;
+            this.btn_import.Click += new System.EventHandler(this.btn_import_Click);
             // 
             // btn_change_clr
             // 
@@ -270,21 +273,21 @@ namespace OOPproject
             this.btn_rhombus.UseVisualStyleBackColor = true;
             this.btn_rhombus.Click += new System.EventHandler(this.btn_rhombus_Click);
             // 
-            // Undo
+            // btn_undo
             // 
-            this.Undo.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Undo.FlatAppearance.BorderSize = 0;
-            this.Undo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(215)))), ((int)(((byte)(192)))));
-            this.Undo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(215)))), ((int)(((byte)(192)))));
-            this.Undo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Undo.ForeColor = System.Drawing.Color.Wheat;
-            this.Undo.Image = global::OOPproject.Properties.Resources.undo;
-            this.Undo.Location = new System.Drawing.Point(5, 19);
-            this.Undo.Name = "Undo";
-            this.Undo.Size = new System.Drawing.Size(49, 32);
-            this.Undo.TabIndex = 11;
-            this.Undo.UseVisualStyleBackColor = true;
-            this.Undo.Click += new System.EventHandler(this.btn_undo_Click);
+            this.btn_undo.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_undo.FlatAppearance.BorderSize = 0;
+            this.btn_undo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(215)))), ((int)(((byte)(192)))));
+            this.btn_undo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(215)))), ((int)(((byte)(192)))));
+            this.btn_undo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_undo.ForeColor = System.Drawing.Color.Wheat;
+            this.btn_undo.Image = global::OOPproject.Properties.Resources.undo;
+            this.btn_undo.Location = new System.Drawing.Point(5, 19);
+            this.btn_undo.Name = "btn_undo";
+            this.btn_undo.Size = new System.Drawing.Size(49, 32);
+            this.btn_undo.TabIndex = 11;
+            this.btn_undo.UseVisualStyleBackColor = true;
+            this.btn_undo.Click += new System.EventHandler(this.btn_undo_Click);
             // 
             // btn_clear
             // 
@@ -451,22 +454,37 @@ namespace OOPproject
             this.pic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pic_MouseMove);
             this.pic.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pic_MouseUp);
             // 
+            // txtBoxForTesting
+            // 
+            this.txtBoxForTesting.Enabled = false;
+            this.txtBoxForTesting.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.txtBoxForTesting.Location = new System.Drawing.Point(503, 637);
+            this.txtBoxForTesting.Name = "txtBoxForTesting";
+            this.txtBoxForTesting.PlaceholderText = "Testing";
+            this.txtBoxForTesting.ReadOnly = true;
+            this.txtBoxForTesting.Size = new System.Drawing.Size(424, 23);
+            this.txtBoxForTesting.TabIndex = 2;
+            this.txtBoxForTesting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(928, 661);
+            this.Controls.Add(this.txtBoxForTesting);
             this.Controls.Add(this.pic);
             this.Controls.Add(this.pnl_btns);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.pnl_btns.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -484,7 +502,7 @@ namespace OOPproject
         private System.Windows.Forms.Button btn_clear;
         private System.Windows.Forms.Button btn_redo;
         private System.Windows.Forms.Button btn_rhombus;
-        private System.Windows.Forms.Button Undo;
+        private System.Windows.Forms.Button btn_undo;
         private System.Windows.Forms.Button btn_EditObject;
         private System.Windows.Forms.Button btn_change_clr;
         private System.Windows.Forms.Button btn_fill;
@@ -500,6 +518,7 @@ namespace OOPproject
         private System.Windows.Forms.Panel line3;
         private System.Windows.Forms.Panel line2;
         private System.Windows.Forms.PictureBox pic;
+        private System.Windows.Forms.TextBox txtBoxForTesting;
     }
 }
 

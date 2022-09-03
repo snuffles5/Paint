@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
 namespace OOPproject
@@ -20,36 +16,53 @@ namespace OOPproject
             InitializeComponent();
             this.Width = 950;
             this.Height = 700;
-            bm = new Bitmap(pic.Width,pic.Height);
+            bm = new Bitmap(pic.Width, pic.Height);
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
             pic.Image = bm;
         }
+
+        private void Form1_Shown(Object sender, EventArgs e)
+        {
+            FHistoryList.Add(new FigureList(Flist));
+            currentFlistIndex++;
+            txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+            txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
+            btn_undo.Enabled = false;
+            btn_redo.Enabled = false;
+        }
+
         public enum FigureSelection
         {
-            Point, None, Pencil, Ellipse, PerfectCircle, Rectangle, Line, Rhombus, ObjectEraser, Fill, Color, Clear, Undo, Redo
+            Point, None, 
+            Pencil, Ellipse, PerfectCircle, Rectangle, Line, Rhombus, 
+            ObjectEraser, Fill, Color, Clear, Undo, Redo, StrokeWidth, ChangeStrokeColor,
+            Import,
+            Save
         }
         Bitmap bm;
         Graphics g;
         const int DEFAULT_WIDTH = 5;
         bool paint = false;
-        Point pX, pY;
         Pen pen1 = new Pen(Color.Black, DEFAULT_WIDTH);
-        Pen eraser = new Pen(Color.White, 15);
         FigureSelection currSelect = FigureSelection.None;
-        int figureIndex=-1;
+        int figureIndex = -1;
         int selectedFigureIndex = -1;
-        //int x, y, sX, sY, cX, cY;
         ColorDialog cd = new ColorDialog();
         Color New_Color = Color.Black; //Default Stroke Color
         FigureList Flist = new FigureList();
-        FigureList FHistoryList = new FigureList();
+        //FigureList FHistoryList = new FigureList();
+        List<FigureList> FHistoryList = new List<FigureList>();
+        int currentFlistIndex = -1;
+        bool isErased;
+        MyPoint mouseDownPoint = new MyPoint();
+        bool isMoved;
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
-            pY = e.Location;
-            
-      
+            //pY = e.Location;
+
+
             figureIndex = Flist.NextIndex;
             switch (currSelect)
             {
@@ -57,6 +70,7 @@ namespace OOPproject
                     Flist[figureIndex] = new AbstractFig(e.X, e.Y);
                     Flist[figureIndex].FillColor = Color.Transparent;
                     Flist[figureIndex].StrokeColor = New_Color;
+                    Flist[figureIndex].StrokeWidth = DEFAULT_WIDTH;
                     break;
                 case FigureSelection.Ellipse: // ellipse     
                     Flist[figureIndex] = new Ellipse(e.X, e.Y, e.X, e.Y);
@@ -92,12 +106,16 @@ namespace OOPproject
                     Flist[figureIndex].StrokeWidth = DEFAULT_WIDTH;
                     Flist[figureIndex].StrokeColor = New_Color;
                     break;
+                case FigureSelection.Point:
+                    mouseDownPoint.X = e.X;
+                    mouseDownPoint.Y = e.Y;
+                    break;
             }
             pic.Text = Flist.NextIndex + "";
         }
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
-            if(paint && figureIndex != -1)
+            if (paint && figureIndex != -1)
             {
                 Figure c = (Figure)Flist[figureIndex];
                 switch (currSelect)
@@ -105,100 +123,76 @@ namespace OOPproject
                     case FigureSelection.Point:
                         if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
                         {
-                            Flist[selectedFigureIndex].Move(e.X, e.Y);
+                            float offsetX = e.X - mouseDownPoint.X;
+                            mouseDownPoint.X = e.X;
+                            float offsetY = e.Y - mouseDownPoint.Y;
+                            mouseDownPoint.Y = e.Y;
+                            Flist[selectedFigureIndex].Move(offsetX, offsetY);
+                            isMoved = true;
                         }
 
                         break;
-                    //case FigureSelection.Pencil:
-                    //    //pX = e.Location;
-                    //    //g.DrawLine(pen1, pX, pY);
-                    //    //pY = pX;
-                    //    ((AbstractFig)c).Add(e.X ,e.Y);
-                    //    break;    
                     case FigureSelection.Ellipse:
                     case FigureSelection.Rectangle:
                     case FigureSelection.Line: // line
                     case FigureSelection.Rhombus: //rhombus
                     case FigureSelection.Pencil:
                         c.Change(e.X, e.Y);
-                        //((Ellipse)c).Draw(g);
                         break;
-                    //case FigureSelection.Rectangle: // rect
-                    //    ((Rectangle)c).Width = e.X - c.X;
-                    //    ((Rectangle)c).Height = e.Y - c.Y;
-                    //    //((Rectangle)c).Draw(g);
-                    //    break;
-                    //case FigureSelection.Line: // line
-                    //    ((Line)c).X2 = e.X;
-                    //    ((Line)c).Y2 = e.Y;
-                    //    break;
                     case FigureSelection.Fill: // fill
                         break;// pencil 
-                    //case FigureSelection.Rhombus: //rhombus
-                    //    ((Rhombus)c).Width = e.X - c.X;
-                    //    ((Rhombus)c).Height = e.Y - c.Y;
-                    //    //((Rhombus)c).Draw(g);
-                    //    break;
+                    case FigureSelection.ObjectEraser:
+                        int index = Flist.Find(e.X, e.Y);
+                        //txtBoxForTesting.Text = index + " index to be erased";
+
+                        if (index != -1)
+                        {
+                            Flist.Remove(Flist.Find(e.X, e.Y));
+                            txtBoxForTesting.Text = index + " erased.";
+                            isErased = true;
+                            //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
+                        }
+                        break;
                     case FigureSelection.PerfectCircle: //"perfect" circle
                         // TODO: check why Line.Distance doesnt work ---- double to float casting ----- point of start should be top left (angle 45) 
                         float newX = Math.Abs(((Circle)c).X - e.X);
                         float newY = Math.Abs(((Circle)c).Y - e.Y);
                         double dis = Math.Sqrt(newX * newX + newY * newY);
                         ((Circle)c).Radius = (float)dis; // double to float TODO
-                        //((Circle)c).Center = new MyPoint(newX, newY);
                         break;
 
                 }
                 pic.Invalidate();
-                    //if (currSelect==1)
-                    //{
-                    //    pX = e.Location;
-                    //    g.DrawLine(pen1,pX,pY);
-                    //    pY = pX;
-                    //}
-                    //if (currSelect == 2)
-                    //{
-                    //    pX = e.Location;
-                    //    g.DrawLine(eraser, pX, pY);
-                    //    pY = pX;
-                    //}
-                
             }
-            //pic.Refresh();
-            //pic.Invalidate();
+            if (!paint)
+            {
 
-            //x = e.X;
-            //y = e.Y;
-            //sX = e.X - cX;
-            //sY = e.Y - cY;
+            }
         }
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
             paint = false;
             figureIndex = -1;
-            //sX = x - cX;
-            //sY = y - cY;
-            //Figure c = (Figure)Flist[figureIndex];
-            //if (currSelect == 3)
-            //{
-            //    g.DrawEllipse(pen1, cX, cY, sX, sY);
-            //}
-            //if (currSelect == 4)
-            //{
-            //    g.DrawRectangle(pen1, cX, cY, sX, sY);
-            //    if (figureIndex >= 1)
-            //        ((Rectangle)c).Width = e.X - c.X;
-            //    ((Rectangle)c).Width = e.X - c.X;
-            //    ((Rectangle)c).Height = e.Y - c.Y;
-            //    ((Rectangle)c).Draw(g);
-            //}
-            //if (currSelect == 5)
-            //{
-            //    Line l;
-            //    l.Draw(g);
-            //    g.DrawLine(pen1, cX, cY, x, y);
-            //}
-            //pic.Invalidate();
+            switch (currSelect)
+            {
+                case FigureSelection.Ellipse:
+                case FigureSelection.Rectangle:
+                case FigureSelection.Line: // line
+                case FigureSelection.Rhombus: //rhombus
+                case FigureSelection.Pencil:
+                case FigureSelection.PerfectCircle:
+                    saveCurrentState();
+                    break;
+                case FigureSelection.ObjectEraser:
+                    if (isErased) saveCurrentState();
+                    isErased = false;
+                    break;
+                case FigureSelection.Point:
+                if (isMoved) // to fix?
+                    saveCurrentState();
+                    isMoved = false; 
+                    break;
+            }
         }
 
         /***************************    Buttons       *******************************/
@@ -207,9 +201,17 @@ namespace OOPproject
         {
             g.Clear(Color.White);
             pic.Image = bm;
-            currSelect =  FigureSelection.Clear;
-            Flist.Clear();
+            currSelect = FigureSelection.Clear;
             pic.Text = Flist.NextIndex + "";
+            txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+            txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
+            Flist.Clear();
+            FHistoryList.Clear();
+            FHistoryList.Add(new FigureList(Flist));
+            currentFlistIndex = 0;
+            txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+            txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
+            updateUndoRedoEnabled();
             clearSelection(true);
         }
         private void btn_color_Click(object sender, EventArgs e)
@@ -230,18 +232,13 @@ namespace OOPproject
             currSelect = FigureSelection.Pencil;
             clearSelection(true);
         }
-        
-        //private void btn_eraser_Click(object sender, EventArgs e)
-        //{
-        //    currSelect = FigureSelection.Eraser;
-        //    clearSelection(false);
-        //}
+
         private void btn_circle_Click(object sender, EventArgs e)
         {
             currSelect = FigureSelection.PerfectCircle;
             paint = false;
             clearSelection(true);
-          
+
         }
         private void btn_rect_Click(object sender, EventArgs e)
         {
@@ -265,55 +262,129 @@ namespace OOPproject
             clearSelection(true);
         }
 
-        //private void btn_pen_eraser_Click(object sender, EventArgs e)
-        //{
-        //    currSelect = FigureSelection.PenEraser;
-        //    clearSelection(false);
-
-        //}
-
         private void btn_object_eraser_Click(object sender, EventArgs e)
         {
             currSelect = FigureSelection.ObjectEraser;
             clearSelection(true);
         }
 
+        public void saveCurrentState()
+        {
+            if (currentFlistIndex < FHistoryList.Count - 1)
+                FHistoryList.RemoveRange(currentFlistIndex + 1, FHistoryList.Count - currentFlistIndex - 1);
+            currentFlistIndex++;
+            FHistoryList.Add(new FigureList(Flist));
+            txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+            txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
+            updateUndoRedoEnabled();
+        }
+
         private void btn_undo_Click(object sender, EventArgs e) //doesnt work for pencil yet
         {
             currSelect = FigureSelection.Undo;
-            if (Flist.NextIndex > 0)
+            if (currentFlistIndex > 0)
             {
-                FHistoryList[FHistoryList.NextIndex] = Flist[Flist.NextIndex-1];
-                Flist.Remove(Flist.NextIndex - 1);
+                currentFlistIndex--;
+                Flist = new FigureList(FHistoryList[currentFlistIndex]);
+                //FHistoryList[FHistoryList.NextIndex] = Flist[Flist.NextIndex-1];
+                //Flist.Remove(Flist.NextIndex - 1);
                 pic.Invalidate();
+                txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+                txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
+
             }
+            updateUndoRedoEnabled();
             clearSelection(true);
         }
 
         private void btn_redo_Click(object sender, EventArgs e)
         {
             currSelect = FigureSelection.Redo;
-            if (FHistoryList.NextIndex > 0)
+            if (currentFlistIndex < FHistoryList.Count - 1)
             {
-                Flist[Flist.NextIndex] = FHistoryList[FHistoryList.NextIndex - 1];
-                FHistoryList.Remove(FHistoryList.NextIndex - 1);
+                currentFlistIndex++;
+                Flist = new FigureList(FHistoryList[currentFlistIndex]);
                 pic.Invalidate();
+                txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+                txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
+            }
+            updateUndoRedoEnabled();
+            clearSelection(true);
+        }
+
+        private void updateUndoRedoEnabled()
+        {
+            if (currentFlistIndex == 0)
+                btn_undo.Enabled = false;
+            else 
+                btn_undo.Enabled = true;
+            if (currentFlistIndex<FHistoryList.Count-1)    
+            btn_redo.Enabled = true;   
+            else
+                btn_redo.Enabled = false; 
+         }
+
+        private void btn_save_Click(object sender, EventArgs e)
+        {
+            currSelect = FigureSelection.Save;
+            var sfd = new SaveFileDialog();
+            //sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
+            sfd.Filter = "Model (*.mdl)|*.mdl|Image (*.jpg)|*.jpg|(*.*)|*.*";
+            if(sfd.ShowDialog()==DialogResult.OK)
+            {
+                switch (sfd.FilterIndex)
+                {
+                    case 1: // 
+                        IFormatter formatter = new BinaryFormatter();
+                        using (Stream stream = new FileStream(sfd.FileName, FileMode.Create, FileAccess.Write, FileShare.None))
+                        {
+                            //!!!!
+                            formatter.Serialize(stream, Flist[0]);
+                            stream.Close();
+                        }
+                        break;
+                    case 2: // Image
+                        pic.Image.Save(sfd.FileName, ImageFormat.Jpeg);
+                        MessageBox.Show("Image saved sucessfully!");
+                        break;
+
+                    case 3: // All
+
+                        break;
+                }
             }
             clearSelection(true);
         }
-        private void btn_save_Click(object sender, EventArgs e)
+
+        private void btn_import_Click(object sender, EventArgs e)
         {
-            var sfd = new SaveFileDialog();
-            sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
-            if(sfd.ShowDialog()==DialogResult.OK)
+            currSelect = FigureSelection.Import;
+            OpenFileDialog ofd = new OpenFileDialog();
+            //sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
+            ofd.Filter = "Model (*.mdl)|*.mdl|Image (*.jpg)|*.jpg|(*.*)|*.*";
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
-                System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, pic.Width, pic.Height);
-                Bitmap btm = bm.Clone(rect, bm.PixelFormat);
-                btm.Save(sfd.FileName,ImageFormat.Jpeg);
-                MessageBox.Show("Image saved sucessfully!");
+                switch (ofd.FilterIndex)
+                {
+                    case 1: // 
+                        Stream stream = File.Open(ofd.FileName, FileMode.Open);
+                        var binaryFormatter = new BinaryFormatter();
+                        //!!!!
+                        Flist[0] = (Figure)binaryFormatter.Deserialize(stream);
+                        stream.Close();
+                        pic.Invalidate();
+                        break;
+                    case 2: // Image
+                        pic.Image.Save(ofd.FileName, ImageFormat.Jpeg);
+                        MessageBox.Show("Image saved sucessfully!");
+                        break;
+
+                    case 3: // All
+
+                        break;
+                }
             }
             clearSelection(true);
-            currSelect = FigureSelection.None;
         }
 
         private void pic_MouseClick(object sender, MouseEventArgs e)
@@ -322,21 +393,18 @@ namespace OOPproject
             switch (currSelect)
             {
                 case FigureSelection.Fill:
-                    Point point = set_point(pic, e.Location);
-                    Fill(bm, point.X, point.Y, New_Color);
+                    //Point point = set_point(pic, e.Location);
+                    //Fill(bm, point.X, point.Y, New_Color);
                     break;
                 case FigureSelection.ObjectEraser:
-                    for (int i = Flist.NextIndex - 1; i >= 0; i--)
-                    {
-                        if (Flist[i].isInside(e.X, e.Y))
-                        {
-                            Flist.Remove(i);
-                            pic.Text = Flist.NextIndex + "";
-                            //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
-                            pic.Invalidate();
-                            break;
-                        }
-                    }
+                    //int index = Flist.Find(e.X, e.Y);
+                    //if (index != -1)
+                    //{
+                    //    Flist.Remove(Flist.Find(e.X, e.Y));
+                    //    pic.Text = Flist.NextIndex + "";
+                    //    //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
+                    //    pic.Invalidate();
+                    //} 
                     break;
                 case FigureSelection.Point:
                     bool foundFig = false;
@@ -371,12 +439,12 @@ namespace OOPproject
             Flist.DrawAll(paintGraphics);
             //textBoxForTesting.Text = Flist.NextIndex + "-" + currSelect.ToString();
         }
-        static Point set_point(PictureBox pb, Point p)
-        {
-            float pX = 1f * pb.Image.Width / pb.Width;
-            float pY = 1f * pb.Image.Height / pb.Height;
-            return new Point((int)(p.X * pX),(int)(p.Y * pY));
-        }
+        //static Point set_point(PictureBox pb, Point p)
+        //{
+        //    float pX = 1f * pb.Image.Width / pb.Width;
+        //    float pY = 1f * pb.Image.Height / pb.Height;
+        //    return new Point((int)(p.X * pX),(int)(p.Y * pY));
+        //}
          private void validate(Bitmap bm,Stack<Point>sp,int x, int y, Color oldColor,Color newColor)
         {
             Color cx = bm.GetPixel(x, y);
@@ -420,19 +488,31 @@ namespace OOPproject
                 clearSelectedFig();
                 btn_fill.Hide();
                 btn_change_clr.Hide();
-                Figure.SELECTED_COLOR = Color.Red;
+                Figure.SELECTED_COLOR = Color.DimGray;
+                isErased = false;
             }
         }
 
         private void btn_EditObject_Click(object sender, EventArgs e)
         {
             currSelect = FigureSelection.Point;
-            showEditMenu();
+            if (Flist.NextIndex > 0) showEditMenu();
         }
 
-        private void btn_change_clr_Click(object sender, EventArgs e)
+        private void btn_change_clr_Click(object sender, EventArgs e) //change stroke color
         {
+            currSelect = FigureSelection.ChangeStrokeColor;
             showEditMenu();
+            clearSelection(false);
+        }
+        private void btn_strokeWidth_Click(object sender, EventArgs e)
+        {
+            currSelect = FigureSelection.StrokeWidth;
+            if (Flist[selectedFigureIndex].IsSelected)
+            {
+                Flist[selectedFigureIndex].StrokeWidth++;
+                pic.Invalidate();
+            }
             clearSelection(false);
         }
 
@@ -457,5 +537,8 @@ namespace OOPproject
             btn_change_clr.Show();
             btn_strokeWidth.Show();
         }
+
+        
     }
+
 }
