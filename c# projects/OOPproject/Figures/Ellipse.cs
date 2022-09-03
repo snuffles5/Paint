@@ -49,7 +49,6 @@ public class Ellipse : Figure
             Pen = new Pen(StrokeColor, StrokeWidth);
         graphic.FillEllipse(br, FirstPoint.X, FirstPoint.Y, SecondPoint.X-FirstPoint.X, SecondPoint.Y-FirstPoint.Y);
         graphic.DrawEllipse(Pen, FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
-        if (_path == null) _path = new GraphicsPath(); // after desrialize
         _path.AddEllipse(FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
     }
     public override bool isInside(MyPoint point)

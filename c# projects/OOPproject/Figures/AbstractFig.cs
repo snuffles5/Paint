@@ -152,7 +152,6 @@ public class AbstractFig : Figure
             
         }
         Pen = new Pen(StrokeColor, StrokeWidth);
-        if (_path == null) _path = new GraphicsPath(); // after desrialize
         g.DrawPath(Pen,_path);
     }
 

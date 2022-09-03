@@ -36,9 +36,7 @@ namespace OOPproject
         {
             Point, None, 
             Pencil, Ellipse, PerfectCircle, Rectangle, Line, Rhombus, 
-            ObjectEraser, Fill, Color, Clear, Undo, Redo, StrokeWidth, ChangeStrokeColor,
-            Import,
-            Save
+            ObjectEraser, Fill, Color, Clear, Undo, Redo, StrokeWidth, ChangeStrokeColor
         }
         Bitmap bm;
         Graphics g;
@@ -326,7 +324,6 @@ namespace OOPproject
 
         private void btn_save_Click(object sender, EventArgs e)
         {
-            currSelect = FigureSelection.Save;
             var sfd = new SaveFileDialog();
             //sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
             sfd.Filter = "Model (*.mdl)|*.mdl|Image (*.jpg)|*.jpg|(*.*)|*.*";
@@ -354,37 +351,7 @@ namespace OOPproject
                 }
             }
             clearSelection(true);
-        }
-
-        private void btn_import_Click(object sender, EventArgs e)
-        {
-            currSelect = FigureSelection.Import;
-            OpenFileDialog ofd = new OpenFileDialog();
-            //sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
-            ofd.Filter = "Model (*.mdl)|*.mdl|Image (*.jpg)|*.jpg|(*.*)|*.*";
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                switch (ofd.FilterIndex)
-                {
-                    case 1: // 
-                        Stream stream = File.Open(ofd.FileName, FileMode.Open);
-                        var binaryFormatter = new BinaryFormatter();
-                        //!!!!
-                        Flist[0] = (Figure)binaryFormatter.Deserialize(stream);
-                        stream.Close();
-                        pic.Invalidate();
-                        break;
-                    case 2: // Image
-                        pic.Image.Save(ofd.FileName, ImageFormat.Jpeg);
-                        MessageBox.Show("Image saved sucessfully!");
-                        break;
-
-                    case 3: // All
-
-                        break;
-                }
-            }
-            clearSelection(true);
+            currSelect = FigureSelection.None;
         }
 
         private void pic_MouseClick(object sender, MouseEventArgs e)
