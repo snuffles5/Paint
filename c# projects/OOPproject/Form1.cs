@@ -317,10 +317,22 @@ namespace OOPproject
             sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
             if(sfd.ShowDialog()==DialogResult.OK)
             {
-                System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, pic.Width, pic.Height);
-                Bitmap btm = bm.Clone(rect, bm.PixelFormat);
-                btm.Save(sfd.FileName,ImageFormat.Jpeg);
-                MessageBox.Show("Image saved sucessfully!");
+                switch (sfd.FilterIndex)
+                {
+                    case 1: // Image
+                        System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, pic.Width, pic.Height);
+                        Bitmap btm = bm.Clone(rect, bm.PixelFormat);
+                        btm.Save(sfd.FileName, ImageFormat.Jpeg);
+                        MessageBox.Show("Image saved sucessfully!");
+                        break;
+                    case 2: // 
+
+                        break;
+
+                    case 3: // All
+
+                        break;
+                }
             }
             clearSelection(true);
             currSelect = FigureSelection.None;
