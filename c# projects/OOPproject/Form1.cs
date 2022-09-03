@@ -55,6 +55,7 @@ namespace OOPproject
         bool isErased;
         MyPoint mouseDownPoint = new MyPoint();
         bool isMoved;
+        int new_width;
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
@@ -509,7 +510,7 @@ namespace OOPproject
 
         private void cB_selestSize_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            //new_width = (int)cB_selestSize.SelectedIndexChanged; //need to fix
         }
     }
 
