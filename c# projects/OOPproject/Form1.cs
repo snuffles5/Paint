@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace OOPproject
@@ -33,9 +26,9 @@ namespace OOPproject
         Graphics g;
         const int DEFAULT_WIDTH = 5;
         bool paint = false;
-        Point pX, pY;
+        //Point pX, pY;
         Pen pen1 = new Pen(Color.Black, DEFAULT_WIDTH);
-        Pen eraser = new Pen(Color.White, 15);
+        //Pen eraser = new Pen(Color.White, 15);
         FigureSelection currSelect = FigureSelection.None;
         int figureIndex=-1;
         int selectedFigureIndex = -1;
@@ -47,7 +40,7 @@ namespace OOPproject
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
-            pY = e.Location;
+            //pY = e.Location;
             
       
             figureIndex = Flist.NextIndex;
@@ -344,8 +337,8 @@ namespace OOPproject
             switch (currSelect)
             {
                 case FigureSelection.Fill:
-                    Point point = set_point(pic, e.Location);
-                    Fill(bm, point.X, point.Y, New_Color);
+                    //Point point = set_point(pic, e.Location);
+                    //Fill(bm, point.X, point.Y, New_Color);
                     break;
                 case FigureSelection.ObjectEraser:
                     int index = Flist.Find(e.X, e.Y);
@@ -390,12 +383,12 @@ namespace OOPproject
             Flist.DrawAll(paintGraphics);
             //textBoxForTesting.Text = Flist.NextIndex + "-" + currSelect.ToString();
         }
-        static Point set_point(PictureBox pb, Point p)
-        {
-            float pX = 1f * pb.Image.Width / pb.Width;
-            float pY = 1f * pb.Image.Height / pb.Height;
-            return new Point((int)(p.X * pX),(int)(p.Y * pY));
-        }
+        //static Point set_point(PictureBox pb, Point p)
+        //{
+        //    float pX = 1f * pb.Image.Width / pb.Width;
+        //    float pY = 1f * pb.Image.Height / pb.Height;
+        //    return new Point((int)(p.X * pX),(int)(p.Y * pY));
+        //}
          private void validate(Bitmap bm,Stack<Point>sp,int x, int y, Color oldColor,Color newColor)
         {
             Color cx = bm.GetPixel(x, y);
