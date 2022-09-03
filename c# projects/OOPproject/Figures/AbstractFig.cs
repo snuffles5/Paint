@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Reflection;
 
 [Serializable]
@@ -146,7 +147,9 @@ public class AbstractFig : Figure
             float height = MaxPoint.Y - MinPoint.Y;
             Pen surrundingRec = new Pen(SELECTED_COLOR, StrokeWidth / 2);
             surrundingRec.DashStyle = DashStyle.Dash;
-            g.DrawRectangle(surrundingRec, MinPoint.X, MinPoint.Y, width, height);  // surrounding rectangle
+            //g.DrawRectangle(surrundingRec, MinPoint.X, MinPoint.Y, width, height);  // surrounding rectangle
+            g.DrawRectangle(surrundingRec, _path.GetBounds().X, _path.GetBounds().Y, _path.GetBounds().Width, _path.GetBounds().Height);  // surrounding rectangle
+            
         }
         Pen = new Pen(StrokeColor, StrokeWidth);
         g.DrawPath(Pen,_path);
@@ -170,16 +173,34 @@ public class AbstractFig : Figure
         Add(x, y);
     }
 
-    public override void Move(float x, float y)
+    public override void Move(float xOffset, float yOffset)
     {
         //TODO   
-        MyPoint.X += x;
-        MyPoint.Y += y;
+        MyPoint.X += xOffset;
+        MyPoint.Y += yOffset;
+        //PointF[] newPathPoint = _path.PathPoints;
+        //if (_path != null)
+        //{
+        //    newPathPoint[0].X += xOffset;
+        //    newPathPoint[0].Y += yOffset;
+        //}
         for (int i = 0; i < Vertices.Count; i++)
         {
-            Vertices[i].X += x;
-            Vertices[i].Y += y;
+            Vertices[i].X += xOffset;
+            Vertices[i].Y += yOffset;
+            //if (i < _path.PathPoints.Length)
+            //{
+            //    newPathPoint[i].X += xOffset;
+            //    newPathPoint[i].Y += yOffset;
+            //}
         }
+        //if (newPathPoint.Length == _path.PathPoints.Length)
+        //{
+            Matrix m = new Matrix();
+            m.Translate(xOffset, yOffset);
+            _path.Transform(m);
+
+        //}
     }
 
 

@@ -48,6 +48,8 @@ namespace OOPproject
         List<FigureList> FHistoryList = new List<FigureList>();
         int currentFlistIndex = -1;
         bool isErased;
+        MyPoint mouseDownPoint = new MyPoint();
+        bool isMoved;
 
         //Point pX, pY;
         //Pen eraser = new Pen(Color.White, 15);
@@ -101,6 +103,10 @@ namespace OOPproject
                     Flist[figureIndex].StrokeWidth = DEFAULT_WIDTH;
                     Flist[figureIndex].StrokeColor = New_Color;
                     break;
+                case FigureSelection.Point:
+                    mouseDownPoint.X = e.X;
+                    mouseDownPoint.Y = e.Y;
+                    break;
             }
             pic.Text = Flist.NextIndex + "";
         }
@@ -114,7 +120,12 @@ namespace OOPproject
                     case FigureSelection.Point:
                         if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
                         {
-                            Flist[selectedFigureIndex].Move(e.X, e.Y);
+                            float offsetX = e.X - mouseDownPoint.X;
+                            mouseDownPoint.X = e.X;
+                            float offsetY = e.Y - mouseDownPoint.Y;
+                            mouseDownPoint.Y = e.Y;
+                            Flist[selectedFigureIndex].Move(offsetX, offsetY);
+                            isMoved = true;
                         }
 
                         break;
@@ -214,6 +225,11 @@ namespace OOPproject
                 case FigureSelection.ObjectEraser:
                     if (isErased) saveCurrentState();
                     isErased = false;
+                    break;
+                case FigureSelection.Point:
+                if (isMoved) // to fix?
+                    saveCurrentState();
+                    isMoved = false; 
                     break;
             }
             //sX = x - cX;

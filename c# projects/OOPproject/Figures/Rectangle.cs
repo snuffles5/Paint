@@ -107,10 +107,10 @@ public class Rectangle : Quadrilateral // not supporting rotation
         Width = x - X;
         Height = y - Y;
     }
-    public override void Move(float x, float y)
+    public override void Move(float offsetX, float offsetY)
     {
         //TODO
-        updateParams(x, y, Width, Height);
+        updateParams(X+ offsetX, Y+ offsetY, Width, Height);
     }
 
 
