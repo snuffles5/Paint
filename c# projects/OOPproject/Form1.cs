@@ -340,7 +340,7 @@ namespace OOPproject
                         using (Stream stream = new FileStream(sfd.FileName, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
                             //!!!!
-                            formatter.Serialize(stream, Flist[0]);
+                            formatter.Serialize(stream, Flist);
                             stream.Close();
                             MessageBox.Show("File saved successfully!");
 
@@ -372,7 +372,7 @@ namespace OOPproject
                         Stream stream = File.Open(ofd.FileName, FileMode.Open);
                         var binaryFormatter = new BinaryFormatter();
                         //!!!!
-                        Flist[0] = (Figure)binaryFormatter.Deserialize(stream);
+                        Flist = (FigureList)binaryFormatter.Deserialize(stream);
                         //MessageBox.Show("File imported successfully sucessfully!");
 
                         stream.Close();

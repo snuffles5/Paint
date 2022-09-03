@@ -4,11 +4,12 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 [Serializable]
 public class AbstractFig : Figure 
 {
-    List<MyPoint> _vertices = new List<MyPoint>();
+    [DataMember] List<MyPoint> _vertices = new List<MyPoint>();
     MyPoint _maxPoint;
     MyPoint _minPoint;
     [field: NonSerialized] public GraphicsPath _path = new GraphicsPath();
@@ -21,19 +22,6 @@ public class AbstractFig : Figure
         if (vertices != null)
         {
             MyPoint = vertices[0];
-            
-            //for (int i = 1; i < vertices.Count; i++)
-            //{
-            //    Vertices[i] = vertices[i];
-            //    if (vertices[i].X > MaxPoint.X)
-            //        MaxPoint.X = vertices[i].X;
-            //    else if (vertices[i].X < MinPoint.X)
-            //        MinPoint.X = vertices[i].X;
-            //    if (vertices[i].Y > MaxPoint.Y)
-            //        MaxPoint.Y = vertices[i].Y;
-            //    else if (vertices[i].Y < MinPoint.Y)
-            //        MinPoint.Y = vertices[i].Y;
-            //}
             Vertices = vertices;
         }
         else
@@ -54,15 +42,10 @@ public class AbstractFig : Figure
         {
             MyPoint = vertices[0];
             for (int i = 1; i < vertices.Count; i++)
-            {
                 Vertices[i] = vertices[i];
-
-            }
         }
         else
-        {
             MyPoint = new MyPoint();
-        }
         StrokeColor = strokeColor;
         FillColor = fillColor;
         StrokeWidth = strokeWidth;
@@ -123,6 +106,22 @@ public class AbstractFig : Figure
                 MinPoint.Y = point.Y;
         }
     }
+
+    private void initializePath()
+    {
+        _path = new GraphicsPath();
+        if (MyPoint != null)
+        {
+            MyPoint prev = Vertices != null ? Vertices[0] : MyPoint;
+            _path.AddLine( new PointF(MyPoint.X, MyPoint.Y), new PointF(prev.X, prev.Y));
+        }
+        for (int i = 1; i < Vertices.Count ; i++)
+        {
+            MyPoint prev = Vertices[i - 1];
+            _path.AddLine(new PointF(prev.X, prev.Y), new PointF(Vertices[i].X, Vertices[i].Y));
+
+        }
+    }
      public void Add(float x, float y)
     {
         MyPoint prev = Vertices != null && Vertices.Count > 0 ? Vertices[Vertices.Count - 1] : MyPoint;
@@ -152,6 +151,7 @@ public class AbstractFig : Figure
             
         }
         Pen = new Pen(StrokeColor, StrokeWidth);
+        if (_path == null) initializePath(); // after desrialize
         g.DrawPath(Pen,_path);
     }
 
