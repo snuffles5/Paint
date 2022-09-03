@@ -463,7 +463,8 @@ namespace OOPproject
         private void btn_EditObject_Click(object sender, EventArgs e)
         {
             currSelect = FigureSelection.Point;
-            if (Flist.NextIndex > 0) showEditMenu();
+           // if (Flist.NextIndex > 0)
+                showEditMenu();
         }
 
         private void btn_change_clr_Click(object sender, EventArgs e) //change stroke color
@@ -480,6 +481,7 @@ namespace OOPproject
                 Flist[selectedFigureIndex].StrokeWidth++;
                 pic.Invalidate();
             }
+            cB_selestSize.Show();
             clearSelection(false);
         }
 
@@ -502,10 +504,13 @@ namespace OOPproject
         {
             btn_fill.Show();
             btn_change_clr.Show();
-            btn_strokeWidth.Show();
+           
         }
 
-        
+        private void cB_selestSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

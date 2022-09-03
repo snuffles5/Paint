@@ -55,6 +55,7 @@ namespace OOPproject
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pic = new System.Windows.Forms.PictureBox();
             this.txtBoxForTesting = new System.Windows.Forms.TextBox();
+            this.cB_selestSize = new System.Windows.Forms.ComboBox();
             this.pnl_btns.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -64,6 +65,7 @@ namespace OOPproject
             // pnl_btns
             // 
             this.pnl_btns.BackColor = System.Drawing.Color.PapayaWhip;
+            this.pnl_btns.Controls.Add(this.cB_selestSize);
             this.pnl_btns.Controls.Add(this.line3);
             this.pnl_btns.Controls.Add(this.line2);
             this.pnl_btns.Controls.Add(this.line1);
@@ -101,7 +103,7 @@ namespace OOPproject
             // line2
             // 
             this.line2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(215)))), ((int)(((byte)(192)))));
-            this.line2.Location = new System.Drawing.Point(582, 10);
+            this.line2.Location = new System.Drawing.Point(638, 10);
             this.line2.Name = "line2";
             this.line2.Size = new System.Drawing.Size(4, 50);
             this.line2.TabIndex = 22;
@@ -124,13 +126,12 @@ namespace OOPproject
             this.btn_strokeWidth.ForeColor = System.Drawing.Color.Wheat;
             this.btn_strokeWidth.Image = global::OOPproject.Properties.Resources.stroke;
             this.btn_strokeWidth.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btn_strokeWidth.Location = new System.Drawing.Point(719, 17);
+            this.btn_strokeWidth.Location = new System.Drawing.Point(469, 18);
             this.btn_strokeWidth.Name = "btn_strokeWidth";
             this.btn_strokeWidth.Size = new System.Drawing.Size(43, 42);
             this.btn_strokeWidth.TabIndex = 20;
             this.btn_strokeWidth.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btn_strokeWidth.UseVisualStyleBackColor = true;
-            this.btn_strokeWidth.Visible = false;
             this.btn_strokeWidth.Click += new System.EventHandler(this.btn_strokeWidth_Click);
             // 
             // btn_import
@@ -164,7 +165,7 @@ namespace OOPproject
             this.btn_change_clr.ForeColor = System.Drawing.Color.Black;
             this.btn_change_clr.Image = global::OOPproject.Properties.Resources.paint_brush;
             this.btn_change_clr.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btn_change_clr.Location = new System.Drawing.Point(655, 15);
+            this.btn_change_clr.Location = new System.Drawing.Point(712, 14);
             this.btn_change_clr.Name = "btn_change_clr";
             this.btn_change_clr.Size = new System.Drawing.Size(43, 40);
             this.btn_change_clr.TabIndex = 15;
@@ -181,7 +182,7 @@ namespace OOPproject
             this.pic_color.FlatAppearance.BorderSize = 0;
             this.pic_color.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.pic_color.ForeColor = System.Drawing.Color.Black;
-            this.pic_color.Location = new System.Drawing.Point(655, 16);
+            this.pic_color.Location = new System.Drawing.Point(712, 15);
             this.pic_color.Name = "pic_color";
             this.pic_color.Size = new System.Drawing.Size(48, 43);
             this.pic_color.TabIndex = 0;
@@ -197,7 +198,7 @@ namespace OOPproject
             this.btn_fill.ForeColor = System.Drawing.Color.Wheat;
             this.btn_fill.Image = global::OOPproject.Properties.Resources.fill_color;
             this.btn_fill.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btn_fill.Location = new System.Drawing.Point(594, 18);
+            this.btn_fill.Location = new System.Drawing.Point(650, 16);
             this.btn_fill.Name = "btn_fill";
             this.btn_fill.Size = new System.Drawing.Size(43, 42);
             this.btn_fill.TabIndex = 2;
@@ -230,7 +231,7 @@ namespace OOPproject
             this.btn_EditObject.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_EditObject.ForeColor = System.Drawing.Color.Wheat;
             this.btn_EditObject.Image = global::OOPproject.Properties.Resources.write;
-            this.btn_EditObject.Location = new System.Drawing.Point(524, 14);
+            this.btn_EditObject.Location = new System.Drawing.Point(581, 12);
             this.btn_EditObject.Name = "btn_EditObject";
             this.btn_EditObject.Size = new System.Drawing.Size(52, 52);
             this.btn_EditObject.TabIndex = 14;
@@ -406,7 +407,7 @@ namespace OOPproject
             this.btn_color.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_color.ForeColor = System.Drawing.Color.Wheat;
             this.btn_color.Image = global::OOPproject.Properties.Resources.color_palette1;
-            this.btn_color.Location = new System.Drawing.Point(466, 14);
+            this.btn_color.Location = new System.Drawing.Point(524, 13);
             this.btn_color.Name = "btn_color";
             this.btn_color.Size = new System.Drawing.Size(52, 52);
             this.btn_color.TabIndex = 1;
@@ -465,6 +466,16 @@ namespace OOPproject
             this.txtBoxForTesting.TabIndex = 2;
             this.txtBoxForTesting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // cB_selestSize
+            // 
+            this.cB_selestSize.FormattingEnabled = true;
+            this.cB_selestSize.Location = new System.Drawing.Point(476, 47);
+            this.cB_selestSize.Name = "cB_selestSize";
+            this.cB_selestSize.Size = new System.Drawing.Size(33, 23);
+            this.cB_selestSize.TabIndex = 24;
+            this.cB_selestSize.Visible = false;
+            this.cB_selestSize.SelectedIndexChanged += new System.EventHandler(this.cB_selestSize_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -518,6 +529,7 @@ namespace OOPproject
         private System.Windows.Forms.Panel line2;
         private System.Windows.Forms.PictureBox pic;
         private System.Windows.Forms.TextBox txtBoxForTesting;
+        private System.Windows.Forms.ComboBox cB_selestSize;
     }
 }
 
