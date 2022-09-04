@@ -20,6 +20,7 @@ namespace OOPproject
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
             pic.Image = bm;
+            
         }
 
         private void Form1_Shown(Object sender, EventArgs e)
@@ -34,9 +35,11 @@ namespace OOPproject
 
         public enum FigureSelection
         {
-            Point, None,
-            Pencil, Ellipse, PerfectCircle, Rectangle, Line, Rhombus,
-            ObjectEraser, Fill, Color, Clear, Undo, Redo, StrokeWidth, ChangeStrokeColor
+            Point, None, 
+            Pencil, Ellipse, PerfectCircle, Rectangle, Line, Rhombus, 
+            ObjectEraser, Fill, Color, Clear, Undo, Redo, StrokeWidth, ChangeStrokeColor,
+            Import,
+            Save
         }
         Bitmap bm;
         Graphics g;
@@ -55,11 +58,13 @@ namespace OOPproject
         bool isErased;
         MyPoint mouseDownPoint = new MyPoint();
         bool isMoved;
-        //int new_width;
+        int new_width;
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
             //pY = e.Location;
+
+
             figureIndex = Flist.NextIndex;
             switch (currSelect)
             {
@@ -127,6 +132,7 @@ namespace OOPproject
                             Flist[selectedFigureIndex].Move(offsetX, offsetY);
                             isMoved = true;
                         }
+
                         break;
                     case FigureSelection.Ellipse:
                     case FigureSelection.Rectangle:
@@ -135,12 +141,12 @@ namespace OOPproject
                     case FigureSelection.Pencil:
                         c.Change(e.X, e.Y);
                         break;
-                    case FigureSelection.Fill:// fill
-
+                    case FigureSelection.Fill: // fill
                         break;// pencil 
                     case FigureSelection.ObjectEraser:
                         int index = Flist.Find(e.X, e.Y);
                         //txtBoxForTesting.Text = index + " index to be erased";
+
                         if (index != -1)
                         {
                             Flist.Remove(Flist.Find(e.X, e.Y));
@@ -184,9 +190,9 @@ namespace OOPproject
                     isErased = false;
                     break;
                 case FigureSelection.Point:
-                    if (isMoved) // to fix?
-                        saveCurrentState();
-                    isMoved = false;
+                if (isMoved) // to fix?
+                    saveCurrentState();
+                    isMoved = false; 
                     break;
             }
         }
@@ -216,11 +222,11 @@ namespace OOPproject
             currSelect = FigureSelection.Color;
             New_Color = cd.Color;
             pic_color.BackColor = cd.Color;
-            //Figure.SELECTED_COLOR = New_Color;
+            Figure.SELECTED_COLOR = New_Color;
             pen1.Color = cd.Color;
-            //if (selectedFigureIndex != -1)
-            //    Flist[selectedFigureIndex].StrokeColor = New_Color;
-            //clearSelection(false);
+            if (selectedFigureIndex != -1)
+                Flist[selectedFigureIndex].StrokeColor = New_Color;
+            clearSelection(false);
             pic.Invalidate();
         }
         private void btn_pencil_Click(object sender, EventArgs e)
@@ -312,20 +318,21 @@ namespace OOPproject
         {
             if (currentFlistIndex == 0)
                 btn_undo.Enabled = false;
-            else
+            else 
                 btn_undo.Enabled = true;
-            if (currentFlistIndex < FHistoryList.Count - 1)
-                btn_redo.Enabled = true;
+            if (currentFlistIndex<FHistoryList.Count-1)    
+            btn_redo.Enabled = true;   
             else
-                btn_redo.Enabled = false;
-        }
+                btn_redo.Enabled = false; 
+         }
 
         private void btn_save_Click(object sender, EventArgs e)
         {
+            currSelect = FigureSelection.Save;
             var sfd = new SaveFileDialog();
             //sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
             sfd.Filter = "Model (*.mdl)|*.mdl|Image (*.jpg)|*.jpg|(*.*)|*.*";
-            if (sfd.ShowDialog() == DialogResult.OK)
+            if(sfd.ShowDialog()==DialogResult.OK)
             {
                 switch (sfd.FilterIndex)
                 {
@@ -334,13 +341,15 @@ namespace OOPproject
                         using (Stream stream = new FileStream(sfd.FileName, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
                             //!!!!
-                            formatter.Serialize(stream, Flist[0]);
+                            formatter.Serialize(stream, Flist);
                             stream.Close();
+                            MessageBox.Show("File saved successfully!");
+
                         }
                         break;
                     case 2: // Image
                         pic.Image.Save(sfd.FileName, ImageFormat.Jpeg);
-                        MessageBox.Show("Image saved sucessfully!");
+                        MessageBox.Show("Image saved successfully!");
                         break;
 
                     case 3: // All
@@ -349,7 +358,39 @@ namespace OOPproject
                 }
             }
             clearSelection(true);
-            currSelect = FigureSelection.None;
+        }
+
+        private void btn_import_Click(object sender, EventArgs e)
+        {
+            currSelect = FigureSelection.Import;
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Model (*.mdl)|*.mdl|Image (*.jpg)|*.jpg|(*.*)|*.*";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                switch (ofd.FilterIndex)
+                {
+                    case 1: // 
+                        Stream stream = File.Open(ofd.FileName, FileMode.Open);
+                        var binaryFormatter = new BinaryFormatter();
+                        //!!!!
+                        Flist = (FigureList)binaryFormatter.Deserialize(stream);
+                        //MessageBox.Show("File imported successfully sucessfully!");
+
+                        stream.Close();
+                        pic.Invalidate();
+                        break;
+                    case 2: // Image
+                        //pic.Image.Save(ofd.FileName, ImageFormat.Jpeg);
+                        //MessageBox.Show("Image imported successfully sucessfully!");
+                        MessageBox.Show("Not implemented!");
+                        break;
+
+                    case 3: // All
+
+                        break;
+                }
+            }
+            clearSelection(true);
         }
 
         private void pic_MouseClick(object sender, MouseEventArgs e)
@@ -359,20 +400,7 @@ namespace OOPproject
             {
                 case FigureSelection.Fill:
                     //Point point = set_point(pic, e.Location);
-                    int index = Flist.Find(e.X, e.Y);
-                    if (index != -1)
-                    {
-                        //Fill(bm, point.X, point.Y, New_Color);
-                        if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
-                        {
-                            Point point = set_point(pic, e.Location);
-                            point.X = (int)(e.X - mouseDownPoint.X);
-                            mouseDownPoint.X = e.X;
-                            point.Y = (int)(e.Y - mouseDownPoint.Y);
-                            mouseDownPoint.Y = e.Y;
-                            Fill(bm, point.X, point.Y, New_Color);
-                        }
-                    }
+                    //Fill(bm, point.X, point.Y, New_Color);
                     break;
                 case FigureSelection.ObjectEraser:
                     //int index = Flist.Find(e.X, e.Y);
@@ -404,11 +432,8 @@ namespace OOPproject
                         clearSelectedFig();
                     pic.Invalidate();
                     break;
-                case FigureSelection.ChangeStrokeColor:
-
-                    break;
             }
-
+            
         }
         #endregion
 
@@ -420,16 +445,16 @@ namespace OOPproject
             Flist.DrawAll(paintGraphics);
             //textBoxForTesting.Text = Flist.NextIndex + "-" + currSelect.ToString();
         }
-        static Point set_point(PictureBox pb, Point p)
-        {
-            float pX = 1f * pb.Image.Width / pb.Width;
-            float pY = 1f * pb.Image.Height / pb.Height;
-            return new Point((int)(p.X * pX), (int)(p.Y * pY));
-        }
-        private void validate(Bitmap bm, Stack<Point> sp, int x, int y, Color oldColor, Color newColor)
+        //static Point set_point(PictureBox pb, Point p)
+        //{
+        //    float pX = 1f * pb.Image.Width / pb.Width;
+        //    float pY = 1f * pb.Image.Height / pb.Height;
+        //    return new Point((int)(p.X * pX),(int)(p.Y * pY));
+        //}
+         private void validate(Bitmap bm,Stack<Point>sp,int x, int y, Color oldColor,Color newColor)
         {
             Color cx = bm.GetPixel(x, y);
-            if (cx == oldColor)
+            if(cx==oldColor)
             {
                 sp.Push(new Point(x, y));
                 bm.SetPixel(x, y, newColor);
@@ -441,22 +466,22 @@ namespace OOPproject
             currSelect = FigureSelection.Point;
         }
 
-        public void Fill(Bitmap bm, int x, int y, Color newColor)
+        public void Fill(Bitmap bm,int x ,int y,Color newColor )
         {
             Color oldColor = bm.GetPixel(x, y);
             Stack<Point> pixel = new Stack<Point>();
-            pixel.Push(new Point(x, y));
+            pixel.Push(new Point(x,y));
             bm.SetPixel(x, y, newColor);
             if (oldColor == newColor) return;
-            while (pixel.Count > 0)
+            while(pixel.Count>0)
             {
                 Point p = (Point)pixel.Pop();
                 if (p.X > 0 && p.Y > 0 && p.X < bm.Width - 1 && p.Y < bm.Height - 1)
                 {
                     validate(bm, pixel, p.X - 1, p.Y, oldColor, newColor);
-                    validate(bm, pixel, p.X, p.Y - 1, oldColor, newColor);
-                    validate(bm, pixel, p.X + 1, p.Y, oldColor, newColor);
-                    validate(bm, pixel, p.X, p.Y + 1, oldColor, newColor);
+                    validate(bm, pixel, p.X , p.Y-1, oldColor, newColor);
+                    validate(bm, pixel, p.X+ 1, p.Y, oldColor, newColor);
+                    validate(bm, pixel, p.X , p.Y+1, oldColor, newColor);
                 }
             }
         }
@@ -468,7 +493,7 @@ namespace OOPproject
             {
                 clearSelectedFig();
                 btn_fill.Hide();
-                btn_changeStkClr.Hide();
+                btn_change_clr.Hide();
                 Figure.SELECTED_COLOR = Color.DimGray;
                 isErased = false;
             }
@@ -476,19 +501,14 @@ namespace OOPproject
 
         private void btn_EditObject_Click(object sender, EventArgs e)
         {
-            //currSelect = FigureSelection.Point;
-            // if (Flist.NextIndex > 0)
-            showEditMenu();
+            currSelect = FigureSelection.Point;
+           // if (Flist.NextIndex > 0)
+                showEditMenu();
         }
 
         private void btn_change_clr_Click(object sender, EventArgs e) //change stroke color
         {
-            //currSelect = FigureSelection.Point;
-            //Figure.SELECTED_COLOR = New_Color;
-            //currSelect = FigureSelection.Point;
-            if (selectedFigureIndex != -1)
-                Flist[selectedFigureIndex].StrokeColor = New_Color;
-            //pic.Invalidate();
+            currSelect = FigureSelection.ChangeStrokeColor;
             showEditMenu();
             clearSelection(false);
         }
@@ -512,7 +532,7 @@ namespace OOPproject
 
         public void clearSelectedFig()
         {
-            if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
+            if (selectedFigureIndex  >= 0 && selectedFigureIndex < Flist.NextIndex)
             {
                 (Flist[selectedFigureIndex]).IsSelected = false;
                 selectedFigureIndex = -1;
@@ -522,60 +542,14 @@ namespace OOPproject
         public void showEditMenu()
         {
             btn_fill.Show();
-            btn_changeStkClr.Show();
-
+            btn_change_clr.Show();
+           
         }
 
         private void cB_selestSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             //new_width = (int)cB_selestSize.SelectedIndexChanged; //need to fix
         }
-
-        private void pic_Click(object sender, EventArgs e)
-        {
-            currSelect = FigureSelection.Point;
-        }
-
-        private void btn_import_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog open = new OpenFileDialog();
-            // image filters  
-           // open.Filter = "Image Files(*.jpg; *.jpeg; *.gif; *.bmp)|*.jpg; *.jpeg; *.gif; *.bmp";
-            if (open.ShowDialog() == DialogResult.OK)
-            {
-                // display image in picture box  
-                pic.Image = new Bitmap(open.FileName);
-                //pic.Image = open.FileName;
-                // image file path  
-                //MessageBox.Show("File uploded sucessfully!"); 
-                //textBox1.Text = open.FileName;
-            }
-            //using (OpenFileDialog ofd = new OpenFileDialog())
-            //{
-            //    //ofd.Title = "Open Image";
-            //    //dlg.Filter = "bmp files (*.bmp)|*.bmp";
-
-            //    if (ofd.ShowDialog() == DialogResult.OK)
-            //    {
-            //        PictureBox pic2 = new PictureBox();
-            //        pic2.Image = new Bitmap(ofd.FileName);
-
-            //        // Add the new control to its parent's controls collection
-            //        this.Controls.Add(pic2);
-            //    }
-            //}
-            // private System.Windows.Forms.OpenFileDialog openFileDialog1;
-            //var ofd = new OpenFileDialog();
-            //ofd.ShowDialog();
-            //if (ofd.ShowDialog() == DialogResult.OK)
-            //{
-            //    var pic2 = new PictureBox();
-            //    pic2.Image(ofd.FileName);
-            //}
-            //ofd.Dispose();
-            //ofd = new System.Windows.Forms.OpenFileDialog();
-            //pic.Image.Open(sfd.FileName, ImageFormat.Jpeg);
-            //MessageBox.Show("File uploded sucessfully!");      
-        } 
     }
+
 }
