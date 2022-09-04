@@ -75,7 +75,8 @@ namespace OOPproject
             mouseDownPoint.X = e.X;
             mouseDownPoint.Y = e.Y;
             figureIndex = Flist.NextIndex;
-            switch (currSelect)
+            if (selectedFigureIndex >= 0) clearSelectedFig();
+            switch (currSelect) 
             {
                 case FigureSelection.Pencil:
                     Flist[figureIndex] = new AbstractFig(e.X, e.Y);
@@ -177,8 +178,10 @@ namespace OOPproject
 
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
-            paint = false;
-            isMouseMoved = false;
+            //TODO removed last created figure if not drawn. if isMouseMoved = false and  paint = true ???
+
+
+
             figureIndex = -1;
             switch (currSelect)
             {
@@ -202,6 +205,7 @@ namespace OOPproject
             }
             if (!isMouseMoved) // mouse was clicked but didn't moved
             {
+               
                 bool foundFig = false;
                 for (int i = Flist.NextIndex - 1; i >= 0; i--)
                 {
@@ -222,6 +226,8 @@ namespace OOPproject
                     clearSelectedFig();
                 pic.Invalidate();
             }
+            isMouseMoved = false;
+            paint = false;
         }
 
         /***************************    Mouse Click       *******************************/
@@ -240,11 +246,8 @@ namespace OOPproject
                         if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
                         {
                             Flist[selectedFigureIndex].FillColor = New_Color;
-                            //Fill(bm, point.X, point.Y, New_Color);
                         }
                     }
-                    //Point point = set_point(pic, e.Location);
-                    //Fill(bm, point.X, point.Y, New_Color);
                     break;
                 case FigureSelection.ObjectEraser:
                     //int index = Flist.Find(e.X, e.Y);
@@ -263,8 +266,6 @@ namespace OOPproject
             
 
         }
-
-        
 
         private void pic_Paint(object sender, PaintEventArgs e)
         {
@@ -402,6 +403,7 @@ namespace OOPproject
                         }
                         break;
                     case 2: // Image
+                        clearSelectedFig();
                         pic.DrawToBitmap(bm, new System.Drawing.Rectangle(0, 0, pic.Width, pic.Height));
                         bm.Save(sfd.FileName, ImageFormat.Png);
                         MessageBox.Show("Image saved successfully!");
