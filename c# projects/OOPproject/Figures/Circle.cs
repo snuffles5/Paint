@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.Serialization;
 
 [Serializable]
 public class Circle : Figure
@@ -148,8 +149,15 @@ public class Circle : Figure
             surrundingRec.DashStyle = DashStyle.Dash;
             g.DrawRectangle(surrundingRec, TopLeft.X, TopLeft.Y, Radius * 2, Radius * 2);  // surrounding rectangle
         }
-        if (Pen == null) Pen = new Pen(StrokeColor, StrokeWidth);
+        if (TopLeft == null) // for deserialize
+        {
+            toChangeTopLeft = true;
+            TopLeft = null;
+            toChangeTopLeft = false;
+        }
         g.FillEllipse(br, TopLeft.X , TopLeft.Y, Radius * 2, Radius * 2);
+        if (Pen == null) 
+                Pen = new Pen(StrokeColor, StrokeWidth);  // for desrialize
         g.DrawEllipse(Pen, TopLeft.X, TopLeft.Y , Radius * 2, Radius * 2);
     }
     public override bool isInside(MyPoint point)

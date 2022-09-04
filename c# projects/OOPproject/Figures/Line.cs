@@ -97,10 +97,10 @@ public class Line: Figure
     {
         if (IsSelected)
             Pen = new Pen(SELECTED_COLOR, StrokeWidth);
-        else
-            Pen = new Pen(StrokeColor, StrokeWidth);
-        if (Pen == null) Pen = new Pen(StrokeColor, StrokeWidth);
+        if (Pen == null) Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
         g.DrawLine(Pen, Point1.X, Point1.Y, Point2.X, Point2.Y);
+        if (_path == null)
+            InitializePath(); // for desrialize
         _path.AddLine(Point1.X, Point1.Y, Point2.X, Point2.Y);
     }
 

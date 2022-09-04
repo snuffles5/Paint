@@ -78,6 +78,8 @@ public class Rhombus : Quadrilateral
         SolidBrush br = new SolidBrush(FillColor);
         graphic.FillPolygon(br, new PointF[] {new PointF(MyPoint.X, MyPoint.Y), new PointF(Vertices[0].X, Vertices[0].Y), new PointF(Vertices[1].X, Vertices[1].Y), new PointF(Vertices[2].X, Vertices[2].Y) });
         graphic.DrawPolygon(Pen, new PointF[] {new PointF(MyPoint.X, MyPoint.Y), new PointF(Vertices[0].X, Vertices[0].Y), new PointF(Vertices[1].X, Vertices[1].Y), new PointF(Vertices[2].X, Vertices[2].Y) });
+        if (_path == null)
+            InitializePath();// after desrialize
         _path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);
         _path.AddLine(Vertices[0].X, Vertices[0].Y, Vertices[1].X, Vertices[1].Y);
         _path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);
