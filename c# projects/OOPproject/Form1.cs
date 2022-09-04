@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
+
 namespace OOPproject
 {
     public partial class Form1 : Form
@@ -352,6 +353,16 @@ namespace OOPproject
                         }
                         break;           
                     case 2: // Image
+                        //if (pic != null)
+                        //{
+                        //        JpegBitmapEncoder jpg = new JpegBitmapEncoder();
+                        //        jpg.Frames.Add(BitmapFrame.Create(bi));
+                        //        using (Stream stm = File.Create(sfd.FileName))
+                        //        {
+                        //            jpg.Save(stm);
+                        //        }
+                            
+                        //}
                         pic.Image.Save(sfd.FileName, ImageFormat.Jpeg);
                         MessageBox.Show("Image saved successfully!");
                         break;
