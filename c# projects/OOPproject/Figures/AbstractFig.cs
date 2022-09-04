@@ -121,17 +121,29 @@ public class AbstractFig : Figure
         g.DrawPath(Pen,_path);
     }
 
-    public override bool isInside(MyPoint point)
-    {
-        return _path.IsOutlineVisible(point.X, point.Y, Pen);
-    }
-
     public override bool isInside(float x, float y)
     {
-        if(Pen != null)
-            return _path.IsOutlineVisible(x, y, Pen);
-        return false;
+        if (Pen == null)
+            Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
+        if (_path == null)
+            InitializePath(); // for desrialize
+        return _path.IsOutlineVisible(x, y, Pen) && isOnPath(x,y);
     }
+
+    public override bool isOnPath(float x, float y)
+    {
+        if (Pen == null)
+            Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
+        if (_path == null)
+            InitializePath(); // for desrialize
+        return _path.IsOutlineVisible(x, y, Pen);
+    }
+    public override bool isInsideSurrounding(float x, float y)
+    {
+        RectangleF recf = new RectangleF(_path.GetBounds().X, _path.GetBounds().Y, _path.GetBounds().Width, _path.GetBounds().Height);  // surrounding rectangle
+        return recf.Contains(x, y);
+    }
+            
 
     public override void Change(float x, float y)
     {

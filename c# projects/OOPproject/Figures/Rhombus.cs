@@ -85,26 +85,26 @@ public class Rhombus : Quadrilateral
         _path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);
         _path.AddLine(Vertices[2].X, Vertices[2].Y, MyPoint.X, MyPoint.Y);
     }
-    public override bool isInside(MyPoint point)
-    {
-        return Math.Abs(point.X - X) <= Width / 2 && Math.Abs(point.Y - Y) <= Height / 2;
-    }
     public override bool isInside(float x, float y)
+    {
+        return (Math.Abs(x - X) <= Width / 2 && Math.Abs(y - Y) <= Height / 2) && isOnPath(x, y); //TODO
+    }
+    public override bool isOnPath(float x, float y)
     {
         if (Vertices.Length != 0)
         {
-                //GraphicsPath path = new GraphicsPath();
-
-            ////Pen pen = new Pen(StrokeColor, StrokeWidth);
-            ////Graphics graphics;
-            //path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);
-            //path.AddLine(Vertices[0].X, Vertices[0].Y, Vertices[1].X, Vertices[1].Y);
-            //path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);
-            //path.AddLine(Vertices[2].X, Vertices[2].Y, MyPoint.X, MyPoint.Y);
+            if (Pen == null)
+                Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
+            if (_path == null)
+                InitializePath(); // for desrialize
             return _path.IsOutlineVisible(x, y, Pen);
-            //return Math.Abs(x - X) <= Width && Math.Abs(y - Y) <= Height;
         }
         return false;
+    }
+
+    public override bool isInsideSurrounding(float x, float y)
+    {
+        return false; //TODO
     }
 
     public override void Change(float x, float y)
@@ -116,8 +116,5 @@ public class Rhombus : Quadrilateral
     {
         //TODO   
     }
-
-
-    ~Rhombus() { System.Diagnostics.Debug.WriteLine("Destructor Rhombus"); }
 
 }

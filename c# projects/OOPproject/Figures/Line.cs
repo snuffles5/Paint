@@ -104,14 +104,18 @@ public class Line: Figure
         _path.AddLine(Point1.X, Point1.Y, Point2.X, Point2.Y);
     }
 
-    public override bool isInside(MyPoint point)
-    {
-        return _path.IsOutlineVisible(point.X, point.Y, Pen); 
-        //return true;
-    }
     public override bool isInside(float x, float y)
     {
+        return isOnPath(x, y);
+    }
+    public override bool isOnPath(float x, float y)
+    {
         return _path.IsOutlineVisible(x, y, Pen);
+    }
+
+    public override bool isInsideSurrounding(float x, float y)
+    {
+        return false; //TODO
     }
 
     public override void Change(float x, float y)

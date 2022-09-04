@@ -66,7 +66,7 @@ namespace OOPproject
 
         #region main events
 
-        /***************************    Mouse Down       *******************************/
+        /***************************  Mouse Down inside Pic    *******************************/
 
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
@@ -117,10 +117,62 @@ namespace OOPproject
                     Flist[figureIndex].StrokeWidth = DEFAULT_STROKE_WIDTH;
                     Flist[figureIndex].StrokeColor = New_Color;
                     break;
+                default:
+                    paint = false;
+                    break;
             }
             pic.Text = Flist.NextIndex + "";
         }
 
+        /***************************    Mouse Move       *******************************/
+
+        private void pic_MouseMove(object sender, MouseEventArgs e)
+        {
+           
+            if (paint && figureIndex != -1)
+            {
+                Figure c = (Figure)Flist[figureIndex];
+                switch (currSelect)
+                {
+                    case FigureSelection.Ellipse:
+                    case FigureSelection.Rectangle:
+                    case FigureSelection.Line: // line
+                    case FigureSelection.Rhombus: //rhombus
+                    case FigureSelection.Pencil:
+                    case FigureSelection.PerfectCircle:
+                        if (selectedFigureIndex < 0) // none object is selected
+                            c.Change(e.X, e.Y);
+                        break;
+                    case FigureSelection.ObjectEraser: // remove
+                        int index = Flist.Find(e.X, e.Y);
+                        //txtBoxForTesting.Text = index + " index to be erased";
+                        if (index != -1)
+                        {
+                            Flist.Remove(Flist.Find(e.X, e.Y));
+                            txtBoxForTesting.Text = index + " erased.";
+                            isErased = true;
+                            //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
+                        }
+                        break;
+                }
+
+                pic.Invalidate();
+            }
+            if (paint)
+            {
+                isMouseMoved = true;
+                if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex && Flist[selectedFigureIndex].isInsideSurrounding(e.X, e.Y))
+                {
+                    float offsetX = e.X - mouseDownPoint.X;
+                    mouseDownPoint.X = e.X;
+                    float offsetY = e.Y - mouseDownPoint.Y;
+                    mouseDownPoint.Y = e.Y;
+                    Flist[selectedFigureIndex].Move(offsetX, offsetY);
+                    isFigureMoved = true;
+                }
+                pic.Invalidate();
+            }
+        }
         /***************************    Mouse Up       *******************************/
 
         private void pic_MouseUp(object sender, MouseEventArgs e)
@@ -212,54 +264,7 @@ namespace OOPproject
 
         }
 
-        /***************************    Mouse Move       *******************************/
-
-        private void pic_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (paint) isMouseMoved = true;
-            if (paint && figureIndex != -1)
-            {
-                Figure c = (Figure)Flist[figureIndex];
-                switch (currSelect)
-                {
-                    case FigureSelection.Ellipse:
-                    case FigureSelection.Rectangle:
-                    case FigureSelection.Line: // line
-                    case FigureSelection.Rhombus: //rhombus
-                    case FigureSelection.Pencil:
-                    case FigureSelection.PerfectCircle:
-                        c.Change(e.X, e.Y);
-                        break;
-                    case FigureSelection.ObjectEraser: // remove
-                        int index = Flist.Find(e.X, e.Y);
-                        //txtBoxForTesting.Text = index + " index to be erased";
-                        if (index != -1)
-                        {
-                            Flist.Remove(Flist.Find(e.X, e.Y));
-                            txtBoxForTesting.Text = index + " erased.";
-                            isErased = true;
-                            //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
-                        }
-                        break;
-
-                }
-
-                pic.Invalidate();
-            }
-            if (!paint)
-            {
-                if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
-                {
-                    float offsetX = e.X - mouseDownPoint.X;
-                    mouseDownPoint.X = e.X;
-                    float offsetY = e.Y - mouseDownPoint.Y;
-                    mouseDownPoint.Y = e.Y;
-                    Flist[selectedFigureIndex].Move(offsetX, offsetY);
-                    isFigureMoved = true;
-                }
-                pic.Invalidate();
-            }
-        }
+        
 
         private void pic_Paint(object sender, PaintEventArgs e)
         {

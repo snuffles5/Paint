@@ -160,13 +160,22 @@ public class Circle : Figure
                 Pen = new Pen(StrokeColor, StrokeWidth);  // for desrialize
         g.DrawEllipse(Pen, TopLeft.X, TopLeft.Y , Radius * 2, Radius * 2);
     }
-    public override bool isInside(MyPoint point)
+    public override bool isOnPath(float x, float y)
     {
-        return Math.Sqrt(Math.Pow(point.X - X, 2) + Math.Pow(point.Y - Y, 2)) < Radius;
+        if (Pen == null)
+            Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
+        if (_path == null)
+            InitializePath(); // for desrialize
+        return true && isInside(x, y); //TODO
     }
     public override bool isInside(float x, float y)
     {
         return Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - Y, 2)) < Radius;
+    }
+    public override bool isInsideSurrounding(float x, float y)
+    {
+        RectangleF recf = new RectangleF(TopLeft.X, TopLeft.Y, Radius * 2, Radius * 2);  // surrounding rectangle
+        return recf.Contains(x, y);
     }
     public override void Change(float x, float y)
     {

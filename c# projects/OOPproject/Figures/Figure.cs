@@ -93,8 +93,9 @@ public abstract class Figure
     public abstract void Change(float x, float y);
     public abstract void Move(float x, float y);
     public abstract void Draw(Graphics g);
-    public abstract bool isInside(MyPoint MyPoint);
     public abstract bool isInside(float x, float y);
+    public abstract bool isOnPath(float x, float y);
+    public abstract bool isInsideSurrounding(float x, float y);
     
     public virtual void InitializePath()
     {

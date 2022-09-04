@@ -58,18 +58,18 @@ public class Ellipse : Figure
             InitializePath(); // for desrialize
         _path.AddEllipse(FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
     }
-    public override bool isInside(MyPoint point)
-    {
-        //return Math.Sqrt(Math.Pow(firstPoint.X - X, 2) + Math.Pow(firstPoint.Y - Y, 2)) < Radius;
-        // Todo 
-        return _path.IsOutlineVisible(point.X, point.Y, Pen);
-    }
     public override bool isInside(float x, float y)
     {
-        //return Math.Sqrt(Math.Pow(firstPoint.X - X, 2) + Math.Pow(firstPoint.Y - Y, 2)) < Radius;
-        // Todo 
-
+        return true && isOnPath(x, y); //TODO
+    }
+    public override bool isOnPath(float x, float y)
+    {
         return _path.IsOutlineVisible(x, y, Pen);
+    }
+
+    public override bool isInsideSurrounding(float x, float y)
+    {
+        return false; //TODO
     }
 
     public override void Change(float x, float y)

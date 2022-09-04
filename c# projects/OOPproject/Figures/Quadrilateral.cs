@@ -42,6 +42,8 @@ public abstract class Quadrilateral : Figure
         FillColor = Color.Black;
         StrokeWidth = strokeWidth;
     }
+
+
     public MyPoint[] Vertices
     {
         get

@@ -82,17 +82,26 @@ public class Rectangle : Quadrilateral // not supporting rotation
         _path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);
         _path.AddLine(Vertices[2].X, Vertices[2].Y, MyPoint.X, MyPoint.Y);
     }
-    public override bool isInside(MyPoint point)
-    {
-        return Math.Abs(point.X - X) <= Width / 2 && Math.Abs(point.Y - Y) <= Height / 2;
-    }
     public override bool isInside(float x, float y)
+    {
+        return (Math.Abs(x - X) <= Width / 2 && Math.Abs(y - Y) <= Height / 2) && isOnPath(x, y);
+    }
+    public override bool isOnPath(float x, float y)
     {
         if (Vertices.Length != 0)
         {
+            if (Pen == null)
+                Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
+            if (_path == null)
+                InitializePath(); // for desrialize
             return _path.IsOutlineVisible(x, y, Pen);
         }
         return false;
+    }
+
+    public override bool isInsideSurrounding(float x, float y)
+    {
+        return isInside(x,y) && isOnPath(x,y);
     }
 
     public override void Change(float x, float y)
