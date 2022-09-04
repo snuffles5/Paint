@@ -59,6 +59,8 @@ namespace OOPproject
         bool isErased;
         MyPoint mouseDownPoint = new MyPoint();
         bool isMoved;
+        private bool isMouseMoved;
+
         //int new_width;
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
@@ -108,29 +110,22 @@ namespace OOPproject
                     Flist[figureIndex].StrokeColor = New_Color;
                     break;
                 case FigureSelection.Point:
-                    mouseDownPoint.X = e.X;
-                    mouseDownPoint.Y = e.Y;
+                    //mouseDownPoint.X = e.X;
+                   // mouseDownPoint.Y = e.Y;
                     break;
             }
             pic.Text = Flist.NextIndex + "";
         }
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
+            if (paint) isMouseMoved = true;
             if (paint && figureIndex != -1)
             {
                 Figure c = (Figure)Flist[figureIndex];
                 switch (currSelect)
                 {
                     case FigureSelection.Point:
-                        if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
-                        {
-                            float offsetX = e.X - mouseDownPoint.X;
-                            mouseDownPoint.X = e.X;
-                            float offsetY = e.Y - mouseDownPoint.Y;
-                            mouseDownPoint.Y = e.Y;
-                            Flist[selectedFigureIndex].Move(offsetX, offsetY);
-                            isMoved = true;
-                        }
+                        
                         break;
                     case FigureSelection.Ellipse:
                     case FigureSelection.Rectangle:
@@ -162,16 +157,27 @@ namespace OOPproject
                         break;
 
                 }
+               
                 pic.Invalidate();
             }
             if (!paint)
             {
-
+                if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
+                {
+                    float offsetX = e.X - mouseDownPoint.X;
+                    mouseDownPoint.X = e.X;
+                    float offsetY = e.Y - mouseDownPoint.Y;
+                    mouseDownPoint.Y = e.Y;
+                    Flist[selectedFigureIndex].Move(offsetX, offsetY);
+                    isMoved = true;
+                }
+                pic.Invalidate();
             }
         }
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
             paint = false;
+            isMouseMoved = false;
             figureIndex = -1;
             switch (currSelect)
             {
@@ -405,12 +411,8 @@ namespace OOPproject
                         //Fill(bm, point.X, point.Y, New_Color);
                         if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
                         {
-                            Point point = set_point(pic, e.Location);
-                            point.X = (int)(e.X - mouseDownPoint.X);
-                            mouseDownPoint.X = e.X;
-                            point.Y = (int)(e.Y - mouseDownPoint.Y);
-                            mouseDownPoint.Y = e.Y;
-                            Fill(bm, point.X, point.Y, New_Color);
+                            Flist[selectedFigureIndex].FillColor=New_Color;
+                            //Fill(bm, point.X, point.Y, New_Color);
                         }
                     }
                     //Point point = set_point(pic, e.Location);
@@ -427,28 +429,33 @@ namespace OOPproject
                     //} 
                     break;
                 case FigureSelection.Point:
-                    bool foundFig = false;
-                    for (int i = Flist.NextIndex - 1; i >= 0; i--)
-                    {
-                        if (Flist[i].isInside(e.X, e.Y))
-                        {
-                            pic.Text = ((Flist[i]).GetType()).ToString() + " [" + i + "]";
-                            if (selectedFigureIndex != -1) {
-                                clearSelectedFig();
-                            }
-                            selectedFigureIndex = i;
-                            (Flist[i]).IsSelected = true;
-                            foundFig = true;
-                            break;
-                        }
-                    }
-                    if (!foundFig)
-                        clearSelectedFig();
-                    pic.Invalidate();
+                   
                     break;
                 case FigureSelection.ChangeStrokeColor:
 
                     break;
+            }
+            if (!isMouseMoved)
+            {
+                bool foundFig = false;
+                for (int i = Flist.NextIndex - 1; i >= 0; i--)
+                {
+                    if (Flist[i].isInside(e.X, e.Y))
+                    {
+                        pic.Text = ((Flist[i]).GetType()).ToString() + " [" + i + "]";
+                        if (selectedFigureIndex != -1)
+                        {
+                            clearSelectedFig();
+                        }
+                        selectedFigureIndex = i;
+                        (Flist[i]).IsSelected = true;
+                        foundFig = true;
+                        break;
+                    }
+                }
+                if (!foundFig)
+                    clearSelectedFig();
+                pic.Invalidate();
             }
             
         }
@@ -483,25 +490,25 @@ namespace OOPproject
             currSelect = FigureSelection.Point;
         }
 
-        public void Fill(Bitmap bm,int x ,int y,Color newColor )
-        {
-            Color oldColor = bm.GetPixel(x, y);
-            Stack<Point> pixel = new Stack<Point>();
-            pixel.Push(new Point(x,y));
-            bm.SetPixel(x, y, newColor);
-            if (oldColor == newColor) return;
-            while(pixel.Count>0)
-            {
-                Point p = (Point)pixel.Pop();
-                if (p.X > 0 && p.Y > 0 && p.X < bm.Width - 1 && p.Y < bm.Height - 1)
-                {
-                    validate(bm, pixel, p.X - 1, p.Y, oldColor, newColor);
-                    validate(bm, pixel, p.X , p.Y-1, oldColor, newColor);
-                    validate(bm, pixel, p.X+ 1, p.Y, oldColor, newColor);
-                    validate(bm, pixel, p.X , p.Y+1, oldColor, newColor);
-                }
-            }
-        }
+        //public void Fill(Bitmap bm,int x ,int y,Color newColor )
+        //{
+        //    Color oldColor = bm.GetPixel(x, y);
+        //    Stack<Point> pixel = new Stack<Point>();
+        //    pixel.Push(new Point(x,y));
+        //    bm.SetPixel(x, y, newColor);
+        //    if (oldColor == newColor) return;
+        //    while(pixel.Count>0)
+        //    {
+        //        Point p = (Point)pixel.Pop();
+        //        if (p.X > 0 && p.Y > 0 && p.X < bm.Width - 1 && p.Y < bm.Height - 1)
+        //        {
+        //            validate(bm, pixel, p.X - 1, p.Y, oldColor, newColor);
+        //            validate(bm, pixel, p.X , p.Y-1, oldColor, newColor);
+        //            validate(bm, pixel, p.X+ 1, p.Y, oldColor, newColor);
+        //            validate(bm, pixel, p.X , p.Y+1, oldColor, newColor);
+        //        }
+        //    }
+        //}
 
         public void clearSelection(bool clearAll)
         {
@@ -572,10 +579,7 @@ namespace OOPproject
         {
             //new_width = (int)cB_selestSize.SelectedIndexChanged; //need to fix
         }
-        private void pic_Click(object sender, EventArgs e)
-        {
-            currSelect = FigureSelection.Point;
-        }
+       
     }
    
 }

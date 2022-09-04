@@ -459,7 +459,7 @@ namespace OOPproject
             this.pic.Size = new System.Drawing.Size(928, 591);
             this.pic.TabIndex = 1;
             this.pic.TabStop = false;
-            this.pic.Click += new System.EventHandler(this.pic_Click);
+           // this.pic.Click += new System.EventHandler(this.pic_Click);
             this.pic.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_Paint);
             this.pic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pic_MouseClick);
             this.pic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_MouseDown);

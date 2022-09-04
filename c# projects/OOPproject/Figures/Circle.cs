@@ -33,7 +33,7 @@ public class Circle : Figure
         StrokeWidth = strokeWidth;
     }
 
-    public Circle(float x, float y, float radius = DEFAULT_RADIUS, int strokeWidth = 1)
+    public Circle(float x, float y, float radius = DEFAULT_RADIUS, int strokeWidth = 1) 
     {
         MyPoint = new MyPoint(x, y);
         Radius = radius;
@@ -148,7 +148,7 @@ public class Circle : Figure
             surrundingRec.DashStyle = DashStyle.Dash;
             g.DrawRectangle(surrundingRec, TopLeft.X, TopLeft.Y, Radius * 2, Radius * 2);  // surrounding rectangle
         }
-        
+        if (Pen == null) Pen = new Pen(StrokeColor, StrokeWidth);
         g.FillEllipse(br, TopLeft.X , TopLeft.Y, Radius * 2, Radius * 2);
         g.DrawEllipse(Pen, TopLeft.X, TopLeft.Y , Radius * 2, Radius * 2);
     }
