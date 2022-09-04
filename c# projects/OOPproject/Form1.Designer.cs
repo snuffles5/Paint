@@ -161,6 +161,7 @@ namespace OOPproject
             this.btn_import.Size = new System.Drawing.Size(43, 42);
             this.btn_import.TabIndex = 19;
             this.btn_import.UseVisualStyleBackColor = false;
+            this.btn_import.Click += new System.EventHandler(this.btn_import_Click);
             // 
             // btn_changeStkClr
             // 
