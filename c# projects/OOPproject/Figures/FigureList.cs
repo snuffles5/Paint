@@ -31,7 +31,7 @@ public class FigureList
     {
         get
         {
-            if (index >= figures.Count)
+            if (index < 0 || index >= figures.Count)
                 return (Figure)null;
             return (Figure)figures.GetByIndex(index);
         }
