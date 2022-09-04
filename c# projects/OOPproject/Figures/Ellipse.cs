@@ -50,6 +50,7 @@ public class Ellipse : Figure
             Pen = new Pen(SELECTED_COLOR, StrokeWidth);
         //else
         //    Pen = new Pen(StrokeColor, StrokeWidth);
+        if (Pen == null) Pen = new Pen(StrokeColor, StrokeWidth);
         graphic.FillEllipse(br, FirstPoint.X, FirstPoint.Y, SecondPoint.X-FirstPoint.X, SecondPoint.Y-FirstPoint.Y);
         graphic.DrawEllipse(Pen, FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
         _path.AddEllipse(FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);

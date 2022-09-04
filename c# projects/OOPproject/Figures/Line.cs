@@ -99,6 +99,7 @@ public class Line: Figure
             Pen = new Pen(SELECTED_COLOR, StrokeWidth);
         else
             Pen = new Pen(StrokeColor, StrokeWidth);
+        if (Pen == null) Pen = new Pen(StrokeColor, StrokeWidth);
         g.DrawLine(Pen, Point1.X, Point1.Y, Point2.X, Point2.Y);
         _path.AddLine(Point1.X, Point1.Y, Point2.X, Point2.Y);
     }

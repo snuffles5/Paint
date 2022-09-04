@@ -74,6 +74,7 @@ public class Rhombus : Quadrilateral
             Pen = new Pen(SELECTED_COLOR, StrokeWidth);
         //else
         //    Pen = new Pen(StrokeColor, StrokeWidth);
+        if (Pen == null) Pen = new Pen(StrokeColor, StrokeWidth);
         SolidBrush br = new SolidBrush(FillColor);
         graphic.FillPolygon(br, new PointF[] {new PointF(MyPoint.X, MyPoint.Y), new PointF(Vertices[0].X, Vertices[0].Y), new PointF(Vertices[1].X, Vertices[1].Y), new PointF(Vertices[2].X, Vertices[2].Y) });
         graphic.DrawPolygon(Pen, new PointF[] {new PointF(MyPoint.X, MyPoint.Y), new PointF(Vertices[0].X, Vertices[0].Y), new PointF(Vertices[1].X, Vertices[1].Y), new PointF(Vertices[2].X, Vertices[2].Y) });
