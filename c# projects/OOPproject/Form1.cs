@@ -55,13 +55,11 @@ namespace OOPproject
         bool isErased;
         MyPoint mouseDownPoint = new MyPoint();
         bool isMoved;
-        int new_width;
+        //int new_width;
         private void pic_MouseDown(object sender, MouseEventArgs e)
         {
             paint = true;
             //pY = e.Location;
-
-
             figureIndex = Flist.NextIndex;
             switch (currSelect)
             {
@@ -138,12 +136,12 @@ namespace OOPproject
                     case FigureSelection.Pencil:
                         c.Change(e.X, e.Y);
                         break;
-                    case FigureSelection.Fill: // fill
+                    case FigureSelection.Fill:// fill
+                   
                         break;// pencil 
                     case FigureSelection.ObjectEraser:
                         int index = Flist.Find(e.X, e.Y);
                         //txtBoxForTesting.Text = index + " index to be erased";
-
                         if (index != -1)
                         {
                             Flist.Remove(Flist.Find(e.X, e.Y));
@@ -219,11 +217,11 @@ namespace OOPproject
             currSelect = FigureSelection.Color;
             New_Color = cd.Color;
             pic_color.BackColor = cd.Color;
-            Figure.SELECTED_COLOR = New_Color;
+            //Figure.SELECTED_COLOR = New_Color;
             pen1.Color = cd.Color;
-            if (selectedFigureIndex != -1)
-                Flist[selectedFigureIndex].StrokeColor = New_Color;
-            clearSelection(false);
+            //if (selectedFigureIndex != -1)
+            //    Flist[selectedFigureIndex].StrokeColor = New_Color;
+            //clearSelection(false);
             pic.Invalidate();
         }
         private void btn_pencil_Click(object sender, EventArgs e)
@@ -328,6 +326,7 @@ namespace OOPproject
             var sfd = new SaveFileDialog();
             //sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
             sfd.Filter = "Model (*.mdl)|*.mdl|Image (*.jpg)|*.jpg|(*.*)|*.*";
+            sfd.FilterIndex = 2;
             if(sfd.ShowDialog()==DialogResult.OK)
             {
                 switch (sfd.FilterIndex)
@@ -362,7 +361,20 @@ namespace OOPproject
             {
                 case FigureSelection.Fill:
                     //Point point = set_point(pic, e.Location);
-                    //Fill(bm, point.X, point.Y, New_Color);
+                    int index = Flist.Find(e.X, e.Y);
+                    if (index != -1)
+                    {
+                        //Fill(bm, point.X, point.Y, New_Color);
+                        if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
+                        {
+                            Point point = set_point(pic, e.Location);
+                            point.X = (int)(e.X - mouseDownPoint.X);
+                            mouseDownPoint.X = e.X;
+                            point.Y = (int)(e.Y - mouseDownPoint.Y);
+                            mouseDownPoint.Y = e.Y;
+                            Fill(bm, point.X, point.Y, New_Color);
+                        }
+                    }
                     break;
                 case FigureSelection.ObjectEraser:
                     //int index = Flist.Find(e.X, e.Y);
@@ -394,6 +406,9 @@ namespace OOPproject
                         clearSelectedFig();
                     pic.Invalidate();
                     break;
+                case FigureSelection.ChangeStrokeColor:
+
+                    break;
             }
             
         }
@@ -407,13 +422,13 @@ namespace OOPproject
             Flist.DrawAll(paintGraphics);
             //textBoxForTesting.Text = Flist.NextIndex + "-" + currSelect.ToString();
         }
-        //static Point set_point(PictureBox pb, Point p)
-        //{
-        //    float pX = 1f * pb.Image.Width / pb.Width;
-        //    float pY = 1f * pb.Image.Height / pb.Height;
-        //    return new Point((int)(p.X * pX),(int)(p.Y * pY));
-        //}
-         private void validate(Bitmap bm,Stack<Point>sp,int x, int y, Color oldColor,Color newColor)
+        static Point set_point(PictureBox pb, Point p)
+        {
+            float pX = 1f * pb.Image.Width / pb.Width;
+            float pY = 1f * pb.Image.Height / pb.Height;
+            return new Point((int)(p.X * pX), (int)(p.Y * pY));
+        }
+        private void validate(Bitmap bm,Stack<Point>sp,int x, int y, Color oldColor,Color newColor)
         {
             Color cx = bm.GetPixel(x, y);
             if(cx==oldColor)
@@ -455,7 +470,7 @@ namespace OOPproject
             {
                 clearSelectedFig();
                 btn_fill.Hide();
-                btn_change_clr.Hide();
+                btn_changeStkClr.Hide();
                 Figure.SELECTED_COLOR = Color.DimGray;
                 isErased = false;
             }
@@ -463,14 +478,19 @@ namespace OOPproject
 
         private void btn_EditObject_Click(object sender, EventArgs e)
         {
-            currSelect = FigureSelection.Point;
+            //currSelect = FigureSelection.Point;
            // if (Flist.NextIndex > 0)
                 showEditMenu();
         }
 
         private void btn_change_clr_Click(object sender, EventArgs e) //change stroke color
         {
-            currSelect = FigureSelection.ChangeStrokeColor;
+            //currSelect = FigureSelection.Point;
+            //Figure.SELECTED_COLOR = New_Color;
+            //currSelect = FigureSelection.Point;
+            if (selectedFigureIndex != -1)
+                Flist[selectedFigureIndex].StrokeColor = New_Color;
+            //pic.Invalidate();
             showEditMenu();
             clearSelection(false);
         }
@@ -504,13 +524,18 @@ namespace OOPproject
         public void showEditMenu()
         {
             btn_fill.Show();
-            btn_change_clr.Show();
+            btn_changeStkClr.Show();
            
         }
 
         private void cB_selestSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             //new_width = (int)cB_selestSize.SelectedIndexChanged; //need to fix
+        }
+
+        private void pic_Click(object sender, EventArgs e)
+        {
+            currSelect = FigureSelection.Point;
         }
     }
 

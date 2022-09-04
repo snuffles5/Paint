@@ -30,12 +30,13 @@ namespace OOPproject
         private void InitializeComponent()
         {
             this.pnl_btns = new System.Windows.Forms.Panel();
+            this.cB_selestSize = new System.Windows.Forms.ComboBox();
             this.line3 = new System.Windows.Forms.Panel();
             this.line2 = new System.Windows.Forms.Panel();
             this.line1 = new System.Windows.Forms.Panel();
             this.btn_strokeWidth = new System.Windows.Forms.Button();
             this.btn_import = new System.Windows.Forms.Button();
-            this.btn_change_clr = new System.Windows.Forms.Button();
+            this.btn_changeStkClr = new System.Windows.Forms.Button();
             this.pic_color = new System.Windows.Forms.Button();
             this.btn_fill = new System.Windows.Forms.Button();
             this.ObjectsEraser = new System.Windows.Forms.Button();
@@ -55,7 +56,6 @@ namespace OOPproject
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pic = new System.Windows.Forms.PictureBox();
             this.txtBoxForTesting = new System.Windows.Forms.TextBox();
-            this.cB_selestSize = new System.Windows.Forms.ComboBox();
             this.pnl_btns.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -71,7 +71,7 @@ namespace OOPproject
             this.pnl_btns.Controls.Add(this.line1);
             this.pnl_btns.Controls.Add(this.btn_strokeWidth);
             this.pnl_btns.Controls.Add(this.btn_import);
-            this.pnl_btns.Controls.Add(this.btn_change_clr);
+            this.pnl_btns.Controls.Add(this.btn_changeStkClr);
             this.pnl_btns.Controls.Add(this.pic_color);
             this.pnl_btns.Controls.Add(this.btn_fill);
             this.pnl_btns.Controls.Add(this.ObjectsEraser);
@@ -91,6 +91,16 @@ namespace OOPproject
             this.pnl_btns.Name = "pnl_btns";
             this.pnl_btns.Size = new System.Drawing.Size(928, 70);
             this.pnl_btns.TabIndex = 0;
+            // 
+            // cB_selestSize
+            // 
+            this.cB_selestSize.FormattingEnabled = true;
+            this.cB_selestSize.Location = new System.Drawing.Point(476, 47);
+            this.cB_selestSize.Name = "cB_selestSize";
+            this.cB_selestSize.Size = new System.Drawing.Size(33, 23);
+            this.cB_selestSize.TabIndex = 24;
+            this.cB_selestSize.Visible = false;
+            this.cB_selestSize.SelectedIndexChanged += new System.EventHandler(this.cB_selestSize_SelectedIndexChanged);
             // 
             // line3
             // 
@@ -152,27 +162,27 @@ namespace OOPproject
             this.btn_import.TabIndex = 19;
             this.btn_import.UseVisualStyleBackColor = false;
             // 
-            // btn_change_clr
+            // btn_changeStkClr
             // 
-            this.btn_change_clr.BackColor = System.Drawing.Color.PapayaWhip;
-            this.btn_change_clr.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.btn_change_clr.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btn_change_clr.FlatAppearance.BorderSize = 0;
-            this.btn_change_clr.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(215)))), ((int)(((byte)(192)))));
-            this.btn_change_clr.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(215)))), ((int)(((byte)(192)))));
-            this.btn_change_clr.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_change_clr.Font = new System.Drawing.Font("Segoe UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.btn_change_clr.ForeColor = System.Drawing.Color.Black;
-            this.btn_change_clr.Image = global::OOPproject.Properties.Resources.paint_brush;
-            this.btn_change_clr.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btn_change_clr.Location = new System.Drawing.Point(712, 14);
-            this.btn_change_clr.Name = "btn_change_clr";
-            this.btn_change_clr.Size = new System.Drawing.Size(43, 40);
-            this.btn_change_clr.TabIndex = 15;
-            this.btn_change_clr.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_change_clr.UseVisualStyleBackColor = false;
-            this.btn_change_clr.Visible = false;
-            this.btn_change_clr.Click += new System.EventHandler(this.btn_change_clr_Click);
+            this.btn_changeStkClr.BackColor = System.Drawing.Color.PapayaWhip;
+            this.btn_changeStkClr.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_changeStkClr.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_changeStkClr.FlatAppearance.BorderSize = 0;
+            this.btn_changeStkClr.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(215)))), ((int)(((byte)(192)))));
+            this.btn_changeStkClr.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(215)))), ((int)(((byte)(192)))));
+            this.btn_changeStkClr.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_changeStkClr.Font = new System.Drawing.Font("Segoe UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_changeStkClr.ForeColor = System.Drawing.Color.Black;
+            this.btn_changeStkClr.Image = global::OOPproject.Properties.Resources.paint_brush;
+            this.btn_changeStkClr.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.btn_changeStkClr.Location = new System.Drawing.Point(712, 14);
+            this.btn_changeStkClr.Name = "btn_changeStkClr";
+            this.btn_changeStkClr.Size = new System.Drawing.Size(43, 40);
+            this.btn_changeStkClr.TabIndex = 15;
+            this.btn_changeStkClr.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_changeStkClr.UseVisualStyleBackColor = false;
+            this.btn_changeStkClr.Visible = false;
+            this.btn_changeStkClr.Click += new System.EventHandler(this.btn_change_clr_Click);
             // 
             // pic_color
             // 
@@ -448,6 +458,7 @@ namespace OOPproject
             this.pic.Size = new System.Drawing.Size(928, 591);
             this.pic.TabIndex = 1;
             this.pic.TabStop = false;
+            this.pic.Click += new System.EventHandler(this.pic_Click);
             this.pic.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_Paint);
             this.pic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pic_MouseClick);
             this.pic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_MouseDown);
@@ -465,16 +476,6 @@ namespace OOPproject
             this.txtBoxForTesting.Size = new System.Drawing.Size(424, 23);
             this.txtBoxForTesting.TabIndex = 2;
             this.txtBoxForTesting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // cB_selestSize
-            // 
-            this.cB_selestSize.FormattingEnabled = true;
-            this.cB_selestSize.Location = new System.Drawing.Point(476, 47);
-            this.cB_selestSize.Name = "cB_selestSize";
-            this.cB_selestSize.Size = new System.Drawing.Size(33, 23);
-            this.cB_selestSize.TabIndex = 24;
-            this.cB_selestSize.Visible = false;
-            this.cB_selestSize.SelectedIndexChanged += new System.EventHandler(this.cB_selestSize_SelectedIndexChanged);
             // 
             // Form1
             // 
@@ -514,7 +515,7 @@ namespace OOPproject
         private System.Windows.Forms.Button btn_rhombus;
         private System.Windows.Forms.Button btn_undo;
         private System.Windows.Forms.Button btn_EditObject;
-        private System.Windows.Forms.Button btn_change_clr;
+        private System.Windows.Forms.Button btn_changeStkClr;
         private System.Windows.Forms.Button btn_fill;
         private System.Windows.Forms.Button ObjectsEraser;
         //private System.Windows.Forms.PictureBox pictureBox1;
