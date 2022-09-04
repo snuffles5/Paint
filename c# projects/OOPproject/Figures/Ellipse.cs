@@ -50,9 +50,12 @@ public class Ellipse : Figure
             Pen = new Pen(SELECTED_COLOR, StrokeWidth);
         //else
         //    Pen = new Pen(StrokeColor, StrokeWidth);
-        if (Pen == null) Pen = new Pen(StrokeColor, StrokeWidth);
+        if (Pen == null) 
+            Pen = new Pen(StrokeColor, StrokeWidth);  // for desrialize
         graphic.FillEllipse(br, FirstPoint.X, FirstPoint.Y, SecondPoint.X-FirstPoint.X, SecondPoint.Y-FirstPoint.Y);
         graphic.DrawEllipse(Pen, FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
+        if (_path == null)
+            InitializePath(); // for desrialize
         _path.AddEllipse(FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
     }
     public override bool isInside(MyPoint point)

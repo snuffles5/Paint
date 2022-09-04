@@ -95,5 +95,11 @@ public abstract class Figure
     public abstract void Draw(Graphics g);
     public abstract bool isInside(MyPoint MyPoint);
     public abstract bool isInside(float x, float y);
+    
+    public virtual void InitializePath()
+    {
+        if (_path == null)
+            _path = new GraphicsPath();
+    }
 
 }

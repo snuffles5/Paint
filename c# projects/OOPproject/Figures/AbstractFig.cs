@@ -80,9 +80,9 @@ public class AbstractFig : Figure
         }
     }
 
-    private void initializePath()
+    public override void InitializePath()
     {
-        _path = new GraphicsPath();
+        _path = new GraphicsPath(); 
         if (MyPoint != null)
         {
             MyPoint prev = Vertices != null ? Vertices[0] : MyPoint;
@@ -114,9 +114,10 @@ public class AbstractFig : Figure
             g.DrawRectangle(surrundingRec, _path.GetBounds().X, _path.GetBounds().Y, _path.GetBounds().Width, _path.GetBounds().Height);  // surrounding rectangle
             
         }
-        if (Pen == null) Pen = new Pen(StrokeColor, StrokeWidth);
-        //Pen = new Pen(StrokeColor, StrokeWidth);
-        if (_path == null) initializePath(); // after desrialize
+        if (Pen == null) 
+            Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
+        if (_path == null)
+            InitializePath(); // for desrialize
         g.DrawPath(Pen,_path);
     }
 
