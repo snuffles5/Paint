@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+//System.Windows.Media.Imaging;
 
 
 namespace OOPproject
@@ -20,7 +21,7 @@ namespace OOPproject
             bm = new Bitmap(pic.Width, pic.Height);
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
-            pic.Image = bm;   
+            pic.Image = bm;
         }
 
         private void Form1_Shown(Object sender, EventArgs e)
@@ -35,8 +36,8 @@ namespace OOPproject
 
         public enum FigureSelection
         {
-            Point, None, 
-            Pencil, Ellipse, PerfectCircle, Rectangle, Line, Rhombus, 
+            Point, None,
+            Pencil, Ellipse, PerfectCircle, Rectangle, Line, Rhombus,
             ObjectEraser, Fill, Color, Clear, Undo, Redo, StrokeWidth, ChangeStrokeColor,
             Import,
             Save
@@ -112,7 +113,7 @@ namespace OOPproject
                     break;
                 case FigureSelection.Point:
                     //mouseDownPoint.X = e.X;
-                   // mouseDownPoint.Y = e.Y;
+                    // mouseDownPoint.Y = e.Y;
                     break;
             }
             pic.Text = Flist.NextIndex + "";
@@ -126,7 +127,7 @@ namespace OOPproject
                 switch (currSelect)
                 {
                     case FigureSelection.Point:
-                        
+
                         break;
                     case FigureSelection.Ellipse:
                     case FigureSelection.Rectangle:
@@ -154,11 +155,11 @@ namespace OOPproject
                         float newY = Math.Abs(((Circle)c).Y - e.Y);
                         double dis = Math.Sqrt(newX * newX + newY * newY);
                         //((Circle)c).Radius = (float)dis; // double to float TODO
-                        c.Change(e.X , e.Y);
+                        c.Change(e.X, e.Y);
                         break;
 
                 }
-               
+
                 pic.Invalidate();
             }
             if (!paint)
@@ -195,9 +196,9 @@ namespace OOPproject
                     isErased = false;
                     break;
                 case FigureSelection.Point:
-                if (isMoved) // to fix?
-                    saveCurrentState();
-                    isMoved = false; 
+                    if (isMoved) // to fix?
+                        saveCurrentState();
+                    isMoved = false;
                     break;
             }
         }
@@ -230,7 +231,7 @@ namespace OOPproject
             //Figure.SELECTED_COLOR = New_Color;
             pen1.Color = cd.Color;
             //if (selectedFigureIndex != -1)
-             //   Flist[selectedFigureIndex].StrokeColor = New_Color;
+            //   Flist[selectedFigureIndex].StrokeColor = New_Color;
             clearSelection(false);//?
             pic.Invalidate();
         }
@@ -323,21 +324,21 @@ namespace OOPproject
         {
             if (currentFlistIndex == 0)
                 btn_undo.Enabled = false;
-            else 
-                btn_undo.Enabled = true;
-            if (currentFlistIndex<FHistoryList.Count-1)    
-            btn_redo.Enabled = true;   
             else
-                btn_redo.Enabled = false; 
-         }
+                btn_undo.Enabled = true;
+            if (currentFlistIndex < FHistoryList.Count - 1)
+                btn_redo.Enabled = true;
+            else
+                btn_redo.Enabled = false;
+        }
 
         private void btn_save_Click(object sender, EventArgs e)
         {
             currSelect = FigureSelection.Save;
             var sfd = new SaveFileDialog();
             //sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
-            sfd.Filter = "Model (*.mdl)|*.mdl|Image (*.jpg)|*.jpg|(*.*)|*.*";
-            if(sfd.ShowDialog()==DialogResult.OK)
+            sfd.Filter = "Model (*.mdl)|*.mdl|Image (*.png)|*.png|(*.*)|*.*";
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
                 switch (sfd.FilterIndex)
                 {
@@ -349,24 +350,13 @@ namespace OOPproject
                             formatter.Serialize(stream, Flist);
                             stream.Close();
                             MessageBox.Show("File saved successfully!");
-
                         }
-                        break;           
+                        break;
                     case 2: // Image
-                        //if (pic != null)
-                        //{
-                        //        JpegBitmapEncoder jpg = new JpegBitmapEncoder();
-                        //        jpg.Frames.Add(BitmapFrame.Create(bi));
-                        //        using (Stream stm = File.Create(sfd.FileName))
-                        //        {
-                        //            jpg.Save(stm);
-                        //        }
-                            
-                        //}
-                        pic.Image.Save(sfd.FileName, ImageFormat.Jpeg);
+                        pic.DrawToBitmap(bm, new System.Drawing.Rectangle(0, 0, pic.Width, pic.Height));
+                        bm.Save(sfd.FileName, ImageFormat.Png);
                         MessageBox.Show("Image saved successfully!");
                         break;
-
                     case 3: // All
 
                         break;
@@ -422,7 +412,7 @@ namespace OOPproject
                         //Fill(bm, point.X, point.Y, New_Color);
                         if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
                         {
-                            Flist[selectedFigureIndex].FillColor=New_Color;
+                            Flist[selectedFigureIndex].FillColor = New_Color;
                             //Fill(bm, point.X, point.Y, New_Color);
                         }
                     }
@@ -440,7 +430,7 @@ namespace OOPproject
                     //} 
                     break;
                 case FigureSelection.Point:
-                   
+
                     break;
                 case FigureSelection.ChangeStrokeColor:
 
@@ -468,7 +458,7 @@ namespace OOPproject
                     clearSelectedFig();
                 pic.Invalidate();
             }
-            
+
         }
         #endregion
 
@@ -486,10 +476,10 @@ namespace OOPproject
             float pY = 1f * pb.Image.Height / pb.Height;
             return new Point((int)(p.X * pX), (int)(p.Y * pY));
         }
-        private void validate(Bitmap bm,Stack<Point>sp,int x, int y, Color oldColor,Color newColor)
+        private void validate(Bitmap bm, Stack<Point> sp, int x, int y, Color oldColor, Color newColor)
         {
             Color cx = bm.GetPixel(x, y);
-            if(cx==oldColor)
+            if (cx == oldColor)
             {
                 sp.Push(new Point(x, y));
                 bm.SetPixel(x, y, newColor);
@@ -537,8 +527,8 @@ namespace OOPproject
         private void btn_EditObject_Click(object sender, EventArgs e)
         {
             //currSelect = FigureSelection.Point;
-           // if (Flist.NextIndex > 0)
-                showEditMenu();
+            // if (Flist.NextIndex > 0)
+            showEditMenu();
         }
 
         private void btn_change_clr_Click(object sender, EventArgs e) //change stroke color
@@ -572,7 +562,7 @@ namespace OOPproject
 
         public void clearSelectedFig()
         {
-            if (selectedFigureIndex  >= 0 && selectedFigureIndex < Flist.NextIndex)
+            if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
             {
                 (Flist[selectedFigureIndex]).IsSelected = false;
                 selectedFigureIndex = -1;
@@ -583,14 +573,14 @@ namespace OOPproject
         {
             btn_fill.Show();
             btn_changeStkClr.Show();
-           
+
         }
 
         private void cB_selestSize_SelectedIndexChanged(object sender, EventArgs e)
         {
             //new_width = (int)cB_selestSize.SelectedIndexChanged; //need to fix
         }
-       
+
     }
-   
+
 }
