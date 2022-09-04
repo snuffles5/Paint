@@ -8,11 +8,11 @@ namespace OOPproject
     
     class Logger
     {
-        static string path = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + $"{ DateTime.Now.ToFileTime()}_log";
+        readonly static string fileName = $"{ DateTime.Now.ToFileTime()}_log.log";
+
+        static string path = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).ToString()).ToString() + $"{fileName}";
         public static void WriteLog(string message)
         {
-            //string path = "c:\\temp";
-            string fileName;
             string path1 = path;
             using (StreamWriter writer = new StreamWriter(path1, true))
             {

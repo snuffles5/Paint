@@ -69,8 +69,8 @@ public class Rectangle : Quadrilateral // not supporting rotation
         SolidBrush br = new SolidBrush(FillColor);
         if (IsSelected)
             Pen = new Pen(SELECTED_COLOR, StrokeWidth);
-        else
-            Pen = new Pen(StrokeColor, StrokeWidth);
+        //else
+        //    Pen = new Pen(StrokeColor, StrokeWidth);
         graphic.FillRectangle(br, MyPoint.X, MyPoint.Y, Width, Height);
         graphic.DrawRectangle(Pen, MyPoint.X, MyPoint.Y, Width, Height);
         _path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);

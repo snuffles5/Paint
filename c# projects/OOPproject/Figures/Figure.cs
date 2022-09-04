@@ -13,15 +13,19 @@ public abstract class Figure
     int _strokeWidth;
     bool _isSelected;
     [field: NonSerialized] Pen _pen;
-    
+    [field: NonSerialized] public GraphicsPath _path = new GraphicsPath();
+
     public Figure()
     {
         _isSelected = false;
+        Pen = new Pen(StrokeColor, StrokeWidth);
     }
 
     public
         //TODO make private and getters
     static Color SELECTED_COLOR = Color.DimGray;
+    public const int STROKE_DEFAULT_WIDTH = 1;
+
     // TODO maybe add _static path to make the eraser less heavier. need to save index too.
 
     public MyPoint MyPoint 
@@ -44,7 +48,10 @@ public abstract class Figure
         set
         {
             if (value != _strokeColor)
+            {
                 _strokeColor = value;
+                Pen.Color = value;
+            }
         }
     }
     public Color FillColor
@@ -53,7 +60,9 @@ public abstract class Figure
         set
         {
             if (value != _fillColor)
+            {
                 _fillColor = value;
+            }
         }
     } public Pen Pen
     {
@@ -72,9 +81,12 @@ public abstract class Figure
             if (value != _strokeWidth)
             {
                 if (value >= 0)
+                {
                     _strokeWidth = value;
+                    Pen.Width = value;
+                }
                 else
-                    _strokeWidth = 1;
+                    _strokeWidth = STROKE_DEFAULT_WIDTH;
             }
         }
     }

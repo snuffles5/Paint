@@ -1,9 +1,12 @@
-﻿using System;
+﻿using OOPproject;
+using System;
 using System.Drawing;
 
 [Serializable]
 public class MyPoint
 {
+    const float MAX_X =  Form1.DEFAULT_FORM_WIDTH;
+    const float MAX_Y = Form1.DEFAULT_FORM_HEIGHT;
     float _x;
     float _y;
     public MyPoint(float x = 0, float y = 0)
@@ -27,7 +30,7 @@ public class MyPoint
         get { return _x; }
         set
         {
-            if (value >= 0)
+            if (value >= 0 && value < MAX_X)
                 _x = value;
             else
                 _x = 0;
@@ -38,7 +41,7 @@ public class MyPoint
         get { return _y; }
         set
         {
-            if (value > 0)
+            if (value >= 0 && value < MAX_Y)
                 _y = value;
             else
                 _y = 0;

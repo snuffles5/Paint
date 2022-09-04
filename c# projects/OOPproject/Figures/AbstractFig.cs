@@ -11,10 +11,10 @@ using System.Runtime.Serialization;
 public class AbstractFig : Figure 
 {
     [DataMember] List<MyPoint> _vertices = new List<MyPoint>();
-    [field: NonSerialized] public GraphicsPath _path = new GraphicsPath();
+    //[field: NonSerialized] public GraphicsPath
+    //_path = new GraphicsPath();
     public AbstractFig() : this((List <MyPoint>) null) 
     {
-        Pen = new Pen(StrokeColor, StrokeWidth);
     }
     public AbstractFig(List<MyPoint> vertices, int strokeWidth = 1)
     {
@@ -30,7 +30,6 @@ public class AbstractFig : Figure
         StrokeColor = Color.Black;
         FillColor = Color.Black;
         StrokeWidth = strokeWidth;
-        Pen = new Pen(StrokeColor, StrokeWidth);
     } 
     
     public AbstractFig(List<MyPoint> vertices, Color strokeColor, Color fillColor, int strokeWidth = 1)
@@ -46,7 +45,6 @@ public class AbstractFig : Figure
         StrokeColor = strokeColor;
         FillColor = fillColor;
         StrokeWidth = strokeWidth;
-        Pen = new Pen(StrokeColor, StrokeWidth);
     }
     public AbstractFig(float x, float y, int strokeWidth = 1)
     {
@@ -54,7 +52,6 @@ public class AbstractFig : Figure
         StrokeColor = Color.Black;
         FillColor = Color.Black;
         StrokeWidth = strokeWidth;
-        Pen = new Pen(StrokeColor, StrokeWidth);
     }
 
 
@@ -103,7 +100,7 @@ public class AbstractFig : Figure
         MyPoint prev = Vertices != null && Vertices.Count > 0 ? Vertices[Vertices.Count - 1] : MyPoint;
         MyPoint curr = new MyPoint(x, y);
         _path.AddLine(new PointF(prev.X, prev.Y), new PointF(curr.X, curr.Y));
-        //Logger.WriteLog("Add: prev point (" + prev.X + "," + prev.Y + ") current )" + x + "," + y + ")");
+        //Logger.WriteLog("Add: prev point (" + prev.X + "," + prev.Y + ") current (" + x + "," + y + ")");
         Vertices.Add(new MyPoint(x, y));
     }
 
@@ -117,7 +114,7 @@ public class AbstractFig : Figure
             g.DrawRectangle(surrundingRec, _path.GetBounds().X, _path.GetBounds().Y, _path.GetBounds().Width, _path.GetBounds().Height);  // surrounding rectangle
             
         }
-        Pen = new Pen(StrokeColor, StrokeWidth);
+        //Pen = new Pen(StrokeColor, StrokeWidth);
         if (_path == null) initializePath(); // after desrialize
         g.DrawPath(Pen,_path);
     }

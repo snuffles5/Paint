@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOPproject;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
@@ -7,7 +8,6 @@ using System.IO;
 public class Line: Figure
 {
     MyPoint _point2;
-    [field: NonSerialized] public GraphicsPath _path = new GraphicsPath();
     public Line(float x1 = 0, float y1 = 0, float x2 = 0, float y2 = 0)
     {
         MyPoint = new MyPoint(x1, y1);
@@ -38,7 +38,9 @@ public class Line: Figure
         get { return MyPoint; }
         set
         {
-            MyPoint = value;
+            if (MyPoint == null) MyPoint = new MyPoint();
+            MyPoint.X = value.X;
+            MyPoint.Y = value.Y;
         }
     }
     public MyPoint Point2
@@ -46,7 +48,9 @@ public class Line: Figure
         get { return _point2; }
         set
         {
-            _point2 = value;
+            if (_point2 == null) _point2 = new MyPoint();
+            _point2.X = value.X;
+            _point2.Y = value.Y;
         }
     }
     public float X1
@@ -67,7 +71,7 @@ public class Line: Figure
     }
     public float X2
     {
-        get { return MyPoint.X; }
+        get { return Point2.X; }
         set
         {
             _point2.X = value;
@@ -81,11 +85,11 @@ public class Line: Figure
             _point2.Y = value;
         }
     }
-    public double Distance
+    public float Distance
     {
         get
         { // √[( y2 –  y1)² + ( x1 –  x2)²]
-            return Math.Sqrt(Math.Pow(Y2 - Y1, 2) + Math.Pow(X1 - X2, 2));
+            return MathF.Sqrt(MathF.Pow(MathF.Abs(Y2 - Y1), 2) + MathF.Pow(MathF.Abs(X2 - X1), 2));
         }
     }
 
@@ -101,12 +105,11 @@ public class Line: Figure
 
     public override bool isInside(MyPoint point)
     {
-        return _path.IsOutlineVisible(point.X, point.Y, Pen); // TODO: Sorry, wasn't implemented yet
+        return _path.IsOutlineVisible(point.X, point.Y, Pen); 
         //return true;
     }
     public override bool isInside(float x, float y)
     {
-        //throw new NotImplementedException(); // TODO: Sorry, wasn't implemented yet
         return _path.IsOutlineVisible(x, y, Pen);
     }
 

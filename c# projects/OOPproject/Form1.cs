@@ -14,8 +14,8 @@ namespace OOPproject
         public Form1()
         {
             InitializeComponent();
-            this.Width = 950;
-            this.Height = 700;
+            this.Width = DEFAULT_FORM_WIDTH;
+            this.Height = DEFAULT_FORM_HEIGHT;
             bm = new Bitmap(pic.Width, pic.Height);
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
@@ -40,11 +40,13 @@ namespace OOPproject
             Import,
             Save
         }
+        public const int DEFAULT_STROKE_WIDTH = 5;
+        public const int DEFAULT_FORM_WIDTH = 950;
+        public const int DEFAULT_FORM_HEIGHT = 700;
         Bitmap bm;
         Graphics g;
-        const int DEFAULT_WIDTH = 5;
         bool paint = false;
-        Pen pen1 = new Pen(Color.Black, DEFAULT_WIDTH);
+        Pen pen1 = new Pen(Color.Black, DEFAULT_STROKE_WIDTH);
         FigureSelection currSelect = FigureSelection.None;
         int figureIndex = -1;
         int selectedFigureIndex = -1;
@@ -69,40 +71,40 @@ namespace OOPproject
                     Flist[figureIndex] = new AbstractFig(e.X, e.Y);
                     Flist[figureIndex].FillColor = Color.Transparent;
                     Flist[figureIndex].StrokeColor = New_Color;
-                    Flist[figureIndex].StrokeWidth = DEFAULT_WIDTH;
+                    Flist[figureIndex].StrokeWidth = DEFAULT_STROKE_WIDTH;
                     break;
                 case FigureSelection.Ellipse: // ellipse     
                     Flist[figureIndex] = new Ellipse(e.X, e.Y, e.X, e.Y);
                     Flist[figureIndex].FillColor = Color.Transparent;
                     Flist[figureIndex].StrokeColor = New_Color;
                     // FOR TESTING : TODO
-                    Flist[figureIndex].StrokeWidth = DEFAULT_WIDTH;
+                    Flist[figureIndex].StrokeWidth = DEFAULT_STROKE_WIDTH;
                     break;
                 case FigureSelection.Rectangle: // rect
                     Flist[figureIndex] = new Rectangle(e.X, e.Y, 0, 0);
                     Flist[figureIndex].FillColor = Color.Transparent;
                     Flist[figureIndex].StrokeColor = New_Color;
                     // FOR TESTING : TODO
-                    Flist[figureIndex].StrokeWidth = DEFAULT_WIDTH;
+                    Flist[figureIndex].StrokeWidth = DEFAULT_STROKE_WIDTH;
                     break;
                 case FigureSelection.Line: // line
                     Flist[figureIndex] = new Line(e.X, e.Y, e.X, e.Y);
                     // FOR TESTING : TODO
-                    Flist[figureIndex].StrokeWidth = DEFAULT_WIDTH;
+                    Flist[figureIndex].StrokeWidth = DEFAULT_STROKE_WIDTH;
                     Flist[figureIndex].StrokeColor = New_Color;
                     break;
                 case FigureSelection.Rhombus: //rhombus
                     Flist[figureIndex] = new Rhombus(e.X, e.Y, 0, 0);
                     Flist[figureIndex].FillColor = Color.Transparent;
                     // FOR TESTING : TODO
-                    Flist[figureIndex].StrokeWidth = DEFAULT_WIDTH;
+                    Flist[figureIndex].StrokeWidth = DEFAULT_STROKE_WIDTH;
                     Flist[figureIndex].StrokeColor = New_Color;
                     break;
                 case FigureSelection.PerfectCircle: //"perfect" circle
                     Flist[figureIndex] = new Circle(e.X, e.Y, 0);
                     Flist[figureIndex].FillColor = Color.Transparent;
                     // FOR TESTING : TODO
-                    Flist[figureIndex].StrokeWidth = DEFAULT_WIDTH;
+                    Flist[figureIndex].StrokeWidth = DEFAULT_STROKE_WIDTH;
                     Flist[figureIndex].StrokeColor = New_Color;
                     break;
                 case FigureSelection.Point:
@@ -155,7 +157,8 @@ namespace OOPproject
                         float newX = Math.Abs(((Circle)c).X - e.X);
                         float newY = Math.Abs(((Circle)c).Y - e.Y);
                         double dis = Math.Sqrt(newX * newX + newY * newY);
-                        ((Circle)c).Radius = (float)dis; // double to float TODO
+                        //((Circle)c).Radius = (float)dis; // double to float TODO
+                        c.Change(e.X , e.Y);
                         break;
 
                 }

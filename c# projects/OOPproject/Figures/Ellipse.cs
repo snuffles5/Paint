@@ -6,7 +6,7 @@ using System.Drawing.Drawing2D;
 public class Ellipse : Figure
 {
     MyPoint _secondPoint;
-    [field: NonSerialized] public GraphicsPath _path = new GraphicsPath();
+    //[field: NonSerialized] public GraphicsPath _path = new GraphicsPath();
 
     public Ellipse() : this(10, 10, 10, 10) { }
     public Ellipse(MyPoint firstPoint, MyPoint secondPoint, int strokeWidth = 1)
@@ -16,6 +16,7 @@ public class Ellipse : Figure
         StrokeColor = Color.Black;
         FillColor = Color.Black;
         StrokeWidth = strokeWidth;
+        Pen = new Pen(StrokeColor, StrokeWidth);
     }
     public Ellipse(Color strokeColor, Color fillColor, MyPoint firstPoint, MyPoint secondPoint, int strokeWidth = 1)
     {
@@ -24,6 +25,7 @@ public class Ellipse : Figure
         StrokeColor = strokeColor;
         FillColor = fillColor;
         StrokeWidth = strokeWidth;
+        Pen = new Pen(StrokeColor, StrokeWidth);
     }
 
     public Ellipse(float x1, float y1, float x2, float y2, int strokeWidth = 1)
@@ -34,6 +36,7 @@ public class Ellipse : Figure
         StrokeColor = Color.Black;
         FillColor = Color.Black;
         StrokeWidth = strokeWidth;
+        Pen = new Pen(StrokeColor, StrokeWidth);
     }
     public MyPoint FirstPoint { get { return MyPoint; } set { MyPoint.X = value.X; MyPoint.Y = value.Y; } }
     public MyPoint SecondPoint { get { return _secondPoint; } set { _secondPoint = new MyPoint(value.X, value.Y); } }
@@ -45,8 +48,8 @@ public class Ellipse : Figure
         SolidBrush br = new SolidBrush(FillColor);
         if (IsSelected)
             Pen = new Pen(SELECTED_COLOR, StrokeWidth);
-        else
-            Pen = new Pen(StrokeColor, StrokeWidth);
+        //else
+        //    Pen = new Pen(StrokeColor, StrokeWidth);
         graphic.FillEllipse(br, FirstPoint.X, FirstPoint.Y, SecondPoint.X-FirstPoint.X, SecondPoint.Y-FirstPoint.Y);
         graphic.DrawEllipse(Pen, FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
         _path.AddEllipse(FirstPoint.X, FirstPoint.Y, SecondPoint.X - FirstPoint.X, SecondPoint.Y - FirstPoint.Y);
