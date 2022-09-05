@@ -29,6 +29,7 @@ namespace OOPproject
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pnl_btns = new System.Windows.Forms.Panel();
             this.cB_selestSize = new System.Windows.Forms.ComboBox();
             this.line3 = new System.Windows.Forms.Panel();
@@ -56,6 +57,22 @@ namespace OOPproject
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pic = new System.Windows.Forms.PictureBox();
             this.txtBoxForTesting = new System.Windows.Forms.TextBox();
+            this.toolTip_undo = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_Redo = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_pencil = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_eraser = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_circle = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_rec = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_line = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_rhombus = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_strokeWidth = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_clr = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_edit = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_fill = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_stroke_clr = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_delete = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_import = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip_save = new System.Windows.Forms.ToolTip(this.components);
             this.pnl_btns.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -141,6 +158,7 @@ namespace OOPproject
             this.btn_strokeWidth.Size = new System.Drawing.Size(43, 42);
             this.btn_strokeWidth.TabIndex = 20;
             this.btn_strokeWidth.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip_strokeWidth.SetToolTip(this.btn_strokeWidth, "Select stroke width");
             this.btn_strokeWidth.UseVisualStyleBackColor = true;
             this.btn_strokeWidth.Click += new System.EventHandler(this.btn_strokeWidth_Click);
             // 
@@ -160,6 +178,7 @@ namespace OOPproject
             this.btn_import.Name = "btn_import";
             this.btn_import.Size = new System.Drawing.Size(43, 42);
             this.btn_import.TabIndex = 19;
+            this.toolTip_import.SetToolTip(this.btn_import, "Import file");
             this.btn_import.UseVisualStyleBackColor = false;
             this.btn_import.Click += new System.EventHandler(this.btn_import_Click);
             // 
@@ -181,6 +200,7 @@ namespace OOPproject
             this.btn_changeStkClr.Size = new System.Drawing.Size(43, 40);
             this.btn_changeStkClr.TabIndex = 15;
             this.btn_changeStkClr.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.toolTip_stroke_clr.SetToolTip(this.btn_changeStkClr, "Change stroke color");
             this.btn_changeStkClr.UseVisualStyleBackColor = false;
             this.btn_changeStkClr.Visible = false;
             this.btn_changeStkClr.Click += new System.EventHandler(this.btn_change_clr_Click);
@@ -214,6 +234,7 @@ namespace OOPproject
             this.btn_fill.Size = new System.Drawing.Size(43, 42);
             this.btn_fill.TabIndex = 2;
             this.btn_fill.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip_fill.SetToolTip(this.btn_fill, "Fill");
             this.btn_fill.UseVisualStyleBackColor = true;
             this.btn_fill.Visible = false;
             this.btn_fill.Click += new System.EventHandler(this.btn_fill_Click);
@@ -230,6 +251,7 @@ namespace OOPproject
             this.ObjectsEraser.Name = "ObjectsEraser";
             this.ObjectsEraser.Size = new System.Drawing.Size(52, 52);
             this.ObjectsEraser.TabIndex = 1;
+            this.toolTip_eraser.SetToolTip(this.ObjectsEraser, "Eraser");
             this.ObjectsEraser.UseVisualStyleBackColor = true;
             this.ObjectsEraser.Click += new System.EventHandler(this.btn_object_eraser_Click);
             // 
@@ -247,6 +269,7 @@ namespace OOPproject
             this.btn_EditObject.Size = new System.Drawing.Size(52, 52);
             this.btn_EditObject.TabIndex = 14;
             this.btn_EditObject.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip_edit.SetToolTip(this.btn_EditObject, "Edit object");
             this.btn_EditObject.UseVisualStyleBackColor = true;
             this.btn_EditObject.Click += new System.EventHandler(this.btn_EditObject_Click);
             // 
@@ -263,6 +286,7 @@ namespace OOPproject
             this.btn_redo.Name = "btn_redo";
             this.btn_redo.Size = new System.Drawing.Size(49, 32);
             this.btn_redo.TabIndex = 13;
+            this.toolTip_Redo.SetToolTip(this.btn_redo, "Redo");
             this.btn_redo.UseVisualStyleBackColor = true;
             this.btn_redo.Click += new System.EventHandler(this.btn_redo_Click);
             // 
@@ -281,6 +305,7 @@ namespace OOPproject
             this.btn_rhombus.Size = new System.Drawing.Size(52, 52);
             this.btn_rhombus.TabIndex = 12;
             this.btn_rhombus.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip_rhombus.SetToolTip(this.btn_rhombus, "Create rhombus");
             this.btn_rhombus.UseVisualStyleBackColor = true;
             this.btn_rhombus.Click += new System.EventHandler(this.btn_rhombus_Click);
             // 
@@ -297,6 +322,7 @@ namespace OOPproject
             this.btn_undo.Name = "btn_undo";
             this.btn_undo.Size = new System.Drawing.Size(49, 32);
             this.btn_undo.TabIndex = 11;
+            this.toolTip_undo.SetToolTip(this.btn_undo, "Undo");
             this.btn_undo.UseVisualStyleBackColor = true;
             this.btn_undo.Click += new System.EventHandler(this.btn_undo_Click);
             // 
@@ -317,6 +343,7 @@ namespace OOPproject
             this.btn_clear.Name = "btn_clear";
             this.btn_clear.Size = new System.Drawing.Size(43, 42);
             this.btn_clear.TabIndex = 8;
+            this.toolTip_delete.SetToolTip(this.btn_clear, "Delete All");
             this.btn_clear.UseVisualStyleBackColor = false;
             this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
             // 
@@ -336,6 +363,7 @@ namespace OOPproject
             this.btn_save.Name = "btn_save";
             this.btn_save.Size = new System.Drawing.Size(43, 42);
             this.btn_save.TabIndex = 9;
+            this.toolTip_save.SetToolTip(this.btn_save, "Save");
             this.btn_save.UseVisualStyleBackColor = false;
             this.btn_save.Click += new System.EventHandler(this.btn_save_Click);
             // 
@@ -354,6 +382,7 @@ namespace OOPproject
             this.btn_line.Size = new System.Drawing.Size(52, 52);
             this.btn_line.TabIndex = 7;
             this.btn_line.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip_line.SetToolTip(this.btn_line, "Create line");
             this.btn_line.UseVisualStyleBackColor = true;
             this.btn_line.Click += new System.EventHandler(this.btn_line_Click);
             // 
@@ -372,6 +401,7 @@ namespace OOPproject
             this.btn_rect.Size = new System.Drawing.Size(52, 52);
             this.btn_rect.TabIndex = 6;
             this.btn_rect.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip_rec.SetToolTip(this.btn_rect, "Create rectangle");
             this.btn_rect.UseVisualStyleBackColor = true;
             this.btn_rect.Click += new System.EventHandler(this.btn_rect_Click);
             // 
@@ -389,6 +419,7 @@ namespace OOPproject
             this.btn_circle.Size = new System.Drawing.Size(52, 52);
             this.btn_circle.TabIndex = 5;
             this.btn_circle.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip_circle.SetToolTip(this.btn_circle, "Create circle");
             this.btn_circle.UseVisualStyleBackColor = true;
             this.btn_circle.Click += new System.EventHandler(this.btn_circle_Click);
             // 
@@ -406,6 +437,7 @@ namespace OOPproject
             this.btn_pencil.Size = new System.Drawing.Size(52, 52);
             this.btn_pencil.TabIndex = 3;
             this.btn_pencil.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip_pencil.SetToolTip(this.btn_pencil, "Pencil");
             this.btn_pencil.UseVisualStyleBackColor = true;
             this.btn_pencil.Click += new System.EventHandler(this.btn_pencil_Click);
             // 
@@ -423,6 +455,7 @@ namespace OOPproject
             this.btn_color.Size = new System.Drawing.Size(52, 52);
             this.btn_color.TabIndex = 1;
             this.btn_color.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.toolTip_clr.SetToolTip(this.btn_color, "Select color");
             this.btn_color.UseVisualStyleBackColor = true;
             this.btn_color.Click += new System.EventHandler(this.btn_color_Click);
             // 
@@ -459,7 +492,6 @@ namespace OOPproject
             this.pic.Size = new System.Drawing.Size(928, 591);
             this.pic.TabIndex = 1;
             this.pic.TabStop = false;
-           // this.pic.Click += new System.EventHandler(this.pic_Click);
             this.pic.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_Paint);
             this.pic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pic_MouseClick);
             this.pic.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pic_MouseDown);
@@ -532,6 +564,22 @@ namespace OOPproject
         private System.Windows.Forms.PictureBox pic;
         private System.Windows.Forms.TextBox txtBoxForTesting;
         private System.Windows.Forms.ComboBox cB_selestSize;
+        private System.Windows.Forms.ToolTip toolTip_undo;
+        private System.Windows.Forms.ToolTip toolTip_strokeWidth;
+        private System.Windows.Forms.ToolTip toolTip_import;
+        private System.Windows.Forms.ToolTip toolTip_stroke_clr;
+        private System.Windows.Forms.ToolTip toolTip_fill;
+        private System.Windows.Forms.ToolTip toolTip_eraser;
+        private System.Windows.Forms.ToolTip toolTip_edit;
+        private System.Windows.Forms.ToolTip toolTip_Redo;
+        private System.Windows.Forms.ToolTip toolTip_rhombus;
+        private System.Windows.Forms.ToolTip toolTip_delete;
+        private System.Windows.Forms.ToolTip toolTip_save;
+        private System.Windows.Forms.ToolTip toolTip_line;
+        private System.Windows.Forms.ToolTip toolTip_rec;
+        private System.Windows.Forms.ToolTip toolTip_circle;
+        private System.Windows.Forms.ToolTip toolTip_pencil;
+        private System.Windows.Forms.ToolTip toolTip_clr;
     }
 }
 
