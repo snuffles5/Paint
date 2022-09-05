@@ -51,6 +51,7 @@ public class Line: Figure
             if (_point2 == null) _point2 = new MyPoint();
             _point2.X = value.X;
             _point2.Y = value.Y;
+            InitializePath();
         }
     }
     public float X1
@@ -59,6 +60,7 @@ public class Line: Figure
         set
         {
             MyPoint.X = value;
+            InitializePath();
         }
     }
     public float Y1
@@ -67,6 +69,7 @@ public class Line: Figure
         set
         {
             MyPoint.Y = value;
+            InitializePath();
         }
     }
     public float X2
@@ -75,6 +78,7 @@ public class Line: Figure
         set
         {
             _point2.X = value;
+            InitializePath();
         }
     }
     public float Y2
@@ -83,6 +87,7 @@ public class Line: Figure
         set
         {
             _point2.Y = value;
+            InitializePath();
         }
     }
     public float Distance
@@ -93,15 +98,25 @@ public class Line: Figure
         }
     }
 
+    public override void InitializePath()
+    {
+        base.InitializePath();
+        _path.AddLine(Point1.X, Point1.Y, Point2.X, Point2.Y);
+    }
+
     public override void Draw(Graphics g)
     {
-        if (IsSelected)
-            Pen = new Pen(SELECTED_COLOR, StrokeWidth);
-        if (Pen == null) Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
-        g.DrawLine(Pen, Point1.X, Point1.Y, Point2.X, Point2.Y);
         if (_path == null)
             InitializePath(); // for desrialize
-        _path.AddLine(Point1.X, Point1.Y, Point2.X, Point2.Y);
+        if (IsSelected)
+        {
+            Pen surrundingRec = new Pen(SELECTED_COLOR, StrokeWidth / 2);
+            surrundingRec.DashStyle = DashStyle.Dash;
+            g.DrawRectangle(surrundingRec, _path.GetBounds().X, _path.GetBounds().Y, _path.GetBounds().Width, _path.GetBounds().Height);  // surrounding rectangle
+        }
+        g.DrawLine(Pen, Point1.X, Point1.Y, Point2.X, Point2.Y);
+      
+        
     }
 
     public override bool isInside(float x, float y)
@@ -110,12 +125,15 @@ public class Line: Figure
     }
     public override bool isOnPath(float x, float y)
     {
+        if (_path == null)
+            InitializePath();
         return _path.IsOutlineVisible(x, y, Pen);
     }
 
     public override bool isInsideSurrounding(float x, float y)
     {
-        return false; //TODO
+        RectangleF recf = new RectangleF(_path.GetBounds().X, _path.GetBounds().Y, _path.GetBounds().Width, _path.GetBounds().Height);  // surrounding rectangle
+        return recf.Contains(x, y);
     }
 
     public override void Change(float x, float y)
@@ -125,7 +143,10 @@ public class Line: Figure
     }
     public override void Move(float x, float y)
     {
-        //TODO   
+        X1 += x;
+        X2 += x;
+        Y1 += y;
+        Y2 += y;
     }
 
 }

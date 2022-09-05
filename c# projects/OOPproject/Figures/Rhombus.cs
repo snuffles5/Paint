@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOPproject;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Reflection;
@@ -65,29 +66,39 @@ public class Rhombus : Quadrilateral
         Vertices[0] = new MyPoint(x + width / 2, y - height / 2);
         Vertices[1] = new MyPoint(x + width, y);
         Vertices[2] = new MyPoint(x + width / 2, y + height / 2);
+        InitializePath();
     }
     public MyPoint Center { get { return MyPoint; } set { updateParams(value.X, value.Y, Width, Height); } }
 
-    public override void Draw(Graphics graphic)
+    public override void InitializePath()
     {
-        if (IsSelected)
-            Pen = new Pen(SELECTED_COLOR, StrokeWidth);
-        //else
-        //    Pen = new Pen(StrokeColor, StrokeWidth);
-        if (Pen == null) Pen = new Pen(StrokeColor, StrokeWidth);
-        SolidBrush br = new SolidBrush(FillColor);
-        graphic.FillPolygon(br, new PointF[] {new PointF(MyPoint.X, MyPoint.Y), new PointF(Vertices[0].X, Vertices[0].Y), new PointF(Vertices[1].X, Vertices[1].Y), new PointF(Vertices[2].X, Vertices[2].Y) });
-        graphic.DrawPolygon(Pen, new PointF[] {new PointF(MyPoint.X, MyPoint.Y), new PointF(Vertices[0].X, Vertices[0].Y), new PointF(Vertices[1].X, Vertices[1].Y), new PointF(Vertices[2].X, Vertices[2].Y) });
-        if (_path == null)
-            InitializePath();// after desrialize
+        base.InitializePath();
         _path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);
         _path.AddLine(Vertices[0].X, Vertices[0].Y, Vertices[1].X, Vertices[1].Y);
         _path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);
         _path.AddLine(Vertices[2].X, Vertices[2].Y, MyPoint.X, MyPoint.Y);
     }
+
+    public override void Draw(Graphics g)
+    {
+        if (IsSelected)
+        {
+            Pen surrundingRec = new Pen(SELECTED_COLOR, StrokeWidth / 2);
+            surrundingRec.DashStyle = DashStyle.Dash;
+            g.DrawRectangle(surrundingRec, _path.GetBounds().X, _path.GetBounds().Y, _path.GetBounds().Width, _path.GetBounds().Height);  // surrounding rectangle
+
+        }
+        if (Pen == null) Pen = new Pen(StrokeColor, StrokeWidth);
+        SolidBrush br = new SolidBrush(FillColor);
+        g.FillPolygon(br, new PointF[] {new PointF(MyPoint.X, MyPoint.Y), new PointF(Vertices[0].X, Vertices[0].Y), new PointF(Vertices[1].X, Vertices[1].Y), new PointF(Vertices[2].X, Vertices[2].Y) });
+        g.DrawPolygon(Pen, new PointF[] {new PointF(MyPoint.X, MyPoint.Y), new PointF(Vertices[0].X, Vertices[0].Y), new PointF(Vertices[1].X, Vertices[1].Y), new PointF(Vertices[2].X, Vertices[2].Y) });
+        if (_path == null)
+            InitializePath();// after desrialize
+        
+    }
     public override bool isInside(float x, float y)
     {
-        return (Math.Abs(x - X) <= Width / 2 && Math.Abs(y - Y) <= Height / 2) && isOnPath(x, y); //TODO
+        return (Math.Abs(x - X) <= Width / 2 && Math.Abs(y - Y) <= Height / 2) || isOnPath(x, y); //TODO
     }
     public override bool isOnPath(float x, float y)
     {
@@ -104,7 +115,8 @@ public class Rhombus : Quadrilateral
 
     public override bool isInsideSurrounding(float x, float y)
     {
-        return false; //TODO
+        RectangleF recf = new RectangleF(_path.GetBounds().X, _path.GetBounds().Y, _path.GetBounds().Width, _path.GetBounds().Height);  // surrounding rectangle
+        return recf.Contains(x, y);
     }
 
     public override void Change(float x, float y)
@@ -112,9 +124,10 @@ public class Rhombus : Quadrilateral
         Width = x - X;
         Height = y - Y;
     }
-    public override void Move(float x, float y)
+    public override void Move(float offsetX, float offsetY)
     {
-        //TODO   
+        Logger.WriteLog("Move rhombus (" + offsetX + "," + offsetX + ")");
+        updateParams(X + offsetX, Y + offsetY, Width, Height);
     }
 
 }

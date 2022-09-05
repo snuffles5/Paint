@@ -90,12 +90,10 @@ public class Circle : Figure
                 _radius = value;
                 if (_path == null)
                     _path = new GraphicsPath();
-                else
-                {
-                    _path.Reset();
-                    _path.AddEllipse(Center.X - _radius, Center.Y - _radius, _radius / 2, _radius / 2);
-                }
-            }
+                
+                InitializePath();
+        }
+
         }
     }
 
@@ -140,8 +138,15 @@ public class Circle : Figure
         }
        
     }
+
+    public override void InitializePath()
+    {
+        base.InitializePath();
+        _path.AddEllipse(Center.X - _radius, Center.Y - _radius, _radius / 2, _radius / 2);
+    }
     public override void Draw(Graphics g)
     {
+        InitializePath();
         SolidBrush br = new SolidBrush(FillColor);
         if (IsSelected)
         {
@@ -166,11 +171,11 @@ public class Circle : Figure
             Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
         if (_path == null)
             InitializePath(); // for desrialize
-        return true && isInside(x, y); //TODO
+        return true; //TODO
     }
     public override bool isInside(float x, float y)
     {
-        return Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - Y, 2)) < Radius;
+        return Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - Y, 2)) < Radius || isOnPath(x,y);
     }
     public override bool isInsideSurrounding(float x, float y)
     {

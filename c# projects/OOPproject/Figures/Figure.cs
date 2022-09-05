@@ -101,6 +101,8 @@ public abstract class Figure
     {
         if (_path == null)
             _path = new GraphicsPath();
+        _path.Reset();
     }
+
 
 }

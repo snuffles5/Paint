@@ -82,7 +82,7 @@ public class AbstractFig : Figure
 
     public override void InitializePath()
     {
-        _path = new GraphicsPath(); 
+        base.InitializePath();
         if (MyPoint != null)
         {
             MyPoint prev = Vertices != null ? Vertices[0] : MyPoint;
@@ -107,35 +107,29 @@ public class AbstractFig : Figure
 
     public override void Draw(Graphics g)
     {
+        if (_path == null)
+            InitializePath(); // for desrialize
         if (IsSelected)
         {
             Pen surrundingRec = new Pen(SELECTED_COLOR, StrokeWidth / 2);
             surrundingRec.DashStyle = DashStyle.Dash;
             g.DrawRectangle(surrundingRec, _path.GetBounds().X, _path.GetBounds().Y, _path.GetBounds().Width, _path.GetBounds().Height);  // surrounding rectangle
-            
         }
         if (Pen == null) 
             Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
-        if (_path == null)
-            InitializePath(); // for desrialize
         g.DrawPath(Pen,_path);
     }
 
     public override bool isInside(float x, float y)
     {
-        if (Pen == null)
-            Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
-        if (_path == null)
-            InitializePath(); // for desrialize
-        return _path.IsOutlineVisible(x, y, Pen) && isOnPath(x,y);
+        return  isOnPath(x,y);
     }
 
     public override bool isOnPath(float x, float y)
     {
+        InitializePath(); // for desrialize
         if (Pen == null)
             Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
-        if (_path == null)
-            InitializePath(); // for desrialize
         return _path.IsOutlineVisible(x, y, Pen);
     }
     public override bool isInsideSurrounding(float x, float y)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OOPproject;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
@@ -60,31 +61,50 @@ public class Rectangle : Quadrilateral // not supporting rotation
         Vertices[0] = new MyPoint(x + width, y);
         Vertices[1] = new MyPoint(x + width, y + height);
         Vertices[2] = new MyPoint(x, y + height);
+        InitializePath();
         //Vertices = new MyPoint[] { new MyPoint(x + width, y), new MyPoint(x + width, y + height), 
         //new MyPoint(x, y + height) };
     }
 
-    public override void Draw(Graphics graphic)
+    public override void InitializePath()
     {
-        SolidBrush br = new SolidBrush(FillColor);
-        if (IsSelected)
-            Pen = new Pen(SELECTED_COLOR, StrokeWidth);
-        //else
-        //    Pen = new Pen(StrokeColor, StrokeWidth);
-        if (Pen == null) 
-            Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
-        graphic.FillRectangle(br, MyPoint.X, MyPoint.Y, Width, Height);
-        graphic.DrawRectangle(Pen, MyPoint.X, MyPoint.Y, Width, Height);
-        if (_path == null)
-            _path = new GraphicsPath(); // for desrialize
+        base.InitializePath();
         _path.AddLine(MyPoint.X, MyPoint.Y, Vertices[0].X, Vertices[0].Y);
         _path.AddLine(Vertices[0].X, Vertices[0].Y, Vertices[1].X, Vertices[1].Y);
         _path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);
         _path.AddLine(Vertices[2].X, Vertices[2].Y, MyPoint.X, MyPoint.Y);
+        
+    }
+
+    public override void Draw(Graphics g)
+    {
+        InitializePath();
+        if (IsSelected)
+        {
+            Pen surrundingRec = new Pen(SELECTED_COLOR, StrokeWidth);
+            surrundingRec.DashStyle = DashStyle.Dash;
+            surrundingRec.Alignment = PenAlignment.Outset;
+            //float diff = 0.01f;
+            //g.DrawRectangle(surrundingRec, X - X*diff, Y - Y*diff, Width + Width*diff, Height+ Height*diff);  // surrounding rectangle
+            g.DrawRectangle(surrundingRec, X, Y, Width, Height);  // surrounding rectangle
+        }
+        if (Pen == null)
+        {
+            Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
+        }
+        Pen.Alignment = PenAlignment.Inset;
+        SolidBrush br = new SolidBrush(FillColor);
+        g.FillRectangle(br, MyPoint.X, MyPoint.Y, Width, Height);
+        g.DrawRectangle(Pen, MyPoint.X, MyPoint.Y, Width, Height);
+        
     }
     public override bool isInside(float x, float y)
     {
-        return (Math.Abs(x - X) <= Width / 2 && Math.Abs(y - Y) <= Height / 2) && isOnPath(x, y);
+        bool b = (x > MyPoint.X && x < Vertices[0].X &&
+            y > MyPoint.Y && y < Vertices[0].Y) || isOnPath(x, y);
+        Logger.WriteLog("inside rectangle = " +b );
+        return (x > MyPoint.X && x < Vertices[0].X &&
+            y > MyPoint.Y && y < Vertices[0].Y) || isOnPath(x,y) ;
     }
     public override bool isOnPath(float x, float y)
     {
@@ -101,7 +121,7 @@ public class Rectangle : Quadrilateral // not supporting rotation
 
     public override bool isInsideSurrounding(float x, float y)
     {
-        return isInside(x,y) && isOnPath(x,y);
+        return isInside(x,y) || isOnPath(x,y);
     }
 
     public override void Change(float x, float y)
