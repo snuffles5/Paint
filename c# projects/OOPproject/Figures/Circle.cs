@@ -71,8 +71,7 @@ public class Circle : Figure
                 _path = new GraphicsPath();
             else
             {
-                _path.Reset();
-                _path.AddEllipse(Center.X - _radius, Center.Y - _radius, _radius / 2, _radius / 2);
+                InitializePath();
             }
         } 
     }
@@ -106,18 +105,9 @@ public class Circle : Figure
         private set
         {
             if (value == null && toChangeTopLeft) 
-            {
-                if (_topLeft == null) _topLeft = new MyPoint();
-                _topLeft.X = X - _radius;
-               _topLeft.Y = Y - _radius;
-            }
+                InititalizeTopLeft(-1, -1);
              else if (toChangeTopLeft)
-            {
-                if (_topLeft == null) _topLeft = new MyPoint();
-                _topLeft.X = value.X;
-                _topLeft.Y = value.Y;
-            }
-
+                InititalizeTopLeft(value.X, value.Y);
         }
 
     }
@@ -136,20 +126,37 @@ public class Circle : Figure
             X = bottomRight.X - Radius;
             Y = bottomRight.Y - Radius;
         }
-       
+    }
+
+    private void InititalizeTopLeft(float x, float y)
+    {
+        if (_topLeft == null) _topLeft = new MyPoint();
+        if (x != -1 && y != -1)
+        {
+            _topLeft.X = x;
+            _topLeft.Y = y;
+        }
+        else
+        {
+            _topLeft.X = X - _radius;
+            _topLeft.Y = Y - _radius;
+        }
     }
 
     public override void InitializePath()
     {
         base.InitializePath();
-        _path.AddEllipse(Center.X - _radius, Center.Y - _radius, _radius / 2, _radius / 2);
+        //_path.AddEllipse(Center.X - _radius, Center.Y - _radius, _radius * 2, _radius * 2);
+        if (TopLeft == null)
+            InititalizeTopLeft(-1, -1);
+        _path.AddEllipse(TopLeft.X, TopLeft.Y, Radius*2, Radius*2);
     }
     public override void Draw(Graphics g)
     {
-        InitializePath();
-        SolidBrush br = new SolidBrush(FillColor);
+        if(_path == null) InitializePath();
         if (IsSelected)
         {
+            Logger.WriteLog("Draw circle IsSelected true");
             Pen surrundingRec = new Pen(SELECTED_COLOR, StrokeWidth / 2);
             surrundingRec.DashStyle = DashStyle.Dash;
             g.DrawRectangle(surrundingRec, TopLeft.X, TopLeft.Y, Radius * 2, Radius * 2);  // surrounding rectangle
@@ -160,6 +167,7 @@ public class Circle : Figure
             TopLeft = null;
             toChangeTopLeft = false;
         }
+        SolidBrush br = new SolidBrush(FillColor);
         g.FillEllipse(br, TopLeft.X , TopLeft.Y, Radius * 2, Radius * 2);
         if (Pen == null) 
                 Pen = new Pen(StrokeColor, StrokeWidth);  // for desrialize
@@ -171,11 +179,13 @@ public class Circle : Figure
             Pen = new Pen(StrokeColor, StrokeWidth); // for desrialize
         if (_path == null)
             InitializePath(); // for desrialize
-        return true; //TODO
+        return _path.IsOutlineVisible(x, y, Pen);
     }
     public override bool isInside(float x, float y)
     {
-        return Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - Y, 2)) < Radius || isOnPath(x,y);
+        //|xp−xc|2+|yp−yc|2−−−−−−−−−−−−−−−−−√<r.
+        Logger.WriteLog("isInside circle Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - Y, 2)) < Radius " + (Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - Y, 2)) < Radius));
+        return new Line(x,y,X,Y).Distance < Radius || isOnPath(x,y);
     }
     public override bool isInsideSurrounding(float x, float y)
     {
