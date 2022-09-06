@@ -75,8 +75,17 @@ namespace OOPproject
             isMouseDownOnPic = true;
             mouseDownPoint.X = e.X;
             mouseDownPoint.Y = e.Y;
-            
-            if (Flist.NextIndex == 0 || (selectedFigureIndex >= 0 && Flist[selectedFigureIndex].isInside(e.X, e.Y))) clearSelectedFig();
+
+            if (Flist.NextIndex == 0 || 
+                (selectedFigureIndex >= 0 && 
+                (!Flist[selectedFigureIndex].isInside(e.X, e.Y) && !Flist[selectedFigureIndex].isInsideSurrounding(e.X, e.Y)))) 
+                // flist empty OR there is selected figure AND (either click outside object AND outside surrounding rectangle)
+            {
+                //Logger.WriteLog(" NextIndex = " + Flist.NextIndex);
+                //Logger.WriteLog(" selectedFigureIndex = " + selectedFigureIndex);
+                //Logger.WriteLog(" pic_MouseDown clearSelectedFig flist empty OR there is selected figure and click inside");
+                clearSelectedFig();
+            }
             //createFigure(currSelect, e.X, e.Y);
             pic.Text = Flist.NextIndex + "";
         }
@@ -85,9 +94,10 @@ namespace OOPproject
 
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
-            if (isMouseDownOnPic && selectedFigureIndex < 0 )
+            //Logger.WriteLog("pic_MouseMove");
+            if (isMouseDownOnPic && selectedFigureIndex < 0 ) // mouse move after mouse down and figure is not selected
             {
-                Logger.WriteLog("MouseMove");
+                //Logger.WriteLog("pic_MouseMove, mouse move after mouse down and figure is not selected");
                 figureIndex = Flist.NextIndex;
                 createFigure(currSelect, e.X, e.Y);
             }
@@ -121,9 +131,13 @@ namespace OOPproject
             }
             if (paint) 
             {
+                if ((selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)) //Logger.WriteLog("pic_MouseMove object selected...");
+                //Logger.WriteLog("pic_MouseMove selectedFigureIndex " + selectedFigureIndex + " Flist.NextIndex " + Flist.NextIndex);
+                //Logger.WriteLog("pic_MouseMove paint true...");
                 isMouseMoved = true;
                 if ((selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex) && (Flist[selectedFigureIndex].isInsideSurrounding(e.X, e.Y)))
                 { // object was selected and mouse clicked inside surrounding
+                    //Logger.WriteLog("pic_MouseMove " + (Flist[selectedFigureIndex]).GetType().ToString() + " was selected and mouse clicked inside surrounding...");
                     float offsetX = e.X - mouseDownPoint.X;
                     mouseDownPoint.X = e.X;
                     float offsetY = e.Y - mouseDownPoint.Y;
@@ -139,11 +153,16 @@ namespace OOPproject
 
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
+            //Logger.WriteLog("pic_MouseUp");
             //TODO removed last created figure if not drawn. if isMouseMoved = false and  paint = true ???
             //if (paint && !isMouseMoved)
-            
+
             if (selectedFigureIndex >= 0 && paint &&  isMouseMoved &&  !isFigureMoved) // // figure is selected, mouse pressed and moved but figure not moved
+            {
+                //Logger.WriteLog(" pic_MouseUp clearSelectedFig igureIndex >= 0 && paint &&  isMouseMoved &&  !isFigureMoved");
+
                 clearSelectedFig();
+            }
 
             //figureIndex = -1;
             switch (currSelect)
@@ -156,7 +175,7 @@ namespace OOPproject
                 case SelectedMenuButton.PerfectCircle:
                     if (isFiguredCreated)
                     {
-                        Logger.WriteLog("MouseUp Figured Created ");
+                        //Logger.WriteLog("MouseUp Figured Created ");
                         isFiguredCreated = false;
                         saveCurrentState();
                     }
@@ -174,17 +193,18 @@ namespace OOPproject
             }
             if (isMouseDownOnPic && !isMouseMoved) // mouse was down but didn't moved
             {
-                Logger.WriteLog("isMouseDownOnPic && !isMouseMoved) // mouse was down but didn't moved");
+                //Logger.WriteLog("isMouseDownOnPic && !isMouseMoved) // mouse was down but didn't moved");
 
                 bool foundFig = false;
                 for (int i = Flist.NextIndex - 1; i >= 0; i--)
                 {
                     if (Flist[i].isInside(e.X, e.Y)) // found object
                     {
-                        Logger.WriteLog("pic_MouseUp found object " + i);
+                        //Logger.WriteLog("pic_MouseUp found object " + i);
                         pic.Text = ((Flist[i]).GetType()).ToString() + " [" + i + "]";
                         if (selectedFigureIndex != -1) // found object before this one, need to clear
                         {
+                            //Logger.WriteLog("pic_MouseUp found object " + i);
                             clearSelectedFig();
                         }
                         selectedFigureIndex = i;
@@ -193,7 +213,11 @@ namespace OOPproject
                     }
                 }
                 if (!foundFig)
+                {
                     clearSelectedFig();
+                    //Logger.WriteLog("pic_MouseUp !foundFig");
+
+                }
                 pic.Invalidate();
             }
             isMouseMoved = paint = isMouseDownOnPic = false;
@@ -203,6 +227,7 @@ namespace OOPproject
 
         private void pic_MouseClick(object sender, MouseEventArgs e)
         {
+            //Logger.WriteLog("pic_MouseClick");
             clearSelection(false);
             switch (currSelect)
             {
@@ -499,8 +524,9 @@ namespace OOPproject
                 Flist[figureIndex].FillColor = Color.Transparent;
                 isFiguredCreated = true;
             }
-            Logger.WriteLog("createFigure --- figure count " + Flist.NextIndex);
-            Logger.WriteLog("createFigure --- tempFigureCreated " + tempFigureCreated);
+            //Logger.WriteLog("createFigure --- figure count " + Flist.NextIndex);
+
+            //Logger.WriteLog("createFigure --- tempFigureCreated " + tempFigureCreated);
         }
 
         public void saveCurrentState()
@@ -517,6 +543,7 @@ namespace OOPproject
 
         public void clearSelectedFig()
         {
+            //Logger.WriteLog("clearSelectedFig (before - " + selectedFigureIndex + " )");
             if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
             {
                 (Flist[selectedFigureIndex]).IsSelected = false;
@@ -535,6 +562,7 @@ namespace OOPproject
             paint = false;
             if (clearAll)
             {
+                //Logger.WriteLog("clearAll");
                 clearSelectedFig();
                 btn_fill.Hide();
                 btn_changeStkClr.Hide();

@@ -100,11 +100,8 @@ public class Rectangle : Quadrilateral // not supporting rotation
     }
     public override bool isInside(float x, float y)
     {
-        bool b = (x > MyPoint.X && x < Vertices[0].X &&
-            y > MyPoint.Y && y < Vertices[0].Y) || isOnPath(x, y);
-        Logger.WriteLog("inside rectangle = " +b );
-        return (x > MyPoint.X && x < Vertices[0].X &&
-            y > MyPoint.Y && y < Vertices[0].Y) || isOnPath(x,y) ;
+        return (x >= MyPoint.X && x <= Vertices[1].X &&
+            y >= MyPoint.Y && y <= Vertices[1].Y) || isOnPath(x, y);
     }
     public override bool isOnPath(float x, float y)
     {
@@ -135,7 +132,5 @@ public class Rectangle : Quadrilateral // not supporting rotation
         updateParams(X+ offsetX, Y+ offsetY, Width, Height);
     }
 
-
-    ~Rectangle() { System.Diagnostics.Debug.WriteLine("Destructor Rectangle"); }
 
 }

@@ -126,7 +126,7 @@ public class Rhombus : Quadrilateral
     }
     public override void Move(float offsetX, float offsetY)
     {
-        Logger.WriteLog("Move rhombus (" + offsetX + "," + offsetX + ")");
+        //Logger.WriteLog("Move rhombus (" + offsetX + "," + offsetX + ")");
         updateParams(X + offsetX, Y + offsetY, Width, Height);
     }
 
