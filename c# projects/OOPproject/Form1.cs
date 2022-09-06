@@ -42,6 +42,7 @@ namespace OOPproject
             Import, Save            
         }
         public const int DEFAULT_STROKE_WIDTH = 5;
+        int new_width = DEFAULT_STROKE_WIDTH;
         public const int DEFAULT_FORM_WIDTH = 950;
         public const int DEFAULT_FORM_HEIGHT = 700;
         Color New_Color = Color.Black; //Default Stroke Color
@@ -62,10 +63,7 @@ namespace OOPproject
         FigureList Flist = new FigureList();
         SelectedMenuButton currSelect = SelectedMenuButton.None;
         MyPoint mouseDownPoint = new MyPoint();
-
-        //int new_width;
-
-
+        
         #region main events
 
         /***************************  Mouse Down inside Pic    *******************************/
@@ -109,7 +107,6 @@ namespace OOPproject
                         break;
                     case SelectedMenuButton.ObjectEraser: // remove
                         int index = Flist.Find(e.X, e.Y);
-                        //txtBoxForTesting.Text = index + " index to be erased";
                         if (index != -1)
                         {
                             Flist.Remove(Flist.Find(e.X, e.Y));
@@ -221,22 +218,17 @@ namespace OOPproject
                         }
                     }
                     break;
-                case SelectedMenuButton.ObjectEraser:
-                    //int index = Flist.Find(e.X, e.Y);
+               // case SelectedMenuButton.ObjectEraser:
+                    //index = Flist.Find(e.X, e.Y);
                     //if (index != -1)
                     //{
                     //    Flist.Remove(Flist.Find(e.X, e.Y));
                     //    pic.Text = Flist.NextIndex + "";
                     //    //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
                     //    pic.Invalidate();
-                    //} 
-                    break;
-                case SelectedMenuButton.ChangeStrokeColor:
-
-                    break;
+                    //}
+                  //  break;
             }
-            
-
         }
 
         private void pic_Paint(object sender, PaintEventArgs e)
@@ -274,11 +266,8 @@ namespace OOPproject
             currSelect = SelectedMenuButton.Color;
             New_Color = cd.Color;
             pic_color.BackColor = cd.Color;
-            //Figure.SELECTED_COLOR = New_Color;
             pen1.Color = cd.Color;
-            //if (selectedFigureIndex != -1)
-            //   Flist[selectedFigureIndex].StrokeColor = New_Color;
-            clearSelection(false);//?
+            clearSelection(false);
             pic.Invalidate();
         }
         private void btn_pencil_Click(object sender, EventArgs e)
@@ -319,10 +308,17 @@ namespace OOPproject
         private void btn_object_eraser_Click(object sender, EventArgs e)
         {
             currSelect = SelectedMenuButton.ObjectEraser;
+            if((Flist[selectedFigureIndex]).IsSelected)
+            {
+                    Flist.Remove(selectedFigureIndex);
+                    pic.Text = Flist.NextIndex + "";
+                    //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
+                    pic.Invalidate();
+            }
             clearSelection(true);
         }
 
-        
+
         private void btn_undo_Click(object sender, EventArgs e) //doesnt work for pencil yet
         {
             currSelect = SelectedMenuButton.Undo;
@@ -358,7 +354,6 @@ namespace OOPproject
         {
             currSelect = SelectedMenuButton.Save;
             var sfd = new SaveFileDialog();
-            //sfd.Filter = "Image(*.jpg)|*.jpg|(*.*|*.*";
             sfd.Filter = "Model (*.mdl)|*.mdl|Image (*.png)|*.png|(*.*)|*.*";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
@@ -422,12 +417,12 @@ namespace OOPproject
             clearSelection(true);
         }
 
-        static Point set_point(PictureBox pb, Point p)
-        {
-            float pX = 1f * pb.Image.Width / pb.Width;
-            float pY = 1f * pb.Image.Height / pb.Height;
-            return new Point((int)(p.X * pX), (int)(p.Y * pY));
-        }
+        //static Point set_point(PictureBox pb, Point p)
+        //{
+        //    float pX = 1f * pb.Image.Width / pb.Width;
+        //    float pY = 1f * pb.Image.Height / pb.Height;
+        //    return new Point((int)(p.X * pX), (int)(p.Y * pY));
+        //}
        
         private void textBoxForTesting_Click(object sender, EventArgs e)
         {
@@ -437,29 +432,20 @@ namespace OOPproject
         private void btn_EditObject_Click(object sender, EventArgs e)
         {
             currSelect = SelectedMenuButton.EditObject;
-            // if (Flist.NextIndex > 0)
             showEditMenu();
         }
 
         private void btn_change_clr_Click(object sender, EventArgs e) //change stroke color
         {
-            //currSelect = SelectedMenuButton.Point;
-            //Figure.SELECTED_COLOR = New_Color;
-            //currSelect = SelectedMenuButton.Point;
             if (selectedFigureIndex != -1)
                 Flist[selectedFigureIndex].StrokeColor = New_Color;
-            //pic.Invalidate();
+            pic.Invalidate();
             showEditMenu();
             clearSelection(false);
         }
         private void btn_strokeWidth_Click(object sender, EventArgs e)
         {
             currSelect = SelectedMenuButton.StrokeWidth;
-            if (Flist[selectedFigureIndex].IsSelected)
-            {
-                Flist[selectedFigureIndex].StrokeWidth++;
-                pic.Invalidate();
-            }
             cB_selestSize.Show();
             clearSelection(false);
         }
@@ -514,7 +500,6 @@ namespace OOPproject
                 isFiguredCreated = true;
             }
             Logger.WriteLog("createFigure --- figure count " + Flist.NextIndex);
-
             Logger.WriteLog("createFigure --- tempFigureCreated " + tempFigureCreated);
         }
 
@@ -560,7 +545,7 @@ namespace OOPproject
 
         private void cB_selestSize_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //new_width = (int)cB_selestSize.SelectedIndexChanged; //need to fix
+            new_width = int.Parse(cB_selestSize.SelectedItem.ToString());
         }
 
         private void updateUndoRedoEnabled()
@@ -583,27 +568,6 @@ namespace OOPproject
                 bm.SetPixel(x, y, newColor);
             }
         }
-        //public void Fill(Bitmap bm,int x ,int y,Color newColor )
-        //{
-        //    Color oldColor = bm.GetPixel(x, y);
-        //    Stack<Point> pixel = new Stack<Point>();
-        //    pixel.Push(new Point(x,y));
-        //    bm.SetPixel(x, y, newColor);
-        //    if (oldColor == newColor) return;
-        //    while(pixel.Count>0)
-        //    {
-        //        Point p = (Point)pixel.Pop();
-        //        if (p.X > 0 && p.Y > 0 && p.X < bm.Width - 1 && p.Y < bm.Height - 1)
-        //        {
-        //            validate(bm, pixel, p.X - 1, p.Y, oldColor, newColor);
-        //            validate(bm, pixel, p.X , p.Y-1, oldColor, newColor);
-        //            validate(bm, pixel, p.X+ 1, p.Y, oldColor, newColor);
-        //            validate(bm, pixel, p.X , p.Y+1, oldColor, newColor);
-        //        }
-        //    }
-        //}
-
-
         #endregion
 
     }

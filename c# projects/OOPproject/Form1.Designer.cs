@@ -111,7 +111,20 @@ namespace OOPproject
             // 
             // cB_selestSize
             // 
+            this.cB_selestSize.BackColor = System.Drawing.Color.PapayaWhip;
+            this.cB_selestSize.Cursor = System.Windows.Forms.Cursors.Hand;
             this.cB_selestSize.FormattingEnabled = true;
+            this.cB_selestSize.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10"});
             this.cB_selestSize.Location = new System.Drawing.Point(476, 47);
             this.cB_selestSize.Name = "cB_selestSize";
             this.cB_selestSize.Size = new System.Drawing.Size(33, 23);
