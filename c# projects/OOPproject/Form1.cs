@@ -22,6 +22,7 @@ namespace OOPproject
             g = Graphics.FromImage(bm);
             g.Clear(Color.White);
             pic.Image = bm;
+            KeyPreview = true;
         }
 
         private void Form1_Shown(Object sender, EventArgs e)
@@ -63,7 +64,8 @@ namespace OOPproject
         FigureList Flist = new FigureList();
         SelectedMenuButton currSelect = SelectedMenuButton.None;
         MyPoint mouseDownPoint = new MyPoint();
-        
+        private bool isShiftPressed;
+
         #region main events
 
         /***************************  Mouse Down inside Pic    *******************************/
@@ -104,10 +106,10 @@ namespace OOPproject
             if (paint && figureIndex != -1)
             {
                 Figure c = (Figure)Flist[figureIndex];
+                
                 switch (currSelect)
                 {
                     case SelectedMenuButton.Ellipse:
-                    case SelectedMenuButton.Rectangle:
                     case SelectedMenuButton.Line: // line
                     case SelectedMenuButton.Rhombus: //rhombus
                     case SelectedMenuButton.Pencil:
@@ -115,15 +117,24 @@ namespace OOPproject
                         if (selectedFigureIndex < 0) // none object is selected
                             c.Change(e.X, e.Y);
                         break;
-                    case SelectedMenuButton.ObjectEraser: // remove
-                        int index = Flist.Find(e.X, e.Y);
-                        if (index != -1)
-                        {
-                            Flist.Remove(Flist.Find(e.X, e.Y));
-                            txtBoxForTesting.Text = index + " erased.";
-                            isErased = true;
-                            //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
+                    case SelectedMenuButton.Rectangle:
+                        if (selectedFigureIndex < 0)
+                        { // none object is selected
+                            if (!isShiftPressed)
+                                c.Change(e.X, e.Y);
+                            else
+                                c.Change(e.X, -1f);
                         }
+                        break;
+                    case SelectedMenuButton.ObjectEraser: // remove
+                        //int index = Flist.Find(e.X, e.Y);
+                        //if (index != -1)
+                        //{
+                        //    Flist.Remove(Flist.Find(e.X, e.Y));
+                        //    txtBoxForTesting.Text = index + " erased.";
+                        //    isErased = true;
+                        //    //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
+                        //}
                         break;
                 }
 
@@ -333,12 +344,15 @@ namespace OOPproject
         private void btn_object_eraser_Click(object sender, EventArgs e)
         {
             currSelect = SelectedMenuButton.ObjectEraser;
-            if((Flist[selectedFigureIndex]).IsSelected)
+            if(selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex && (Flist[selectedFigureIndex]).IsSelected)
             {
-                    Flist.Remove(selectedFigureIndex);
-                    pic.Text = Flist.NextIndex + "";
-                    //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
-                    pic.Invalidate();
+                Flist[selectedFigureIndex].IsSelected = false;
+                Flist.Remove(selectedFigureIndex);
+                pic.Text = Flist.NextIndex + "";
+                saveCurrentState();
+                txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+                txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
+                pic.Invalidate();
             }
             clearSelection(true);
         }
@@ -547,8 +561,8 @@ namespace OOPproject
             if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
             {
                 (Flist[selectedFigureIndex]).IsSelected = false;
-                selectedFigureIndex = -1;
             }
+                selectedFigureIndex = -1;
         }
 
         public void showEditMenu()
@@ -567,7 +581,12 @@ namespace OOPproject
                 btn_fill.Hide();
                 btn_changeStkClr.Hide();
                 Figure.SELECTED_COLOR = Color.DimGray;
-                isErased = false;
+                paint = false;
+                isFigureMoved = false;
+                isMouseMoved = false;
+                isMouseDownOnPic = false;
+                isFiguredCreated = false;
+                figureIndex = -1;
             }
         }
 
@@ -598,5 +617,15 @@ namespace OOPproject
         }
         #endregion
 
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.ShiftKey) isShiftPressed = true;
+        }
+
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.ShiftKey) isShiftPressed = false;
+
+        }
     }
 }

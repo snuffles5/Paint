@@ -124,7 +124,10 @@ public class Rectangle : Quadrilateral // not supporting rotation
     public override void Change(float x, float y)
     {
         Width = x - X;
-        Height = y - Y;
+        if (y == -1) //shift is pressed
+            Height = x - X;
+        else
+            Height = y - Y;
     }
     public override void Move(float offsetX, float offsetY)
     {
