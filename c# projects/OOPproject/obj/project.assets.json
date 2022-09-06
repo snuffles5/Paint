@@ -8,24 +8,19 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\talta\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\shach\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\talta\\source\\repo_tal_daniel\\snuffles5\\bsc_projects\\c# projects\\OOPproject\\OOPproject.csproj",
+      "projectUniqueName": "C:\\Users\\shach\\Documents\\daniel\\bsc_projects\\c# projects\\OOPproject\\OOPproject.csproj",
       "projectName": "OOPproject",
-      "projectPath": "C:\\Users\\talta\\source\\repo_tal_daniel\\snuffles5\\bsc_projects\\c# projects\\OOPproject\\OOPproject.csproj",
-      "packagesPath": "C:\\Users\\talta\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\talta\\source\\repo_tal_daniel\\snuffles5\\bsc_projects\\c# projects\\OOPproject\\obj\\",
+      "projectPath": "C:\\Users\\shach\\Documents\\daniel\\bsc_projects\\c# projects\\OOPproject\\OOPproject.csproj",
+      "packagesPath": "C:\\Users\\shach\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\shach\\Documents\\daniel\\bsc_projects\\c# projects\\OOPproject\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\talta\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\shach\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
