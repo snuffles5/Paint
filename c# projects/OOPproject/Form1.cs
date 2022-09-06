@@ -42,7 +42,6 @@ namespace OOPproject
             Import, Save            
         }
         public const int DEFAULT_STROKE_WIDTH = 5;
-        int new_width = DEFAULT_STROKE_WIDTH;
         public const int DEFAULT_FORM_WIDTH = 950;
         public const int DEFAULT_FORM_HEIGHT = 700;
         Color New_Color = Color.Black; //Default Stroke Color
@@ -55,6 +54,7 @@ namespace OOPproject
         int figureIndex = -1;
         int selectedFigureIndex = -1;
         int currentFlistIndex = -1;
+        private int _selectedWidth = -1;
         Bitmap bm;
         Graphics g;
         ColorDialog cd = new ColorDialog();
@@ -103,7 +103,7 @@ namespace OOPproject
             }
             if (paint && figureIndex != -1)
             {
-                Figure c = (Figure)Flist[figureIndex];
+                Figure c = Flist[figureIndex];
                 switch (currSelect)
                 {
                     case SelectedMenuButton.Ellipse:
@@ -232,27 +232,15 @@ namespace OOPproject
             switch (currSelect)
             {
                 case SelectedMenuButton.Fill:
-                    //Point point = set_point(pic, e.Location);
                     int index = Flist.Find(e.X, e.Y);
                     if (index != -1)
                     {
-                        //Fill(bm, point.X, point.Y, New_Color);
                         if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
                         {
                             Flist[selectedFigureIndex].FillColor = New_Color;
                         }
                     }
                     break;
-               // case SelectedMenuButton.ObjectEraser:
-                    //index = Flist.Find(e.X, e.Y);
-                    //if (index != -1)
-                    //{
-                    //    Flist.Remove(Flist.Find(e.X, e.Y));
-                    //    pic.Text = Flist.NextIndex + "";
-                    //    //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
-                    //    pic.Invalidate();
-                    //}
-                  //  break;
             }
         }
 
@@ -333,7 +321,7 @@ namespace OOPproject
         private void btn_object_eraser_Click(object sender, EventArgs e)
         {
             currSelect = SelectedMenuButton.ObjectEraser;
-            if((Flist[selectedFigureIndex]).IsSelected)
+            if((Flist[selectedFigureIndex]).IsSelected&& (Flist[selectedFigureIndex])!=null)
             {
                     Flist.Remove(selectedFigureIndex);
                     pic.Text = Flist.NextIndex + "";
@@ -428,11 +416,11 @@ namespace OOPproject
                         stream.Close();
                         pic.Invalidate();
                         break;
-                    case 2: // Image
-                        //pic.Image.Save(ofd.FileName, ImageFormat.Jpeg);
-                        //MessageBox.Show("Image imported successfully sucessfully!");
-                        MessageBox.Show("Not implemented!");
-                        break;
+                    //case 2: // Image
+                    //    //pic.Image.Save(ofd.FileName, ImageFormat.Jpeg);
+                    //    //MessageBox.Show("Image imported successfully sucessfully!");
+                    //    MessageBox.Show("Not implemented!");
+                    //    break;
 
                     case 3: // All
 
@@ -470,8 +458,8 @@ namespace OOPproject
         }
         private void btn_strokeWidth_Click(object sender, EventArgs e)
         {
-            currSelect = SelectedMenuButton.StrokeWidth;
-            cB_selestSize.Show();
+            //currSelect = SelectedMenuButton.StrokeWidth;
+            cbSelectSize.Show();
             clearSelection(false);
         }
 
@@ -520,7 +508,7 @@ namespace OOPproject
             if (tempFigureCreated)
             {
                 Flist[figureIndex].StrokeColor = New_Color;
-                Flist[figureIndex].StrokeWidth = DEFAULT_STROKE_WIDTH;
+                Flist[figureIndex].StrokeWidth = _selectedWidth > 0 ?_selectedWidth: DEFAULT_STROKE_WIDTH;
                 Flist[figureIndex].FillColor = Color.Transparent;
                 isFiguredCreated = true;
             }
@@ -571,9 +559,10 @@ namespace OOPproject
             }
         }
 
-        private void cB_selestSize_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbSelectSize_SelectedIndexChanged(object sender, EventArgs e)
         {
-            new_width = int.Parse(cB_selestSize.SelectedItem.ToString());
+           _selectedWidth = int.Parse(cbSelectSize.SelectedItem.ToString());
+            cbSelectSize.Visible = false;
         }
 
         private void updateUndoRedoEnabled()

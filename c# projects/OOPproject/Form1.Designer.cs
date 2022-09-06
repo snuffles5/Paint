@@ -31,7 +31,7 @@ namespace OOPproject
         {
             this.components = new System.ComponentModel.Container();
             this.pnl_btns = new System.Windows.Forms.Panel();
-            this.cB_selestSize = new System.Windows.Forms.ComboBox();
+            this.cbSelectSize = new System.Windows.Forms.ComboBox();
             this.line3 = new System.Windows.Forms.Panel();
             this.line2 = new System.Windows.Forms.Panel();
             this.line1 = new System.Windows.Forms.Panel();
@@ -82,7 +82,7 @@ namespace OOPproject
             // pnl_btns
             // 
             this.pnl_btns.BackColor = System.Drawing.Color.PapayaWhip;
-            this.pnl_btns.Controls.Add(this.cB_selestSize);
+            this.pnl_btns.Controls.Add(this.cbSelectSize);
             this.pnl_btns.Controls.Add(this.line3);
             this.pnl_btns.Controls.Add(this.line2);
             this.pnl_btns.Controls.Add(this.line1);
@@ -109,12 +109,12 @@ namespace OOPproject
             this.pnl_btns.Size = new System.Drawing.Size(928, 70);
             this.pnl_btns.TabIndex = 0;
             // 
-            // cB_selestSize
+            // cbSelectSize
             // 
-            this.cB_selestSize.BackColor = System.Drawing.Color.PapayaWhip;
-            this.cB_selestSize.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.cB_selestSize.FormattingEnabled = true;
-            this.cB_selestSize.Items.AddRange(new object[] {
+            this.cbSelectSize.BackColor = System.Drawing.Color.PapayaWhip;
+            this.cbSelectSize.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.cbSelectSize.FormattingEnabled = true;
+            this.cbSelectSize.Items.AddRange(new object[] {
             "1",
             "2",
             "3",
@@ -125,12 +125,12 @@ namespace OOPproject
             "8",
             "9",
             "10"});
-            this.cB_selestSize.Location = new System.Drawing.Point(476, 47);
-            this.cB_selestSize.Name = "cB_selestSize";
-            this.cB_selestSize.Size = new System.Drawing.Size(33, 23);
-            this.cB_selestSize.TabIndex = 24;
-            this.cB_selestSize.Visible = false;
-            this.cB_selestSize.SelectedIndexChanged += new System.EventHandler(this.cB_selestSize_SelectedIndexChanged);
+            this.cbSelectSize.Location = new System.Drawing.Point(476, 47);
+            this.cbSelectSize.Name = "cbSelectSize";
+            this.cbSelectSize.Size = new System.Drawing.Size(33, 23);
+            this.cbSelectSize.TabIndex = 24;
+            this.cbSelectSize.Visible = false;
+            this.cbSelectSize.SelectedIndexChanged += new System.EventHandler(this.cbSelectSize_SelectedIndexChanged);
             // 
             // line3
             // 
@@ -576,7 +576,7 @@ namespace OOPproject
         private System.Windows.Forms.Panel line2;
         private System.Windows.Forms.PictureBox pic;
         private System.Windows.Forms.TextBox txtBoxForTesting;
-        private System.Windows.Forms.ComboBox cB_selestSize;
+        private System.Windows.Forms.ComboBox cbSelectSize;
         private System.Windows.Forms.ToolTip toolTip_undo;
         private System.Windows.Forms.ToolTip toolTip_strokeWidth;
         private System.Windows.Forms.ToolTip toolTip_import;
@@ -593,6 +593,7 @@ namespace OOPproject
         private System.Windows.Forms.ToolTip toolTip_circle;
         private System.Windows.Forms.ToolTip toolTip_pencil;
         private System.Windows.Forms.ToolTip toolTip_clr;
+        private System.Windows.Forms.ToolTip toolTip_stroke_width;
     }
 }
 
