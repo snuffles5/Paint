@@ -100,7 +100,7 @@ public class AbstractFig : Figure
         MyPoint prev = Vertices != null && Vertices.Count > 0 ? Vertices[Vertices.Count - 1] : MyPoint;
         MyPoint curr = new MyPoint(x, y);
         _path.AddLine(new PointF(prev.X, prev.Y), new PointF(curr.X, curr.Y));
-        //Logger.WriteLog("Add: prev point (" + prev.X + "," + prev.Y + ") current (" + x + "," + y + ")");
+        ////Logger.WriteLog("Add: prev point (" + prev.X + "," + prev.Y + ") current (" + x + "," + y + ")");
         Vertices.Add(new MyPoint(x, y));
     }
 

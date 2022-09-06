@@ -43,8 +43,8 @@ public class Circle : Figure
         StrokeColor = Color.Black;
         FillColor = Color.Black;
         StrokeWidth = strokeWidth;
-        string log = String.Format("{0, 20} {1,14} {2,14} {3,14} {4,14} {5,14}", "Changed - ", "before r.point ", "Center", "Radius", "top left" , "bottom right\n");
-        Logger.WriteLog(log);
+        //string log = String.Format("{0, 20} {1,14} {2,14} {3,14} {4,14} {5,14}", "Changed - ", "before r.point ", "Center", "Radius", "top left" , "bottom right\n");
+        ////Logger.WriteLog(log);
     }
     public MyPoint Center 
     { 
@@ -179,6 +179,7 @@ public class Circle : Figure
     }
     public override bool isInsideSurrounding(float x, float y)
     {
+        //Logger.WriteLog("isInsideSurrounding circle (" + x + "," + y + ")");
         RectangleF recf = new RectangleF(TopLeft.X, TopLeft.Y, Radius * 2, Radius * 2);  // surrounding rectangle
         return recf.Contains(x, y);
     }
@@ -195,5 +196,4 @@ public class Circle : Figure
         toChangeTopLeft = false;
     }
 
-    ~Circle() { Console.WriteLine("Destructor Circle"); }
 }
