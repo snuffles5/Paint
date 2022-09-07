@@ -347,7 +347,7 @@ namespace OOPproject
         }
 
 
-        private void btn_undo_Click(object sender, EventArgs e) //doesnt work for pencil yet
+        private void btn_undo_Click(object sender, EventArgs e)
         {
             currSelect = SelectedMenuButton.Undo;
             if (currentFlistIndex > 0)
@@ -406,7 +406,7 @@ namespace OOPproject
                         bm.Save(sfd.FileName, ImageFormat.Png);
                         MessageBox.Show("Image saved successfully!");
                         break;
-                    case 3: // All
+                    case 3: // All??
 
                         break;
                 }
@@ -419,7 +419,7 @@ namespace OOPproject
         {
             currSelect = SelectedMenuButton.Import;
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Model (*.mdl)|*.mdl|Image (*.jpg)|*.jpg|(*.*)|*.*";
+            ofd.Filter = "Model (*.mdl)|*.mdl|(*.*)|*.*";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 switch (ofd.FilterIndex)
@@ -430,30 +430,15 @@ namespace OOPproject
                         //!!!!
                         Flist = (FigureList)binaryFormatter.Deserialize(stream);
                         //MessageBox.Show("File imported successfully sucessfully!");
-
                         stream.Close();
                         pic.Invalidate();
                         break;
-                    //case 2: // Image
-                    //    //pic.Image.Save(ofd.FileName, ImageFormat.Jpeg);
-                    //    //MessageBox.Show("Image imported successfully sucessfully!");
-                    //    MessageBox.Show("Not implemented!");
-                    //    break;
-
-                    case 3: // All
-
+                    case 2://All??
                         break;
                 }
             }
             clearSelection(true);
         }
-
-        //static Point set_point(PictureBox pb, Point p)
-        //{
-        //    float pX = 1f * pb.Image.Width / pb.Width;
-        //    float pY = 1f * pb.Image.Height / pb.Height;
-        //    return new Point((int)(p.X * pX), (int)(p.Y * pY));
-        //}
        
         private void textBoxForTesting_Click(object sender, EventArgs e)
         {
@@ -476,7 +461,6 @@ namespace OOPproject
         }
         private void btn_strokeWidth_Click(object sender, EventArgs e)
         {
-            //currSelect = SelectedMenuButton.StrokeWidth;
             cbSelectSize.Show();
             clearSelection(false);
         }
@@ -624,7 +608,6 @@ namespace OOPproject
                 case Keys.ControlKey:
                     isControlPressed = true;
                     break;
-
             }
         }
 

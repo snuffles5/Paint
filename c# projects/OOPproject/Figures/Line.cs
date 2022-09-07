@@ -114,9 +114,9 @@ public class Line: Figure
             surrundingRec.DashStyle = DashStyle.Dash;
             g.DrawRectangle(surrundingRec, _path.GetBounds().X, _path.GetBounds().Y, _path.GetBounds().Width, _path.GetBounds().Height);  // surrounding rectangle
         }
+        if (Pen == null)
+            Pen = new Pen(StrokeColor, StrokeWidth);
         g.DrawLine(Pen, Point1.X, Point1.Y, Point2.X, Point2.Y);
-      
-        
     }
 
     public override bool isInside(float x, float y)
