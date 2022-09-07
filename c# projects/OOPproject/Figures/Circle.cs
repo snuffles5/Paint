@@ -61,11 +61,9 @@ public class Circle : Figure
             if (value.Y - _radius < 0)
             {
                 value.Y = _radius;
-            } else
-            {
+            } 
                 MyPoint.X = value.X;
                 MyPoint.Y = value.Y;
-            }
             TopLeft = null;
             if (_path == null)
                 _path = new GraphicsPath();
@@ -130,6 +128,7 @@ public class Circle : Figure
 
     private void InititalizeTopLeft(float x, float y)
     {
+        
         if (_topLeft == null) _topLeft = new MyPoint();
         if (x != -1 && y != -1)
         {
@@ -202,7 +201,8 @@ public class Circle : Figure
     public override void Move(float offsetX, float offsetY)
     {
         toChangeTopLeft = true;
-        Center = new MyPoint(Center.X + offsetX, Center.Y + offsetY);
+        MyPoint p = new MyPoint(Center.X + offsetX, Center.Y + offsetY);
+        Center = p;
         toChangeTopLeft = false;
     }
 
