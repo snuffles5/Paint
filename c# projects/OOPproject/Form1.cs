@@ -67,6 +67,7 @@ namespace OOPproject
         SelectedMenuButton currSelect = SelectedMenuButton.None;
         MyPoint mouseDownPoint = new MyPoint();
         private bool isShiftPressed;
+        private bool isControlPressed;
 
         #region main events
 
@@ -615,13 +616,40 @@ namespace OOPproject
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.ShiftKey) isShiftPressed = true;
+            switch (e.KeyCode)
+            {
+                case Keys.ShiftKey:
+                    isShiftPressed = true;
+                    break;
+                case Keys.ControlKey:
+                    isControlPressed = true;
+                    break;
+
+            }
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.ShiftKey) isShiftPressed = false;
-
+            switch (e.KeyCode)
+            {
+                case Keys.ShiftKey:
+                    isShiftPressed = false;
+                    break;
+                case Keys.ControlKey:
+                    isControlPressed = false;
+                    break;
+                case Keys.Z:
+                    if (isControlPressed)
+                        btn_undo_Click(sender, e);
+                        break;
+                case Keys.Y:
+                    if (isControlPressed)
+                        btn_redo_Click(sender, e);
+                        break;
+               default:
+                    Logger.WriteLog(e.KeyCode.ToString());
+                    break;
+            }
         }
     }
 }

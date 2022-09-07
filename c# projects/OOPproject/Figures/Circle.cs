@@ -43,8 +43,6 @@ public class Circle : Figure
         StrokeColor = Color.Black;
         FillColor = Color.Black;
         StrokeWidth = strokeWidth;
-        //string log = String.Format("{0, 20} {1,14} {2,14} {3,14} {4,14} {5,14}", "Changed - ", "before r.point ", "Center", "Radius", "top left" , "bottom right\n");
-        ////Logger.WriteLog(log);
     }
     public MyPoint Center 
     { 
@@ -61,18 +59,11 @@ public class Circle : Figure
             if (value.Y - _radius < 0)
             {
                 value.Y = _radius;
-            } else
-            {
+            } 
                 MyPoint.X = value.X;
                 MyPoint.Y = value.Y;
-            }
             TopLeft = null;
-            if (_path == null)
-                _path = new GraphicsPath();
-            else
-            {
-                InitializePath();
-            }
+            InitializePath();
         } 
     }
 
@@ -87,11 +78,8 @@ public class Circle : Figure
             if (value >= 0 && value < MAX_RADIUS)
             {
                 _radius = value;
-                if (_path == null)
-                    _path = new GraphicsPath();
-                
                 InitializePath();
-        }
+            }
 
         }
     }
@@ -130,6 +118,7 @@ public class Circle : Figure
 
     private void InititalizeTopLeft(float x, float y)
     {
+        
         if (_topLeft == null) _topLeft = new MyPoint();
         if (x != -1 && y != -1)
         {

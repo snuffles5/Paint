@@ -32,6 +32,8 @@ public class MyPoint
         {
             if (value >= 0 && value < MAX_X)
                 _x = value;
+            else if (value >= 0)
+                _x = MAX_X;
             else
                 _x = 0;
         }
@@ -43,6 +45,8 @@ public class MyPoint
         {
             if (value >= 0 && value < MAX_Y)
                 _y = value;
+            else if (value >= 0)
+                _y = MAX_Y;
             else
                 _y = 0;
         }
