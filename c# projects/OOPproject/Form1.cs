@@ -638,23 +638,13 @@ namespace OOPproject
                 case Keys.ControlKey:
                     isControlPressed = false;
                     break;
-                case Keys.Oemplus:
-                case Keys.OemMinus:
-                    if (isControlPressed && (selectedFigureIndex >= 0 &&
-                        selectedFigureIndex < Flist.NextIndex && (Flist[selectedFigureIndex]).IsSelected))
-                    {
-                        float offset = 5;
-                        if (e.KeyCode == Keys.Oemplus)
-                            Flist[selectedFigureIndex].Increase(offset, offset);
-                            else
-                        Flist[selectedFigureIndex].Decrease(offset, offset);
-                        pic.Text = Flist.NextIndex + "";
-                        saveCurrentState();
-                        txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
-                        txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
-                        txtBoxForTesting.Text += " SFI = " + selectedFigureIndex;
-                        pic.Invalidate();
-                    }
+                case Keys.Z:
+                    if (isControlPressed)
+                        btn_undo_Click(sender, e);
+                        break;
+                case Keys.Y:
+                    if (isControlPressed)
+                        btn_redo_Click(sender, e);
                         break;
                default:
                     Logger.WriteLog(e.KeyCode.ToString());
