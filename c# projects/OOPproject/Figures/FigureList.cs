@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 
 [Serializable]
 public class FigureList
 {
-    protected SortedList figures;
+    protected List<Figure> figures;
 
     public FigureList()
     {
-        figures = new SortedList();
+        figures = new List<Figure>();
     }
     public FigureList(FigureList flist)
     {
-        figures = new SortedList();
+        figures = new List<Figure>();
         for (int i = 0; i < flist.NextIndex; i++)
         {
-            figures[NextIndex] = flist[i];
+            figures.Add(flist[i]);
         }
     }
 
@@ -33,12 +34,12 @@ public class FigureList
         {
             if (index < 0 || index >= figures.Count)
                 return (Figure)null;
-            return (Figure)figures.GetByIndex(index);
+            return (Figure)figures[index];
         }
         set
         {
             if (index <= figures.Count)
-                figures[index] = value;		
+                figures.Add(value);
         }
     }
 
@@ -46,9 +47,7 @@ public class FigureList
     {
         if (element >= 0 && element < figures.Count)
         {
-            for (int i = element; i < figures.Count - 1; i++)
-                figures[i] = figures[i + 1];
-            figures.RemoveAt(figures.Count - 1);
+            figures.RemoveAt(element);
         }
     }
 
