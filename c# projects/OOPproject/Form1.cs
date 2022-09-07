@@ -67,6 +67,7 @@ namespace OOPproject
         SelectedMenuButton currSelect = SelectedMenuButton.None;
         MyPoint mouseDownPoint = new MyPoint();
         private bool isShiftPressed;
+        private bool isControlPressed;
 
         #region main events
 
@@ -615,13 +616,50 @@ namespace OOPproject
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.ShiftKey) isShiftPressed = true;
+            switch (e.KeyCode)
+            {
+                case Keys.ShiftKey:
+                    isShiftPressed = true;
+                    break;
+                case Keys.ControlKey:
+                    isControlPressed = true;
+                    break;
+
+            }
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.ShiftKey) isShiftPressed = false;
-
+            switch (e.KeyCode)
+            {
+                case Keys.ShiftKey:
+                    isShiftPressed = false;
+                    break;
+                case Keys.ControlKey:
+                    isControlPressed = false;
+                    break;
+                case Keys.Oemplus:
+                case Keys.OemMinus:
+                    if (isControlPressed && (selectedFigureIndex >= 0 &&
+                        selectedFigureIndex < Flist.NextIndex && (Flist[selectedFigureIndex]).IsSelected))
+                    {
+                        float offset = 5;
+                        if (e.KeyCode == Keys.Oemplus)
+                            Flist[selectedFigureIndex].Increase(offset, offset);
+                            else
+                        Flist[selectedFigureIndex].Decrease(offset, offset);
+                        pic.Text = Flist.NextIndex + "";
+                        saveCurrentState();
+                        txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
+                        txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
+                        txtBoxForTesting.Text += " SFI = " + selectedFigureIndex;
+                        pic.Invalidate();
+                    }
+                        break;
+               default:
+                    Logger.WriteLog(e.KeyCode.ToString());
+                    break;
+            }
         }
     }
 }
