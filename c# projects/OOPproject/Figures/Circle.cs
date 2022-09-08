@@ -2,7 +2,6 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Runtime.Serialization;
 
 [Serializable]
 public class Circle : Figure
@@ -33,7 +32,6 @@ public class Circle : Figure
         FillColor = fillColor;
         StrokeWidth = strokeWidth;
     }
-
     public Circle(float x, float y, float radius = DEFAULT_RADIUS, int strokeWidth = 1) 
     {
         MyPoint = new MyPoint(x, y);
@@ -66,7 +64,6 @@ public class Circle : Figure
             InitializePath();
         } 
     }
-
     public float Radius
     {
         get
@@ -99,7 +96,7 @@ public class Circle : Figure
         }
 
     }
-    
+
     public MyPoint BottomRight
     {
         get
@@ -135,7 +132,6 @@ public class Circle : Figure
     public override void InitializePath()
     {
         base.InitializePath();
-        //_path.AddEllipse(Center.X - _radius, Center.Y - _radius, _radius * 2, _radius * 2);
         if (TopLeft == null)
             InititalizeTopLeft(-1, -1);
         _path.AddEllipse(TopLeft.X, TopLeft.Y, Radius*2, Radius*2);
@@ -145,7 +141,6 @@ public class Circle : Figure
         if(_path == null) InitializePath();
         if (IsSelected)
         {
-            Logger.WriteLog("Draw circle IsSelected true");
             Pen surrundingRec = new Pen(SELECTED_COLOR, StrokeWidth / 2);
             surrundingRec.DashStyle = DashStyle.Dash;
             g.DrawRectangle(surrundingRec, TopLeft.X, TopLeft.Y, Radius * 2, Radius * 2);  // surrounding rectangle
@@ -172,13 +167,10 @@ public class Circle : Figure
     }
     public override bool isInside(float x, float y)
     {
-        //|xp−xc|2+|yp−yc|2−−−−−−−−−−−−−−−−−√<r.
-        Logger.WriteLog("isInside circle Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - Y, 2)) < Radius " + (Math.Sqrt(Math.Pow(x - X, 2) + Math.Pow(y - Y, 2)) < Radius));
         return new Line(x,y,X,Y).Distance < Radius || isOnPath(x,y);
     }
     public override bool isInsideSurrounding(float x, float y)
     {
-        //Logger.WriteLog("isInsideSurrounding circle (" + x + "," + y + ")");
         RectangleF recf = new RectangleF(TopLeft.X, TopLeft.Y, Radius * 2, Radius * 2);  // surrounding rectangle
         return recf.Contains(x, y);
     }
@@ -194,5 +186,4 @@ public class Circle : Figure
         Center = new MyPoint(Center.X + offsetX, Center.Y + offsetY);
         toChangeTopLeft = false;
     }
-
 }

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.Globalization;
 
 [Serializable]
 public abstract class Figure
@@ -21,12 +19,9 @@ public abstract class Figure
         Pen = new Pen(StrokeColor, StrokeWidth);
     }
 
-    public
-        //TODO make private and getters
-    static Color SELECTED_COLOR = Color.DimGray;
+    public static Color SELECTED_COLOR = Color.DimGray;
     public const int STROKE_DEFAULT_WIDTH = 1;
 
-    // TODO maybe add _static path to make the eraser less heavier. need to save index too.
 
     public MyPoint MyPoint 
     { 
@@ -103,6 +98,4 @@ public abstract class Figure
             _path = new GraphicsPath();
         _path.Reset();
     }
-
-
 }

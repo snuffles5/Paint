@@ -93,7 +93,7 @@ public class Line: Figure
     public float Distance
     {
         get
-        { // √[( y2 –  y1)² + ( x1 –  x2)²]
+        { 
             return MathF.Sqrt(MathF.Pow(MathF.Abs(Y2 - Y1), 2) + MathF.Pow(MathF.Abs(X2 - X1), 2));
         }
     }
@@ -135,7 +135,6 @@ public class Line: Figure
         RectangleF recf = new RectangleF(_path.GetBounds().X, _path.GetBounds().Y, _path.GetBounds().Width, _path.GetBounds().Height);  // surrounding rectangle
         return recf.Contains(x, y);
     }
-
     public override void Change(float x, float y)
     {
         X2 = x;
@@ -148,5 +147,4 @@ public class Line: Figure
         Y1 += y;
         Y2 += y;
     }
-
 }

@@ -59,8 +59,6 @@ public class FigureList
         {
             prev = (Figure)figures[i - 1];
             cur = (Figure)figures[i];
-            //g.DrawLine(Pens.Yellow, prev.X, prev.Y, cur.X, cur.Y);
-
             ((Figure)figures[i]).Draw(g);
         }
         for (int i = 0; i < figures.Count; i++)

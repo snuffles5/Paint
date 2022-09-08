@@ -6,8 +6,6 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
-//System.Windows.Media.Imaging;
-
 
 namespace OOPproject
 {
@@ -81,15 +79,13 @@ namespace OOPproject
             mouseDownPoint.X = e.X;
             mouseDownPoint.Y = e.Y;
 
-            Logger.WriteLog("pic_MouseDown selectedFigureIndex " + selectedFigureIndex);
             if (Flist.NextIndex == 0 || 
                 (selectedFigureIndex >= 0 && 
                 (!Flist[selectedFigureIndex].isInside(e.X, e.Y) && !Flist[selectedFigureIndex].isInsideSurrounding(e.X, e.Y)))) 
-                // flist empty OR there is selected figure AND (either click outside object AND outside surrounding rectangle)
             {
+                // flist empty OR there is selected figure AND (either click outside object AND outside surrounding rectangle)
                 clearSelectedFig();
             }
-            //createFigure(currSelect, e.X, e.Y);
             pic.Text = Flist.NextIndex + "";
         }
 
@@ -97,10 +93,8 @@ namespace OOPproject
 
         private void pic_MouseMove(object sender, MouseEventArgs e)
         {
-            //Logger.WriteLog("pic_MouseMove");
             if (isMouseDownOnPic && selectedFigureIndex < 0 ) // mouse move after mouse down and figure is not selected
             {
-                //Logger.WriteLog("pic_MouseMove, mouse move after mouse down and figure is not selected");
                 figureIndex = Flist.NextIndex;
                 createFigure(currSelect, e.X, e.Y);
             }
@@ -111,8 +105,8 @@ namespace OOPproject
                 switch (currSelect)
                 {
                     case SelectedMenuButton.Ellipse:
-                    case SelectedMenuButton.Line: // line
-                    case SelectedMenuButton.Rhombus: //rhombus
+                    case SelectedMenuButton.Line: 
+                    case SelectedMenuButton.Rhombus:
                     case SelectedMenuButton.Pencil:
                     case SelectedMenuButton.PerfectCircle:
                         if (selectedFigureIndex < 0) // none object is selected
@@ -127,29 +121,16 @@ namespace OOPproject
                                 c.Change(e.X, -1f);
                         }
                         break;
-                    case SelectedMenuButton.ObjectEraser: // remove
-                        //int index = Flist.Find(e.X, e.Y);
-                        //if (index != -1)
-                        //{
-                        //    Flist.Remove(Flist.Find(e.X, e.Y));
-                        //    txtBoxForTesting.Text = index + " erased.";
-                        //    isErased = true;
-                        //    //MessageBox.Show("inside !" + ((Flist[i]).GetType()).ToString()); // when clicking inside with pencil pencil - just to test
-                        //}
-                        break;
                 }
 
                 pic.Invalidate();
             }
             if (paint) 
             {
-                if ((selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)) //Logger.WriteLog("pic_MouseMove object selected...");
-                //Logger.WriteLog("pic_MouseMove selectedFigureIndex " + selectedFigureIndex + " Flist.NextIndex " + Flist.NextIndex);
-                //Logger.WriteLog("pic_MouseMove paint true...");
+                if ((selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex))
                 isMouseMoved = true;
                 if ((selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex) && (Flist[selectedFigureIndex].isInsideSurrounding(e.X, e.Y)))
                 { // object was selected and mouse clicked inside surrounding
-                    //Logger.WriteLog("pic_MouseMove " + (Flist[selectedFigureIndex]).GetType().ToString() + " was selected and mouse clicked inside surrounding...");
                     float offsetX = e.X - mouseDownPoint.X;
                     mouseDownPoint.X = e.X;
                     float offsetY = e.Y - mouseDownPoint.Y;
@@ -165,29 +146,21 @@ namespace OOPproject
 
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
-            //Logger.WriteLog("pic_MouseUp");
-            //TODO removed last created figure if not drawn. if isMouseMoved = false and  paint = true ???
-            //if (paint && !isMouseMoved)
-
             if (selectedFigureIndex >= 0 && paint &&  isMouseMoved &&  !isFigureMoved) // // figure is selected, mouse pressed and moved but figure not moved
             {
-                //Logger.WriteLog(" pic_MouseUp clearSelectedFig igureIndex >= 0 && paint &&  isMouseMoved &&  !isFigureMoved");
 
                 clearSelectedFig();
             }
-
-            //figureIndex = -1;
             switch (currSelect)
             {
                 case SelectedMenuButton.Ellipse:
                 case SelectedMenuButton.Rectangle:
-                case SelectedMenuButton.Line: // line
-                case SelectedMenuButton.Rhombus: //rhombus
+                case SelectedMenuButton.Line: 
+                case SelectedMenuButton.Rhombus: 
                 case SelectedMenuButton.Pencil:
                 case SelectedMenuButton.PerfectCircle:
                     if (isFiguredCreated)
                     {
-                        //Logger.WriteLog("MouseUp Figured Created ");
                         isFiguredCreated = false;
                         saveCurrentState();
                     }
@@ -205,18 +178,15 @@ namespace OOPproject
             }
             if (isMouseDownOnPic && !isMouseMoved) // mouse was down but didn't moved
             {
-                //Logger.WriteLog("isMouseDownOnPic && !isMouseMoved) // mouse was down but didn't moved");
 
                 bool foundFig = false;
                 for (int i = Flist.NextIndex - 1; i >= 0; i--)
                 {
                     if (Flist[i].isInside(e.X, e.Y)) // found object
                     {
-                        //Logger.WriteLog("pic_MouseUp found object " + i);
                         pic.Text = ((Flist[i]).GetType()).ToString() + " [" + i + "]";
                         if (selectedFigureIndex != -1) // found object before this one, need to clear
                         {
-                            //Logger.WriteLog("pic_MouseUp found object " + i);
                             clearSelectedFig();
                         }
                         selectedFigureIndex = i;
@@ -227,8 +197,6 @@ namespace OOPproject
                 if (!foundFig)
                 {
                     clearSelectedFig();
-                    //Logger.WriteLog("pic_MouseUp !foundFig");
-
                 }
                 pic.Invalidate();
             }
@@ -239,20 +207,11 @@ namespace OOPproject
 
         private void pic_MouseClick(object sender, MouseEventArgs e)
         {
-            //Logger.WriteLog("pic_MouseClick");
             clearSelection(false);
-            switch (currSelect)
-            {
-                case SelectedMenuButton.Fill:
-                    int index = Flist.Find(e.X, e.Y);
-                    if (index != -1)
-                    {
-                        if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
-                        {
-                            Flist[selectedFigureIndex].FillColor = New_Color;
-                        }
-                    }
-                    break;
+            if(currSelect == SelectedMenuButton.Fill && Flist.Find(e.X, e.Y) != -1 && 
+                selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
+            { 
+                Flist[selectedFigureIndex].FillColor = New_Color;
             }
         }
 
@@ -390,11 +349,10 @@ namespace OOPproject
             {
                 switch (sfd.FilterIndex)
                 {
-                    case 1: // 
+                    case 1:
                         IFormatter formatter = new BinaryFormatter();
                         using (Stream stream = new FileStream(sfd.FileName, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
-                            //!!!!
                             formatter.Serialize(stream, Flist);
                             stream.Close();
                             MessageBox.Show("File saved successfully!");
@@ -405,9 +363,6 @@ namespace OOPproject
                         pic.DrawToBitmap(bm, new System.Drawing.Rectangle(0, 0, pic.Width, pic.Height));
                         bm.Save(sfd.FileName, ImageFormat.Png);
                         MessageBox.Show("Image saved successfully!");
-                        break;
-                    case 3: // All??
-
                         break;
                 }
             }
@@ -420,22 +375,14 @@ namespace OOPproject
             currSelect = SelectedMenuButton.Import;
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "Model (*.mdl)|*.mdl|(*.*)|*.*";
-            if (ofd.ShowDialog() == DialogResult.OK)
+            if (ofd.ShowDialog() == DialogResult.OK && ofd.FilterIndex == 1)
             {
-                switch (ofd.FilterIndex)
-                {
-                    case 1: // 
-                        Stream stream = File.Open(ofd.FileName, FileMode.Open);
-                        var binaryFormatter = new BinaryFormatter();
-                        //!!!!
-                        Flist = (FigureList)binaryFormatter.Deserialize(stream);
-                        //MessageBox.Show("File imported successfully sucessfully!");
-                        stream.Close();
-                        pic.Invalidate();
-                        break;
-                    case 2://All??
-                        break;
-                }
+                Stream stream = File.Open(ofd.FileName, FileMode.Open);
+                var binaryFormatter = new BinaryFormatter();
+                        
+                Flist = (FigureList)binaryFormatter.Deserialize(stream);
+                stream.Close();
+                pic.Invalidate();
             }
             clearSelection(true);
         }
@@ -514,9 +461,6 @@ namespace OOPproject
                 Flist[figureIndex].FillColor = Color.Transparent;
                 isFiguredCreated = true;
             }
-            //Logger.WriteLog("createFigure --- figure count " + Flist.NextIndex);
-
-            //Logger.WriteLog("createFigure --- tempFigureCreated " + tempFigureCreated);
         }
 
         public void saveCurrentState()
@@ -535,10 +479,8 @@ namespace OOPproject
 
         public void clearSelectedFig()
         {
-            Logger.WriteLog("clearSelectedFig (before - " + selectedFigureIndex + " )");
             if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
             {
-            Logger.WriteLog("clearing the selected fig " + (Flist[selectedFigureIndex]).GetType());
                 (Flist[selectedFigureIndex]).IsSelected = false;
                 selectedFigureIndex = -1; 
             }
@@ -555,7 +497,6 @@ namespace OOPproject
             paint = false;
             if (clearAll)
             {
-                //Logger.WriteLog("clearAll");
                 clearSelectedFig();
                 selectedFigureIndex = -1;
                 btn_fill.Hide();
@@ -629,9 +570,6 @@ namespace OOPproject
                     if (isControlPressed)
                         btn_redo_Click(sender, e);
                         break;
-               default:
-                    Logger.WriteLog(e.KeyCode.ToString());
-                    break;
             }
         }
     }

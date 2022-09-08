@@ -62,8 +62,6 @@ public class Rectangle : Quadrilateral // not supporting rotation
         Vertices[1] = new MyPoint(x + width, y + height);
         Vertices[2] = new MyPoint(x, y + height);
         InitializePath();
-        //Vertices = new MyPoint[] { new MyPoint(x + width, y), new MyPoint(x + width, y + height), 
-        //new MyPoint(x, y + height) };
     }
 
     public override void InitializePath()
@@ -84,8 +82,6 @@ public class Rectangle : Quadrilateral // not supporting rotation
             Pen surrundingRec = new Pen(SELECTED_COLOR, StrokeWidth);
             surrundingRec.DashStyle = DashStyle.Dash;
             surrundingRec.Alignment = PenAlignment.Outset;
-            //float diff = 0.01f;
-            //g.DrawRectangle(surrundingRec, X - X*diff, Y - Y*diff, Width + Width*diff, Height+ Height*diff);  // surrounding rectangle
             g.DrawRectangle(surrundingRec, X, Y, Width, Height);  // surrounding rectangle
         }
         if (Pen == null)
@@ -131,7 +127,6 @@ public class Rectangle : Quadrilateral // not supporting rotation
     }
     public override void Move(float offsetX, float offsetY)
     {
-        //TODO
         updateParams(X+ offsetX, Y+ offsetY, Width, Height);
     }
 

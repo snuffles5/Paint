@@ -6,8 +6,6 @@ using System.Drawing.Drawing2D;
 public class Ellipse : Figure
 {
     MyPoint _secondPoint;
-    //[field: NonSerialized] public GraphicsPath _path = new GraphicsPath();
-
     public Ellipse() : this(10, 10, 10, 10) { }
     public Ellipse(MyPoint firstPoint, MyPoint secondPoint, int strokeWidth = 1)
     {
@@ -42,14 +40,11 @@ public class Ellipse : Figure
     public MyPoint SecondPoint { get { return _secondPoint; } set { _secondPoint = new MyPoint(value.X, value.Y); } }
     public float X2 { get { return _secondPoint.X; } set { _secondPoint.X = value; } }
     public float Y2 { get { return _secondPoint.Y; } set { _secondPoint.Y = value; } }
-
     public override void Draw(Graphics graphic)
     {
         SolidBrush br = new SolidBrush(FillColor);
         if (IsSelected)
             Pen = new Pen(SELECTED_COLOR, StrokeWidth);
-        //else
-        //    Pen = new Pen(StrokeColor, StrokeWidth);
         if (Pen == null) 
             Pen = new Pen(StrokeColor, StrokeWidth);  // for desrialize
         graphic.FillEllipse(br, FirstPoint.X, FirstPoint.Y, SecondPoint.X-FirstPoint.X, SecondPoint.Y-FirstPoint.Y);

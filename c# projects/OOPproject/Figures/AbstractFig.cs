@@ -11,11 +11,7 @@ using System.Runtime.Serialization;
 public class AbstractFig : Figure 
 {
     [DataMember] List<MyPoint> _vertices = new List<MyPoint>();
-    //[field: NonSerialized] public GraphicsPath
-    //_path = new GraphicsPath();
-    public AbstractFig() : this((List <MyPoint>) null) 
-    {
-    }
+    public AbstractFig() : this((List <MyPoint>) null) {}
     public AbstractFig(List<MyPoint> vertices, int strokeWidth = 1)
     {
         if (vertices != null)
@@ -100,7 +96,6 @@ public class AbstractFig : Figure
         MyPoint prev = Vertices != null && Vertices.Count > 0 ? Vertices[Vertices.Count - 1] : MyPoint;
         MyPoint curr = new MyPoint(x, y);
         _path.AddLine(new PointF(prev.X, prev.Y), new PointF(curr.X, curr.Y));
-        ////Logger.WriteLog("Add: prev point (" + prev.X + "," + prev.Y + ") current (" + x + "," + y + ")");
         Vertices.Add(new MyPoint(x, y));
     }
 
@@ -158,5 +153,4 @@ public class AbstractFig : Figure
             m.Translate(xOffset, yOffset);
             _path.Transform(m);
     }
-
 }

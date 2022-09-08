@@ -1,8 +1,6 @@
-﻿using OOPproject;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Reflection;
 
 [Serializable]
 public class Rhombus : Quadrilateral 
@@ -39,7 +37,6 @@ public class Rhombus : Quadrilateral
                 updateParams(MyPoint.X, MyPoint.Y, value, Height);
             else
                 updateParams(MyPoint.X, MyPoint.Y, 0, Height);
-
         }
     }
     public float Height
@@ -78,7 +75,6 @@ public class Rhombus : Quadrilateral
         _path.AddLine(Vertices[1].X, Vertices[1].Y, Vertices[2].X, Vertices[2].Y);
         _path.AddLine(Vertices[2].X, Vertices[2].Y, MyPoint.X, MyPoint.Y);
     }
-
     public override void Draw(Graphics g)
     {
         if (IsSelected)
@@ -98,7 +94,7 @@ public class Rhombus : Quadrilateral
     }
     public override bool isInside(float x, float y)
     {
-        return (Math.Abs(x - X) <= Width / 2 && Math.Abs(y - Y) <= Height / 2) || isOnPath(x, y); //TODO
+        return (Math.Abs(x - X) <= Width / 2 && Math.Abs(y - Y) <= Height / 2) || isOnPath(x, y);
     }
     public override bool isOnPath(float x, float y)
     {
@@ -126,7 +122,6 @@ public class Rhombus : Quadrilateral
     }
     public override void Move(float offsetX, float offsetY)
     {
-        //Logger.WriteLog("Move rhombus (" + offsetX + "," + offsetX + ")");
         updateParams(X + offsetX, Y + offsetY, Width, Height);
     }
 
