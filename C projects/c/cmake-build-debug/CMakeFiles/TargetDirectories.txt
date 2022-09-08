@@ -1,3 +1,0 @@
-/Users/deni/IdeaProjects/bsc_projects/c/cmake-build-debug/CMakeFiles/c.dir
-/Users/deni/IdeaProjects/bsc_projects/c/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/deni/IdeaProjects/bsc_projects/c/cmake-build-debug/CMakeFiles/rebuild_cache.dir

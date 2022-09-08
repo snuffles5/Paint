@@ -1,0 +1,17 @@
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\bin\Release\netcoreapp3.1\OOPproject.exe
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\bin\Release\netcoreapp3.1\OOPproject.deps.json
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\bin\Release\netcoreapp3.1\OOPproject.runtimeconfig.json
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\bin\Release\netcoreapp3.1\OOPproject.runtimeconfig.dev.json
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\bin\Release\netcoreapp3.1\OOPproject.dll
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\bin\Release\netcoreapp3.1\OOPproject.pdb
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\obj\Release\netcoreapp3.1\OOPproject.csproj.AssemblyReference.cache
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\obj\Release\netcoreapp3.1\OOPproject.Form1.resources
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\obj\Release\netcoreapp3.1\OOPproject.Properties.Resources.resources
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\obj\Release\netcoreapp3.1\OOPproject.csproj.GenerateResource.cache
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\obj\Release\netcoreapp3.1\OOPproject.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\obj\Release\netcoreapp3.1\OOPproject.AssemblyInfoInputs.cache
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\obj\Release\netcoreapp3.1\OOPproject.AssemblyInfo.cs
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\obj\Release\netcoreapp3.1\OOPproject.csproj.CoreCompileInputs.cache
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\obj\Release\netcoreapp3.1\OOPproject.dll
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\obj\Release\netcoreapp3.1\OOPproject.pdb
+C:\Users\shach\Documents\daniel\bsc_projects\c# projects\OOPproject\obj\Release\netcoreapp3.1\OOPproject.genruntimeconfig.cache

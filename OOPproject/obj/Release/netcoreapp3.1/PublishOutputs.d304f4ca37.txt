@@ -1,0 +1,5 @@
+C:\Users\shach\Downloads\C# Project - Paint v1.0\OOPproject.exe
+C:\Users\shach\Downloads\C# Project - Paint v1.0\OOPproject.dll
+C:\Users\shach\Downloads\C# Project - Paint v1.0\OOPproject.deps.json
+C:\Users\shach\Downloads\C# Project - Paint v1.0\OOPproject.runtimeconfig.json
+C:\Users\shach\Downloads\C# Project - Paint v1.0\OOPproject.pdb

@@ -1,3 +1,0 @@
-/Users/deni/IdeaProjects/bsc_projects/ctemp/cmake-build-debug/CMakeFiles/ctemp.dir
-/Users/deni/IdeaProjects/bsc_projects/ctemp/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/deni/IdeaProjects/bsc_projects/ctemp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
