@@ -27,10 +27,6 @@ namespace OOPproject
         {
             FHistoryList.Add(new FigureList(Flist));
             currentFlistIndex++;
-            txtBoxForTesting.Visible = false;
-            txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
-            txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
-            txtBoxForTesting.Text += " SFI = " + selectedFigureIndex;
             btn_undo.Enabled = false;
             btn_redo.Enabled = false;
         }
@@ -233,9 +229,6 @@ namespace OOPproject
             FHistoryList.Clear();
             FHistoryList.Add(new FigureList(Flist));
             currentFlistIndex = 0;
-            txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
-            txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
-            txtBoxForTesting.Text += " SFI = " + selectedFigureIndex;
             updateUndoRedoEnabled();
             clearSelection(true);
         }
@@ -293,9 +286,6 @@ namespace OOPproject
                 Flist.Remove(selectedFigureIndex);
                 pic.Text = Flist.NextIndex + "";
                 saveCurrentState();
-                txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
-                txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
-                txtBoxForTesting.Text += " SFI = " + selectedFigureIndex;
                 pic.Invalidate();
             }
             clearSelection(true);
@@ -310,10 +300,6 @@ namespace OOPproject
                 currentFlistIndex--;
                 Flist = new FigureList(FHistoryList[currentFlistIndex]);
                 pic.Invalidate();
-                txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
-                txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
-                txtBoxForTesting.Text += " SFI = " + selectedFigureIndex;
-
             }
             updateUndoRedoEnabled();
             clearSelection(true);
@@ -327,10 +313,6 @@ namespace OOPproject
                 currentFlistIndex++;
                 Flist = new FigureList(FHistoryList[currentFlistIndex]);
                 pic.Invalidate();
-                txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
-                txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
-                txtBoxForTesting.Text += " SFI = " + selectedFigureIndex;
-
             }
             updateUndoRedoEnabled();
             clearSelection(true);
@@ -460,10 +442,6 @@ namespace OOPproject
                 FHistoryList.RemoveRange(currentFlistIndex + 1, FHistoryList.Count - currentFlistIndex - 1);
             currentFlistIndex++;
             FHistoryList.Add(new FigureList(Flist));
-            txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
-            txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
-            txtBoxForTesting.Text += " SFI = " + selectedFigureIndex;
-
             updateUndoRedoEnabled();
         }
 

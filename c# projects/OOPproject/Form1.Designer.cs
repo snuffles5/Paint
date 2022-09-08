@@ -522,6 +522,7 @@ namespace OOPproject
             this.txtBoxForTesting.Size = new System.Drawing.Size(424, 23);
             this.txtBoxForTesting.TabIndex = 2;
             this.txtBoxForTesting.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtBoxForTesting.Visible = false;
             // 
             // Form1
             // 
