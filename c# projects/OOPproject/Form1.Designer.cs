@@ -534,7 +534,7 @@ namespace OOPproject
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Paint";
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
@@ -566,9 +566,6 @@ namespace OOPproject
         private System.Windows.Forms.Button btn_changeStkClr;
         private System.Windows.Forms.Button btn_fill;
         private System.Windows.Forms.Button ObjectsEraser;
-        //private System.Windows.Forms.PictureBox pictureBox1;
-        //private System.Windows.Forms.PictureBox pictureBox3;
-        //private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Button btn_strokeWidth;
         private System.Windows.Forms.Button btn_import;
         private System.Windows.Forms.Panel panel1;

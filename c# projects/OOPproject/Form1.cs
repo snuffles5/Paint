@@ -27,10 +27,10 @@ namespace OOPproject
         {
             FHistoryList.Add(new FigureList(Flist));
             currentFlistIndex++;
+            txtBoxForTesting.Visible = false;
             txtBoxForTesting.Text = "i=" + currentFlistIndex + " count=";
             txtBoxForTesting.Text += FHistoryList != null ? " " + FHistoryList.Count : "0";
             txtBoxForTesting.Text += " SFI = " + selectedFigureIndex;
-
             btn_undo.Enabled = false;
             btn_redo.Enabled = false;
         }
@@ -56,8 +56,8 @@ namespace OOPproject
         int selectedFigureIndex = -1;
         int currentFlistIndex = -1;
         private int _selectedWidth = -1;
-        Bitmap bm;
-        Graphics g;
+        Bitmap bm; //readonly(?)
+        Graphics g; 
         ColorDialog cd = new ColorDialog();
         Pen pen1 = new Pen(Color.Black, DEFAULT_STROKE_WIDTH);
         List<FigureList> FHistoryList = new List<FigureList>();
@@ -72,7 +72,7 @@ namespace OOPproject
         /***************************  Mouse Down inside Pic    *******************************/
 
         private void pic_MouseDown(object sender, MouseEventArgs e)
-        {
+        { 
             paint = true;
             isMouseMoved = false;
             isMouseDownOnPic = true;
@@ -86,7 +86,6 @@ namespace OOPproject
                 // flist empty OR there is selected figure AND (either click outside object AND outside surrounding rectangle)
                 clearSelectedFig();
             }
-            pic.Text = Flist.NextIndex + "";
         }
 
         /***************************    Mouse Move       *******************************/
@@ -96,13 +95,12 @@ namespace OOPproject
             if (isMouseDownOnPic && selectedFigureIndex < 0 ) // mouse move after mouse down and figure is not selected
             {
                 figureIndex = Flist.NextIndex;
-                createFigure(currSelect, e.X, e.Y);
+                createFigure(currSelect, e.X, e.Y); //Create Figure
             }
-            if (paint && figureIndex != -1)
+            if (paint && figureIndex != -1) //mouse is down on picture box and there is no figures created
             {
                 Figure c = (Figure)Flist[figureIndex];
-                
-                switch (currSelect)
+                switch (currSelect) // which menu button selected
                 {
                     case SelectedMenuButton.Ellipse:
                     case SelectedMenuButton.Line: 
@@ -110,27 +108,26 @@ namespace OOPproject
                     case SelectedMenuButton.Pencil:
                     case SelectedMenuButton.PerfectCircle:
                         if (selectedFigureIndex < 0) // none object is selected
-                            c.Change(e.X, e.Y);
+                            c.Change(e.X, e.Y); // change created figure
                         break;
                     case SelectedMenuButton.Rectangle:
                         if (selectedFigureIndex < 0)
                         { // none object is selected
-                            if (!isShiftPressed)
+                            if (!isShiftPressed) 
                                 c.Change(e.X, e.Y);
                             else
-                                c.Change(e.X, -1f);
+                                c.Change(e.X, -1f); // Change the Rectangle to square figure
                         }
                         break;
                 }
 
                 pic.Invalidate();
             }
-            if (paint) 
+            if (paint) // mouse was down inside picture box
             {
-                if ((selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex))
-                isMouseMoved = true;
+                    isMouseMoved = true;
                 if ((selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex) && (Flist[selectedFigureIndex].isInsideSurrounding(e.X, e.Y)))
-                { // object was selected and mouse clicked inside surrounding
+                { // figure was selected and mouse clicked inside surrounding: Move object
                     float offsetX = e.X - mouseDownPoint.X;
                     mouseDownPoint.X = e.X;
                     float offsetY = e.Y - mouseDownPoint.Y;
@@ -146,12 +143,11 @@ namespace OOPproject
 
         private void pic_MouseUp(object sender, MouseEventArgs e)
         {
-            if (selectedFigureIndex >= 0 && paint &&  isMouseMoved &&  !isFigureMoved) // // figure is selected, mouse pressed and moved but figure not moved
+            if (selectedFigureIndex >= 0 && paint &&  isMouseMoved &&  !isFigureMoved) //  figure is selected, mouse pressed and moved but figure not moved : Clear Selected Figure
             {
-
                 clearSelectedFig();
             }
-            switch (currSelect)
+            switch (currSelect) // which menu button selected
             {
                 case SelectedMenuButton.Ellipse:
                 case SelectedMenuButton.Rectangle:
@@ -208,14 +204,14 @@ namespace OOPproject
         private void pic_MouseClick(object sender, MouseEventArgs e)
         {
             clearSelection(false);
-            if(currSelect == SelectedMenuButton.Fill && Flist.Find(e.X, e.Y) != -1 && 
+            if(currSelect == SelectedMenuButton.Fill && Flist.Find(e.X, e.Y) != -1 && // mouse clicked inside picture box AND inside figure AND fill menu button is selected : Change to selcted color
                 selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
             { 
                 Flist[selectedFigureIndex].FillColor = New_Color;
             }
         }
 
-        private void pic_Paint(object sender, PaintEventArgs e)
+        private void pic_Paint(object sender, PaintEventArgs e) //Invalidate the picture box
         {
             Graphics paintGraphics = e.Graphics;
             paintGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
@@ -227,7 +223,7 @@ namespace OOPproject
         /***************************    Menu clicks events       *******************************/
 
         #region Menu clicks events Methods
-        private void btn_clear_Click(object sender, EventArgs e)
+        private void btn_clear_Click(object sender, EventArgs e) // Clear all figures
         {
             g.Clear(Color.White);
             pic.Image = bm;
@@ -243,7 +239,7 @@ namespace OOPproject
             updateUndoRedoEnabled();
             clearSelection(true);
         }
-        private void btn_color_Click(object sender, EventArgs e)
+        private void btn_color_Click(object sender, EventArgs e) // Change selected color through the color picker dialog
         {
             cd.ShowDialog();
             currSelect = SelectedMenuButton.Color;
@@ -253,45 +249,45 @@ namespace OOPproject
             clearSelection(false);
             pic.Invalidate();
         }
-        private void btn_pencil_Click(object sender, EventArgs e)
+        private void btn_pencil_Click(object sender, EventArgs e) // Menu button Pencil click event
         {
             currSelect = SelectedMenuButton.Pencil;
             clearSelection(true);
         }
 
-        private void btn_circle_Click(object sender, EventArgs e)
+        private void btn_circle_Click(object sender, EventArgs e)// Menu button Circle click event
         {
             currSelect = SelectedMenuButton.PerfectCircle;
             paint = false;
             clearSelection(true);
 
         }
-        private void btn_rect_Click(object sender, EventArgs e)
+        private void btn_rect_Click(object sender, EventArgs e)// Menu button Rectangle click event
         {
             currSelect = SelectedMenuButton.Rectangle;
             clearSelection(true);
         }
-        private void btn_line_Click(object sender, EventArgs e)
+        private void btn_line_Click(object sender, EventArgs e)// Menu button Line click event
         {
             currSelect = SelectedMenuButton.Line;
             clearSelection(true);
         }
-        private void btn_fill_Click(object sender, EventArgs e)
+        private void btn_fill_Click(object sender, EventArgs e)// Menu button Fill click event
         {
             currSelect = SelectedMenuButton.Fill;
             showEditMenu();
             clearSelection(false);
         }
-        private void btn_rhombus_Click(object sender, EventArgs e)
+        private void btn_rhombus_Click(object sender, EventArgs e) // Menu button Rhombus click event
         {
             currSelect = SelectedMenuButton.Rhombus;
             clearSelection(true);
         }
 
-        private void btn_object_eraser_Click(object sender, EventArgs e)
+        private void btn_object_eraser_Click(object sender, EventArgs e) // Menu button Eraser click event
         {
             currSelect = SelectedMenuButton.ObjectEraser;
-            if(selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex && (Flist[selectedFigureIndex]).IsSelected)
+            if(selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex && (Flist[selectedFigureIndex]).IsSelected) // figured is selected: Remove the selected figure
             {
                 Flist[selectedFigureIndex].IsSelected = false;
                 Flist.Remove(selectedFigureIndex);
@@ -306,7 +302,7 @@ namespace OOPproject
         }
 
 
-        private void btn_undo_Click(object sender, EventArgs e)
+        private void btn_undo_Click(object sender, EventArgs e) // Menu button Undo click event
         {
             currSelect = SelectedMenuButton.Undo;
             if (currentFlistIndex > 0)
@@ -323,7 +319,7 @@ namespace OOPproject
             clearSelection(true);
         }
 
-        private void btn_redo_Click(object sender, EventArgs e)
+        private void btn_redo_Click(object sender, EventArgs e) // Menu button Redo click event
         {
             currSelect = SelectedMenuButton.Redo;
             if (currentFlistIndex < FHistoryList.Count - 1)
@@ -340,16 +336,16 @@ namespace OOPproject
             clearSelection(true);
         }
 
-        private void btn_save_Click(object sender, EventArgs e)
+        private void btn_save_Click(object sender, EventArgs e) // Menu button Save click event
         {
             currSelect = SelectedMenuButton.Save;
             var sfd = new SaveFileDialog();
-            sfd.Filter = "Model (*.mdl)|*.mdl|Image (*.png)|*.png|(*.*)|*.*";
+            sfd.Filter = "Model (*.mdl)|*.mdl|Image (*.png)|*.png";
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 switch (sfd.FilterIndex)
                 {
-                    case 1:
+                    case 1: //mdl file
                         IFormatter formatter = new BinaryFormatter();
                         using (Stream stream = new FileStream(sfd.FileName, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
@@ -370,12 +366,12 @@ namespace OOPproject
             currSelect = SelectedMenuButton.None;
         }
 
-        private void btn_import_Click(object sender, EventArgs e)
+        private void btn_import_Click(object sender, EventArgs e) // Menu button Import click event
         {
             currSelect = SelectedMenuButton.Import;
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Model (*.mdl)|*.mdl|(*.*)|*.*";
-            if (ofd.ShowDialog() == DialogResult.OK && ofd.FilterIndex == 1)
+            ofd.Filter = "Model (*.mdl)|*.mdl";
+            if (ofd.ShowDialog() == DialogResult.OK && ofd.FilterIndex == 1) // mdl file
             {
                 Stream stream = File.Open(ofd.FileName, FileMode.Open);
                 var binaryFormatter = new BinaryFormatter();
@@ -387,18 +383,18 @@ namespace OOPproject
             clearSelection(true);
         }
        
-        private void textBoxForTesting_Click(object sender, EventArgs e)
+        private void textBoxForTesting_Click(object sender, EventArgs e) //Text box for testing clicked
         {
             currSelect = SelectedMenuButton.None;
         }
 
-        private void btn_EditObject_Click(object sender, EventArgs e)
+        private void btn_EditObject_Click(object sender, EventArgs e) // Menu button Edit Object click event: Show the edit options
         {
             currSelect = SelectedMenuButton.EditObject;
             showEditMenu();
         }
 
-        private void btn_change_clr_Click(object sender, EventArgs e) //change stroke color
+        private void btn_change_clr_Click(object sender, EventArgs e) // Menu button Stroke Color click event
         {
             if (selectedFigureIndex != -1)
                 Flist[selectedFigureIndex].StrokeColor = New_Color;
@@ -406,17 +402,12 @@ namespace OOPproject
             showEditMenu();
             clearSelection(false);
         }
-        private void btn_strokeWidth_Click(object sender, EventArgs e)
+        private void btn_strokeWidth_Click(object sender, EventArgs e) // Menu button Stroke Width click event
         {
             cbSelectSize.Show();
             clearSelection(false);
         }
 
-        private void btn_changeSize_Click(object sender, EventArgs e)
-        {
-            showEditMenu();
-            clearSelection(false);
-        }
         #endregion
 
         /***************************    Others       *******************************/
@@ -463,7 +454,7 @@ namespace OOPproject
             }
         }
 
-        public void saveCurrentState()
+        public void saveCurrentState() // Add current state to Figure History List (For undo / redo options)
         {
             if (currentFlistIndex < FHistoryList.Count - 1)
                 FHistoryList.RemoveRange(currentFlistIndex + 1, FHistoryList.Count - currentFlistIndex - 1);
@@ -477,7 +468,7 @@ namespace OOPproject
         }
 
 
-        public void clearSelectedFig()
+        public void clearSelectedFig() // remove the selection of figure
         {
             if (selectedFigureIndex >= 0 && selectedFigureIndex < Flist.NextIndex)
             {
@@ -492,7 +483,7 @@ namespace OOPproject
             btn_changeStkClr.Show();
         }
 
-        public void clearSelection(bool clearAll)
+        public void clearSelection(bool clearAll) // initialize the variable to their start point
         {
             paint = false;
             if (clearAll)
@@ -511,13 +502,13 @@ namespace OOPproject
             }
         }
 
-        private void cbSelectSize_SelectedIndexChanged(object sender, EventArgs e)
+        private void cbSelectSize_SelectedIndexChanged(object sender, EventArgs e) // Event for changing Stroke width from combo box list
         {
            _selectedWidth = int.Parse(cbSelectSize.SelectedItem.ToString());
             cbSelectSize.Visible = false;
         }
 
-        private void updateUndoRedoEnabled()
+        private void updateUndoRedoEnabled() // Update the redo and undo buttons states (depends on the current state from history list)
         {
             if (currentFlistIndex == 0)
                 btn_undo.Enabled = false;
@@ -528,18 +519,10 @@ namespace OOPproject
             else
                 btn_redo.Enabled = false;
         }
-        private void validate(Bitmap bm, Stack<Point> sp, int x, int y, Color oldColor, Color newColor)
-        {
-            Color cx = bm.GetPixel(x, y);
-            if (cx == oldColor)
-            {
-                sp.Push(new Point(x, y));
-                bm.SetPixel(x, y, newColor);
-            }
-        }
+    
         #endregion
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        private void Form1_KeyDown(object sender, KeyEventArgs e) // Keyboard  down event
         {
             switch (e.KeyCode)
             {
@@ -552,7 +535,7 @@ namespace OOPproject
             }
         }
 
-        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        private void Form1_KeyUp(object sender, KeyEventArgs e) // Keyboard up event
         {
             switch (e.KeyCode)
             {
@@ -562,11 +545,11 @@ namespace OOPproject
                 case Keys.ControlKey:
                     isControlPressed = false;
                     break;
-                case Keys.Z:
-                    if (isControlPressed)
+                case Keys.Z: // Control + Z
+                    if (isControlPressed) // 
                         btn_undo_Click(sender, e);
                         break;
-                case Keys.Y:
+                case Keys.Y: // Control + Y
                     if (isControlPressed)
                         btn_redo_Click(sender, e);
                         break;
