@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "N3vDKlIkEvKp0rfUVp4ZHX/WyG2xheHhvfmqK8szbHA6e+qvvuXm2wJTmleW3uuBx5eTZ23x0FH04gJWR7nZug==",
+  "dgSpecHash": "Jj8qxg7AxB8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\shach\\Documents\\daniel\\bsc_projects\\OOPproject\\OOPproject.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\projects\\Paint\\OOPproject\\OOPproject.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\talta\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.32\\microsoft.netcore.app.host.win-x64.3.1.32.nupkg.sha512"
+  ],
   "logs": []
 }

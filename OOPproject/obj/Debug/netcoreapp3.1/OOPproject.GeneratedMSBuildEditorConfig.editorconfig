@@ -6,4 +6,6 @@ build_property.ApplicationHighDpiMode =
 build_property.ApplicationUseCompatibleTextRendering = 
 build_property.ApplicationVisualStyles = 
 build_property.RootNamespace = OOPproject
-build_property.ProjectDir = C:\Users\shach\Documents\daniel\bsc_projects\OOPproject\
+build_property.ProjectDir = C:\projects\Paint\OOPproject\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
